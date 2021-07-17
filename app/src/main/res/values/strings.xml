@@ -5,6 +5,9 @@
     <string name="corp_user">요트 사업자</string>
     <string name="email">이메일</string>
     <string name="password">비밀번호</string>
+    <string name="password_check">비밀번호 확인</string>
     <string name="signup_message">아직 회원이 아니신가요?</string>
-    <string name="signup">회원가입</string>
+    <string name="signup_ko">회원가입</string>
+    <string name="next">NEXT</string>
+    <string name="signup">SIGN UP</string>
 </resources>
