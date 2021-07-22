@@ -15,4 +15,8 @@
     <string name="address">기본주소</string>
     <string name="address_detail">상세주소</string>
     <string name="signup">SIGN UP</string>
+    <string name="price_unit">원</string>
+    <string name="per_hour">(/시간)</string>
+    <string name="title_qr_check">QR 체크인</string>
+    <string name="title_reservation">예약내역</string>
 </resources>

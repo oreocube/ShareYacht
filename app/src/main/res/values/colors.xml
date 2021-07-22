@@ -9,4 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="main_color">#FFEB5757</color>
     <color name="gray">#FF818181</color>
+    <color name="main_text">#FF000000</color>
+    <color name="per_text">#FF818181</color>
+    <color name="bg_actionbar">#FFFFFFFF</color>
 </resources>
