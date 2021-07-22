@@ -17,6 +17,7 @@
     <string name="signup">SIGN UP</string>
     <string name="price_unit">원</string>
     <string name="per_hour">(/시간)</string>
+    <string name="logout_ko">로그아웃</string>
     <string name="title_qr_check">QR 체크인</string>
     <string name="title_reservation">예약내역</string>
 </resources>

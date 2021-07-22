@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/group1"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/drawer_qr"
+            android:icon="@drawable/ic_qr_code"
+            android:title="@string/title_qr_check" />
+        <item
+            android:id="@+id/drawer_reserve"
+            android:icon="@drawable/ic_receipt"
+            android:title="@string/title_reservation" />
+    </group>
+</menu>
