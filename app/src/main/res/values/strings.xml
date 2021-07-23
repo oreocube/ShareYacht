@@ -20,4 +20,6 @@
     <string name="logout_ko">로그아웃</string>
     <string name="title_qr_check">QR 체크인</string>
     <string name="title_reservation">예약내역</string>
+    <string name="title_user_info">상세정보 입력</string>
+    <string name="title_signup">회원가입</string>
 </resources>

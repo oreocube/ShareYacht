@@ -15,14 +15,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".view.MainActivity">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/mainContainer"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:listitem="@layout/rv_item" />
+            android:layout_height="match_parent"
+
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_graph_yacht" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

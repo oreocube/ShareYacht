@@ -9,12 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ShareYacht">
-        <activity android:name=".ReservationActivity" />
-        <activity android:name=".QrViewActivity" />
-        <activity android:name=".UserInfoActivity" />
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".view.ReservationActivity" />
+        <activity android:name=".view.QrViewActivity" />
+        <activity android:name=".view.LoginActivity">
+
+        </activity>
+        <activity android:name=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
