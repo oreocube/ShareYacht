@@ -1,4 +1,4 @@
-package com.shareyacht.shareyacht
+package com.shareyacht.shareyacht.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import com.shareyacht.shareyacht.R
 import com.shareyacht.shareyacht.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -30,7 +31,9 @@ class MainActivity : AppCompatActivity() {
 
         val drawer = findViewById<DrawerLayout>(R.id.drawerLayout)
         val toggle = ActionBarDrawerToggle(
-            this, drawer, toolbar, R.string.nav_app_bar_open_drawer_description, R.string.nav_app_bar_open_drawer_description
+            this, drawer, toolbar,
+            R.string.nav_app_bar_open_drawer_description,
+            R.string.nav_app_bar_open_drawer_description
         )
         drawer.addDrawerListener(toggle)
         toggle.isDrawerIndicatorEnabled = true

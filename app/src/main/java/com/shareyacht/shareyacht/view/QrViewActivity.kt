@@ -1,11 +1,12 @@
-package com.shareyacht.shareyacht
+package com.shareyacht.shareyacht.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.shareyacht.shareyacht.R
 
-class LoginActivity : AppCompatActivity() {
+class QrViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_qr_view)
     }
 }

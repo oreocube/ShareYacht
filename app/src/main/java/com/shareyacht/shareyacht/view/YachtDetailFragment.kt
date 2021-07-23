@@ -1,4 +1,4 @@
-package com.shareyacht.shareyacht
+package com.shareyacht.shareyacht.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,16 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.shareyacht.shareyacht.databinding.FragmentYachtReserveBinding
+import com.shareyacht.shareyacht.R
+import com.shareyacht.shareyacht.databinding.FragmentYachtDetailBinding
 
-class YachtReserveFragment : Fragment() {
+class YachtDetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding: FragmentYachtReserveBinding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_yacht_reserve, container, false)
+        val binding: FragmentYachtDetailBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_yacht_detail, container, false)
         context ?: return binding.root
 
         return binding.root
