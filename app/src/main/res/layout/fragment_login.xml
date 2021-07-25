@@ -2,7 +2,14 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".view.LoginFragment">
+    tools:context=".view.user.LoginFragment">
+
+    <data>
+
+        <variable
+            name="loginViewModel"
+            type="com.shareyacht.shareyacht.viewmodel.LoginViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -29,7 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:buttonTint="@color/checkbox_tint"
-            android:checked="true"
+            android:checked="@={loginViewModel.normal}"
+            android:onCheckedChanged="@{loginViewModel.checkedChanged}"
             android:text="@string/normal_user"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appName" />
@@ -40,6 +48,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:buttonTint="@color/checkbox_tint"
+            android:checked="@={loginViewModel.corp}"
+            android:onCheckedChanged="@{loginViewModel.checkedChanged}"
             android:text="@string/corp_user"
             app:layout_constraintBaseline_toBaselineOf="@+id/normalUserCheck"
             app:layout_constraintStart_toEndOf="@+id/normalUserCheck" />
@@ -57,7 +67,8 @@
                 android:id="@+id/emailEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/email" />
+                android:hint="@string/email"
+                android:text="@={loginViewModel.email}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -75,7 +86,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:text="@={loginViewModel.password}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -84,6 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:backgroundTint="@color/main_color"
+            android:onClick="@{() -> loginViewModel.onLoginClick()}"
             android:padding="10dp"
             android:text="@string/login"
             android:textSize="18sp"
