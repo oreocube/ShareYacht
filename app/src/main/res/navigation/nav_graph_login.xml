@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.shareyacht.shareyacht.view.LoginFragment"
+        android:name="com.shareyacht.shareyacht.view.user.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login">
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.shareyacht.shareyacht.view.SignUpFragment"
+        android:name="com.shareyacht.shareyacht.view.user.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up">
         <action
@@ -33,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/userInfoFragment"
-        android:name="com.shareyacht.shareyacht.view.UserInfoFragment"
+        android:name="com.shareyacht.shareyacht.view.user.UserInfoFragment"
         android:label="fragment_user_info"
         tools:layout="@layout/fragment_user_info" />
 </navigation>
