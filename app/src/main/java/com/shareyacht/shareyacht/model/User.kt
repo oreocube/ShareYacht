@@ -8,6 +8,7 @@ data class User(
     @SerializedName(Keyword.PASSWORD) val password: String,
     @SerializedName(Keyword.USER_TYPE) val userType: Int,
     @SerializedName(Keyword.NAME) val name: String,
+    @SerializedName(Keyword.BIRTHDAY) val birth: String,
     @SerializedName(Keyword.ADDRESS) val address: String,
     @SerializedName(Keyword.PHONE) val phone: String,
     @SerializedName(Keyword.SEX) val sex: String

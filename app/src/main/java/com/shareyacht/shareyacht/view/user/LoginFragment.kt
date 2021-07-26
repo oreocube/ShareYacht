@@ -32,10 +32,10 @@ class LoginFragment : Fragment() {
             navSignUpButton.setOnClickListener { navigateToSignUp() }
 
             // 뷰모델의 체크박스 상태가 변경된 경우 체크박스 ui 업데이트
-            viewModel.normal.observe(lifecycleOwner!!, { normal ->
+            viewModel.normal.observe(viewLifecycleOwner, { normal ->
                 normalUserCheck.isChecked = normal
             })
-            viewModel.corp.observe(lifecycleOwner!!, { corp ->
+            viewModel.corp.observe(viewLifecycleOwner, { corp ->
                 corpUserCheck.isChecked = corp
             })
         }
