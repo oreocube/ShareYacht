@@ -25,4 +25,5 @@
     <string name="title_signup">회원가입</string>
     <string name="male">남</string>
     <string name="female">여</string>
+    <string name="add_yacht">요트 등록</string>
 </resources>
