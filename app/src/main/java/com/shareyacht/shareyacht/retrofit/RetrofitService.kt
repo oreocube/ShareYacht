@@ -16,12 +16,12 @@ interface RetrofitService {
     @POST(API.USER_SIGNUP)
     fun requestSignup(
         @Body body: User
-    ): Call<BaseResponse>
+    ): Call<BaseResponse<Int>>
 
     // 로그인
     @Headers("content-type: application/json")
     @POST(API.USER_LOGIN)
     fun requestLogin(
         @Body body: ReqLogin
-    ): Call<BaseResponse>
+    ): Call<BaseResponse<Int>>
 }

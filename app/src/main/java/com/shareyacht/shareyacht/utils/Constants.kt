@@ -33,6 +33,7 @@ object Keyword {
 
     // etc
     const val IMAGE_ID: String = "imageid"
+    const val DATA: String = "data"
 }
 
 object Preference {

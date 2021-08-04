@@ -27,8 +27,8 @@ class RetrofitManager {
     ) {
         val call = service?.requestSignup(user) ?: return
 
-        call.enqueue(object : Callback<BaseResponse> {
-            override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>) {
+        call.enqueue(object : Callback<BaseResponse<Int>> {
+            override fun onResponse(call: Call<BaseResponse<Int>>, response: Response<BaseResponse<Int>>) {
                 when (response.code()) {
                     200 -> {
                         Log.d(TAG, response.raw().toString())
@@ -44,7 +44,7 @@ class RetrofitManager {
                 }
             }
 
-            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+            override fun onFailure(call: Call<BaseResponse<Int>>, t: Throwable) {
                 completion(-1, t.toString())
             }
 
@@ -59,8 +59,8 @@ class RetrofitManager {
         val req = ReqLogin(email = email, password = password, userType = userType)
         val call = service?.requestLogin(req) ?: return
 
-        call.enqueue(object : Callback<BaseResponse> {
-            override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>) {
+        call.enqueue(object : Callback<BaseResponse<Int>> {
+            override fun onResponse(call: Call<BaseResponse<Int>>, response: Response<BaseResponse<Int>>) {
                 when (response.code()) {
                     200 -> {
                         Log.d(TAG, response.raw().toString())
@@ -76,7 +76,7 @@ class RetrofitManager {
                 }
             }
 
-            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+            override fun onFailure(call: Call<BaseResponse<Int>>, t: Throwable) {
                 completion(-1, t.toString())
             }
 
