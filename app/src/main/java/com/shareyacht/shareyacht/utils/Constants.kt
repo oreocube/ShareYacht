@@ -12,6 +12,10 @@ object API {
     const val USER_SIGNUP: String = "/user/signup"
     const val USER_LOGOUT: String = "/user/logout"
 
+    /* Owner */
+    const val OWNER_MY_YACHT: String = "/owner/yacht/myyacht"
+    const val OWNER_DRIVER: String = "/owner/yacht/driver"
+
     const val IMAGE_UPLOAD: String = "/image/upload"
 }
 
@@ -30,6 +34,15 @@ object Keyword {
     const val PHONE: String = "phone"
     const val BIRTHDAY: String = "birthday"
     const val SEX: String = "sex"
+
+    // yacht
+    const val OWNER_ID: String = "ownerid"
+    const val YACHT_NUMBER: String = "yachtnumber"
+    const val YACHT_NAME: String = "yachtname"
+    const val MAX_PEOPLE: String = "maxpeople"
+    const val COMPANY: String = "company"
+    const val LOCATION: String = "location"
+    const val PRICE: String = "price"
 
     // etc
     const val IMAGE_ID: String = "imageid"
