@@ -4,6 +4,7 @@ import android.util.Log
 import com.shareyacht.shareyacht.model.BaseResponse
 import com.shareyacht.shareyacht.model.ReqLogin
 import com.shareyacht.shareyacht.model.User
+import com.shareyacht.shareyacht.model.Yacht
 import com.shareyacht.shareyacht.utils.API
 import com.shareyacht.shareyacht.utils.Constants.TAG
 import retrofit2.Call
@@ -28,7 +29,10 @@ class RetrofitManager {
         val call = service?.requestSignup(user) ?: return
 
         call.enqueue(object : Callback<BaseResponse<Int>> {
-            override fun onResponse(call: Call<BaseResponse<Int>>, response: Response<BaseResponse<Int>>) {
+            override fun onResponse(
+                call: Call<BaseResponse<Int>>,
+                response: Response<BaseResponse<Int>>
+            ) {
                 when (response.code()) {
                     200 -> {
                         Log.d(TAG, response.raw().toString())
@@ -60,7 +64,10 @@ class RetrofitManager {
         val call = service?.requestLogin(req) ?: return
 
         call.enqueue(object : Callback<BaseResponse<Int>> {
-            override fun onResponse(call: Call<BaseResponse<Int>>, response: Response<BaseResponse<Int>>) {
+            override fun onResponse(
+                call: Call<BaseResponse<Int>>,
+                response: Response<BaseResponse<Int>>
+            ) {
                 when (response.code()) {
                     200 -> {
                         Log.d(TAG, response.raw().toString())
@@ -80,6 +87,39 @@ class RetrofitManager {
                 completion(-1, t.toString())
             }
 
+        })
+    }
+
+    // 요트 등록
+    fun requestAddYacht(
+        yacht: Yacht,
+        completion: (code: Int, message: String?) -> Unit
+    ) {
+        val call = service?.requestAddYacht(yacht) ?: return
+
+        call.enqueue(object : Callback<BaseResponse<Int>> {
+            override fun onResponse(
+                call: Call<BaseResponse<Int>>,
+                response: Response<BaseResponse<Int>>
+            ) {
+                when (response.code()) {
+                    200 -> {
+                        Log.d(TAG, response.raw().toString())
+                        if (response.body()?.error == false) {
+                            completion(0, null)
+                        } else {
+                            completion(-1, response.body()?.message)
+                        }
+                    }
+                    else -> {
+                        completion(response.code(), null)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<Int>>, t: Throwable) {
+                completion(-1, t.toString())
+            }
         })
     }
 }
