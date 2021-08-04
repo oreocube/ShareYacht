@@ -25,6 +25,7 @@ class AddCookiesInterceptor : Interceptor {
         for (cookie in getCookies) {
             builder.addHeader("Cookie", cookie)
         }
+        builder.addHeader("content-type", "application/json")
 
         return chain.proceed(builder.build())
     }
