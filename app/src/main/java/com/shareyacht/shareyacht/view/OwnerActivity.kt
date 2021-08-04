@@ -26,9 +26,6 @@ class OwnerActivity : AppCompatActivity() {
     // 메인 툴바 - APP title, DrawerToggle
     private fun initMainActionBar() {
         val toolbar = findViewById<Toolbar>(R.id.main_toolbar)
-        setSupportActionBar(toolbar)
-        actionBar?.title = "SHARE YACHT"
-
         val drawer = findViewById<DrawerLayout>(R.id.drawerLayout)
         val toggle = ActionBarDrawerToggle(
             this, drawer, toolbar,
