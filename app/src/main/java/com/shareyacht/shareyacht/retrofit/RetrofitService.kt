@@ -1,14 +1,10 @@
 package com.shareyacht.shareyacht.retrofit
 
-import com.shareyacht.shareyacht.model.BaseResponse
-import com.shareyacht.shareyacht.model.ReqLogin
-import com.shareyacht.shareyacht.model.User
-import com.shareyacht.shareyacht.model.Yacht
+import com.shareyacht.shareyacht.model.*
 import com.shareyacht.shareyacht.utils.API
+import okhttp3.MultipartBody
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.POST
-import retrofit2.http.PUT
+import retrofit2.http.*
 
 interface RetrofitService {
     /* 사용자 */
@@ -23,6 +19,13 @@ interface RetrofitService {
     fun requestLogin(
         @Body body: ReqLogin
     ): Call<BaseResponse<Int>>
+
+    /* 이미지 */
+    @Multipart
+    @POST(API.IMAGE_UPLOAD)
+    fun requestUploadImage(
+        @Part image: MultipartBody.Part
+    ): Call<BaseResponse<ResUploadImage>>
 
     // 요트 등록, 수정
     @PUT(API.OWNER_MY_YACHT)

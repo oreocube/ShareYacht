@@ -1,15 +1,16 @@
 package com.shareyacht.shareyacht.retrofit
 
 import android.util.Log
-import com.shareyacht.shareyacht.model.BaseResponse
-import com.shareyacht.shareyacht.model.ReqLogin
-import com.shareyacht.shareyacht.model.User
-import com.shareyacht.shareyacht.model.Yacht
+import com.shareyacht.shareyacht.model.*
 import com.shareyacht.shareyacht.utils.API
 import com.shareyacht.shareyacht.utils.Constants.TAG
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 
 class RetrofitManager {
 
@@ -85,6 +86,49 @@ class RetrofitManager {
 
             override fun onFailure(call: Call<BaseResponse<Int>>, t: Throwable) {
                 completion(-1, t.toString())
+            }
+
+        })
+    }
+
+    // 이미지 업로드
+    fun requestUploadImage(
+        file: File,
+        completion: (code: Int, message: String?, imageID: Long?) -> Unit
+    ) {
+
+        val fileBody = MultipartBody.Part.createFormData(
+            "image", file.name, file.asRequestBody("image/jpeg".toMediaType())
+        )
+
+        val call = service?.requestUploadImage(
+            fileBody
+        ) ?: return
+
+        call.enqueue(object : Callback<BaseResponse<ResUploadImage>> {
+            override fun onResponse(
+                call: Call<BaseResponse<ResUploadImage>>,
+                response: Response<BaseResponse<ResUploadImage>>
+            ) {
+                when (response.code()) {
+                    200 -> {
+                        Log.d(TAG, response.raw().toString())
+                        if (response.body()?.error == false) {
+                            // 에러가 없으면 imageID 받음
+                            val imageID = response.body()!!.data.imageid
+                            completion(0, null, imageID)
+                        } else {
+                            completion(-1, response.body()?.message, null)
+                        }
+                    }
+                    else -> {
+                        completion(response.code(), null, null)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<ResUploadImage>>, t: Throwable) {
+                completion(-1, t.toString(), null)
             }
 
         })
