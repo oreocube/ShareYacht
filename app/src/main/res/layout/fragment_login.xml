@@ -92,15 +92,10 @@
 
         <Button
             android:id="@+id/loginButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/MainButton"
             android:layout_marginTop="25dp"
-            android:backgroundTint="@color/main_color"
             android:onClick="@{() -> loginViewModel.onLoginClick()}"
-            android:padding="10dp"
             android:text="@string/login"
-            android:textSize="18sp"
-            app:cornerRadius="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/passwordTextInput" />
