@@ -1,5 +1,6 @@
 package com.shareyacht.shareyacht.viewmodel
 
+import android.content.SharedPreferences
 import android.widget.CompoundButton
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,6 +8,8 @@ import com.google.android.material.button.MaterialButtonToggleGroup
 import com.shareyacht.shareyacht.R
 import com.shareyacht.shareyacht.model.User
 import com.shareyacht.shareyacht.retrofit.RetrofitManager
+import com.shareyacht.shareyacht.utils.Preference
+import com.shareyacht.shareyacht.utils.SharedPreferenceManager
 
 class SignUpViewModel : ViewModel() {
 
@@ -162,6 +165,7 @@ class SignUpViewModel : ViewModel() {
         ) { success, message ->
             when (success) {
                 0 -> {
+                    saveUserInfo()
                     loginResult.value = true
                 }
                 else -> {
@@ -170,5 +174,16 @@ class SignUpViewModel : ViewModel() {
                 }
             }
         }
+    }
+
+
+    private fun saveUserInfo() {
+        val preferences = SharedPreferenceManager.instance
+        val editor: SharedPreferences.Editor = preferences.edit()
+        editor.putString(Preference.SP_EMAIL, email.value)
+        editor.putString(Preference.SP_PW, password.value)
+        editor.putInt(Preference.SP_USERTYPE, userType)
+        editor.putString(Preference.SP_NAME, name.value)
+        editor.apply()
     }
 }

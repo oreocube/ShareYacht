@@ -55,4 +55,8 @@ object Preference {
 
     // Preference Key 값
     const val SHARED_PREFERENCE_NAME_COOKIE = "cookies"
+    const val SP_EMAIL = "email"
+    const val SP_PW = "pw"
+    const val SP_USERTYPE = "usertype"
+    const val SP_NAME = "name"
 }
