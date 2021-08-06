@@ -105,17 +105,17 @@ class RetrofitManager {
             fileBody
         ) ?: return
 
-        call.enqueue(object : Callback<BaseResponse<ResUploadImage>> {
+        call.enqueue(object : Callback<BaseResponse<Long?>> {
             override fun onResponse(
-                call: Call<BaseResponse<ResUploadImage>>,
-                response: Response<BaseResponse<ResUploadImage>>
+                call: Call<BaseResponse<Long?>>,
+                response: Response<BaseResponse<Long?>>
             ) {
                 when (response.code()) {
                     200 -> {
                         Log.d(TAG, response.raw().toString())
                         if (response.body()?.error == false) {
                             // 에러가 없으면 imageID 받음
-                            val imageID = response.body()!!.data.imageid
+                            val imageID = response.body()!!.data
                             completion(0, null, imageID)
                         } else {
                             completion(-1, response.body()?.message, null)
@@ -127,7 +127,7 @@ class RetrofitManager {
                 }
             }
 
-            override fun onFailure(call: Call<BaseResponse<ResUploadImage>>, t: Throwable) {
+            override fun onFailure(call: Call<BaseResponse<Long?>>, t: Throwable) {
                 completion(-1, t.toString(), null)
             }
 
