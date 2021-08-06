@@ -25,4 +25,10 @@
     <string name="title_signup">회원가입</string>
     <string name="male">남</string>
     <string name="female">여</string>
+    <string name="add_yacht">요트 등록</string>
+    <string name="yacht_name">요트 이름</string>
+    <string name="yacht_serial_number">요트 시리얼넘버</string>
+    <string name="yacht_max_people">최대 탑승 가능 인원(명)</string>
+    <string name="yacht_location">탑승 위치</string>
+    <string name="yacht_price">시간 당 가격(1인)</string>
 </resources>

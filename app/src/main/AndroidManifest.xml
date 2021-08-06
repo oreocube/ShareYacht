@@ -3,6 +3,7 @@
     package="com.shareyacht.shareyacht">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,6 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ShareYacht"
         android:usesCleartextTraffic="true">
+        <activity android:name=".view.AddYachtActivity"/>
+        <activity android:name=".view.OwnerActivity"/>
         <activity android:name=".view.ReservationActivity" />
         <activity android:name=".view.QrViewActivity" />
         <activity android:name=".view.user.LoginActivity">
@@ -21,9 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.MainActivity">
-
-        </activity>
+        <activity android:name=".view.MainActivity" />
     </application>
 
 </manifest>

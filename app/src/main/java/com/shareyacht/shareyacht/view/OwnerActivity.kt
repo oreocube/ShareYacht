@@ -7,16 +7,16 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import com.shareyacht.shareyacht.R
-import com.shareyacht.shareyacht.databinding.ActivityMainBinding
+import com.shareyacht.shareyacht.databinding.ActivityOwnerBinding
 
-class MainActivity : AppCompatActivity() {
+class OwnerActivity : AppCompatActivity() {
 
-    private lateinit var mBinding: ActivityMainBinding
+    private lateinit var mBinding: ActivityOwnerBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mBinding = ActivityMainBinding.inflate(layoutInflater)
+        mBinding = ActivityOwnerBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
         initMainActionBar()
@@ -41,13 +41,8 @@ class MainActivity : AppCompatActivity() {
         val navigationView = mBinding.navView
         navigationView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.drawer_qr -> {
-                    val intent = Intent(applicationContext, QrViewActivity::class.java)
-                    startActivity(intent)
-                }
-                R.id.drawer_reserve -> {
-                    val intent =
-                        Intent(applicationContext, ReservationActivity::class.java)
+                R.id.drawer_add_yacht -> {
+                    val intent = Intent(applicationContext, AddYachtActivity::class.java)
                     startActivity(intent)
                 }
             }

@@ -104,16 +104,11 @@
 
         <Button
             android:id="@+id/navInfoButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/MainButton"
             android:layout_marginHorizontal="50dp"
             android:layout_marginTop="25dp"
-            android:backgroundTint="@color/main_color"
             android:onClick="@{() -> signUpViewModel.onNextClick()}"
-            android:padding="10dp"
             android:text="@string/next"
-            android:textSize="18sp"
-            app:cornerRadius="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/passwordCheckTextInput" />

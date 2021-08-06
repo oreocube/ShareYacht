@@ -1,6 +1,7 @@
 package com.shareyacht.shareyacht.view.user
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -8,8 +9,10 @@ import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import com.shareyacht.shareyacht.R
 import com.shareyacht.shareyacht.databinding.ActivityLoginBinding
+import com.shareyacht.shareyacht.utils.Preference
 import com.shareyacht.shareyacht.utils.SharedPreferenceManager
 import com.shareyacht.shareyacht.view.MainActivity
+import com.shareyacht.shareyacht.view.OwnerActivity
 import com.shareyacht.shareyacht.viewmodel.LoginViewModel
 import com.shareyacht.shareyacht.viewmodel.SignUpViewModel
 
@@ -55,9 +58,19 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun navigateToMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
+        when (SharedPreferenceManager.instance.getInt(Preference.SP_USERTYPE, 0)) {
+            1 -> {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            2 -> {
+                val intent = Intent(this, OwnerActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        }
+
     }
 
     private fun printFailMessage(message: String) {
