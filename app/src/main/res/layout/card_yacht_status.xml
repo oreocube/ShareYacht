@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    android:clickable="false"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/yachtStatusTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="요트 현황"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/statusCount0"
+            style="@style/StatusCountText"
+            android:layout_marginTop="30dp"
+            android:text="0"
+            app:layout_constraintEnd_toEndOf="@+id/statusLabel0"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/statusLabel0"
+            app:layout_constraintTop_toBottomOf="@+id/yachtStatusTitle" />
+
+        <TextView
+            android:id="@+id/statusCount1"
+            style="@style/StatusCountText"
+            android:text="0"
+            app:layout_constraintBaseline_toBaselineOf="@+id/statusCount0"
+            app:layout_constraintEnd_toEndOf="@+id/statusLabel1"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/statusLabel1" />
+
+        <TextView
+            android:id="@+id/statusCount2"
+            style="@style/StatusCountText"
+            android:text="0"
+            app:layout_constraintBaseline_toBaselineOf="@+id/statusCount1"
+            app:layout_constraintEnd_toEndOf="@+id/statusLabel2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/statusLabel2" />
+
+        <TextView
+            android:id="@+id/statusCount3"
+            style="@style/StatusCountText"
+            android:text="0"
+            app:layout_constraintBaseline_toBaselineOf="@+id/statusCount0"
+            app:layout_constraintEnd_toEndOf="@+id/statusLabel3"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/statusLabel3" />
+
+        <TextView
+            android:id="@+id/statusLabel0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:text="예약신청"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/statusLabel1"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/statusCount0" />
+
+        <TextView
+            android:id="@+id/statusLabel1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="예약확정"
+            app:layout_constraintBaseline_toBaselineOf="@+id/statusLabel0"
+            app:layout_constraintEnd_toStartOf="@+id/statusLabel2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/statusLabel0" />
+
+        <TextView
+            android:id="@+id/statusLabel2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="운항종료"
+            app:layout_constraintBaseline_toBaselineOf="@+id/statusLabel0"
+            app:layout_constraintEnd_toStartOf="@+id/statusLabel3"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/statusLabel1" />
+
+        <TextView
+            android:id="@+id/statusLabel3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="예약취소"
+            app:layout_constraintBaseline_toBaselineOf="@+id/statusLabel0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/statusLabel2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
