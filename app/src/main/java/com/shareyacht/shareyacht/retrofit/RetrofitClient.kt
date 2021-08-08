@@ -1,6 +1,9 @@
 package com.shareyacht.shareyacht.retrofit
 
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -20,8 +23,12 @@ object RetrofitClient {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
 
         client.addInterceptor(interceptor)
-        // client.interceptors().add(ReceivedCookiesInterceptor()) // 쿠키 Preference에 저장
-        // client.interceptors().add(AddCookiesInterceptor()) // 저장된 쿠키 가져옴
+        client.addInterceptor(Interceptor { chain ->
+            val builder: Request.Builder = chain.request().newBuilder()
+            builder.addHeader("content-type", "application/json")
+
+            chain.proceed(builder.build())
+        })
 
         if (retrofitClient == null) {
 
