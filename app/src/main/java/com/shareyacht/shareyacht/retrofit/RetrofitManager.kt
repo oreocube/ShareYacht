@@ -4,6 +4,8 @@ import android.util.Log
 import com.shareyacht.shareyacht.model.*
 import com.shareyacht.shareyacht.utils.API
 import com.shareyacht.shareyacht.utils.Constants.TAG
+import com.shareyacht.shareyacht.utils.Preference
+import com.shareyacht.shareyacht.utils.SharedPreferenceManager
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -164,6 +166,39 @@ class RetrofitManager {
             override fun onFailure(call: Call<BaseResponse<Int>>, t: Throwable) {
                 completion(-1, t.toString())
             }
+        })
+    }
+
+    fun requestMyYacht(
+        completion: (code: Int, message: String?, yacht: Yacht?) -> Unit
+    ) {
+        val ownerID = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
+        val call = service?.requestMyYacht(BaseRequest(ownerID!!)) ?: return
+
+        call.enqueue(object : Callback<BaseResponse<Yacht>> {
+            override fun onResponse(
+                call: Call<BaseResponse<Yacht>>,
+                response: Response<BaseResponse<Yacht>>
+            ) {
+                when (response.code()) {
+                    200 -> {
+                        Log.d(TAG, response.raw().toString())
+                        if (response.body()?.error == false) {
+                            completion(0, null, response.body()!!.data)
+                        } else {
+                            completion(-1, response.body()?.message, null)
+                        }
+                    }
+                    else -> {
+                        completion(response.code(), null, null)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<Yacht>>, t: Throwable) {
+                completion(-1, t.toString(), null)
+            }
+
         })
     }
 }

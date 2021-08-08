@@ -27,6 +27,11 @@ interface RetrofitService {
         @Part image: MultipartBody.Part
     ): Call<BaseResponse<Long?>>
 
+    @POST(API.OWNER_MY_YACHT)
+    fun requestMyYacht(
+        @Body body: BaseRequest
+    ): Call<BaseResponse<Yacht>>
+
     // 요트 등록, 수정
     @PUT(API.OWNER_MY_YACHT)
     fun requestAddYacht(
