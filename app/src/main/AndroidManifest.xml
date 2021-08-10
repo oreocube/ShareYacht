@@ -13,8 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ShareYacht"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.AddYachtActivity"/>
-        <activity android:name=".view.OwnerActivity"/>
+        <activity android:name=".view.YachtDetailActivity" />
+        <activity android:name=".view.AddYachtActivity" />
+        <activity android:name=".view.OwnerActivity" />
         <activity android:name=".view.ReservationActivity" />
         <activity android:name=".view.QrViewActivity" />
         <activity android:name=".view.user.LoginActivity">

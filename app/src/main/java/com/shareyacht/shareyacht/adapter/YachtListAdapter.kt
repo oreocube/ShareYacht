@@ -1,7 +1,9 @@
 package com.shareyacht.shareyacht.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -9,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.shareyacht.shareyacht.databinding.RvItemBinding
 import com.shareyacht.shareyacht.model.Yacht
 import com.shareyacht.shareyacht.utils.API
+import com.shareyacht.shareyacht.view.YachtDetailActivity
 
 class YachtListAdapter : ListAdapter<Yacht, YachtListAdapter.YachtViewHolder>(YACHT_COMPARATOR) {
 
@@ -39,6 +42,11 @@ class YachtListAdapter : ListAdapter<Yacht, YachtListAdapter.YachtViewHolder>(YA
                     .load(url)
                     .centerCrop()
                     .into(imageView)
+
+                itemView.setOnClickListener {
+                    val intent = Intent(itemView.context, YachtDetailActivity::class.java)
+                    startActivity(itemView.context, intent, null)
+                }
             }
         }
     }
