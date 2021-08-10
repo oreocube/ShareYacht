@@ -201,4 +201,8 @@ class RetrofitManager {
 
         })
     }
+
+    fun requestYachtList() {
+
+    }
 }
