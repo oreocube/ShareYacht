@@ -13,3 +13,7 @@ data class Yacht(
     @SerializedName(Keyword.PRICE) val price: String,
     @SerializedName(Keyword.IMAGE_ID) val imageid: Long
 )
+
+data class ResponseYachtList(
+    val results: List<Yacht>
+)

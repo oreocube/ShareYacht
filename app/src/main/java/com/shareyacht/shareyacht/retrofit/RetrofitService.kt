@@ -2,6 +2,7 @@ package com.shareyacht.shareyacht.retrofit
 
 import com.shareyacht.shareyacht.model.*
 import com.shareyacht.shareyacht.utils.API
+import com.shareyacht.shareyacht.utils.Keyword
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -27,6 +28,8 @@ interface RetrofitService {
         @Part image: MultipartBody.Part
     ): Call<BaseResponse<Long?>>
 
+    /* 사업자 */
+    // 요트 조회
     @POST(API.OWNER_MY_YACHT)
     fun requestMyYacht(
         @Body body: BaseRequest
@@ -37,4 +40,18 @@ interface RetrofitService {
     fun requestAddYacht(
         @Body body: Yacht
     ): Call<BaseResponse<Int>>
+
+    /* 일반 */
+    // 요트 목록 조회
+    @GET(API.CONSUMER_YACHT)
+    suspend fun requestYachtList(
+        @Query(Keyword.PAGE_NUM) page: Int
+    ): BaseResponse<ResponseYachtList>
+
+    // 요트 예약
+    @POST
+    fun requestReserveYacht(
+
+    ): Call<BaseResponse<Int>>
+
 }
