@@ -16,6 +16,11 @@ object API {
     const val OWNER_MY_YACHT: String = "/owner/yacht/myyacht"
     const val OWNER_DRIVER: String = "/owner/yacht/driver"
 
+    /* Consumer */
+    const val CONSUMER_YACHT: String = "/consumer/yacht"
+    const val CONSUMER_YACHT_RESERVE: String = "/consumer/yacht/reserve"
+    const val CONSUMER_RESERVE_VIEW: String = "/consumer/reserve/view"
+
     const val IMAGE_UPLOAD: String = "/image/upload"
 }
 
@@ -47,6 +52,7 @@ object Keyword {
     // etc
     const val IMAGE_ID: String = "imageid"
     const val DATA: String = "data"
+    const val PAGE_NUM: String = "pagenum"
 }
 
 object Preference {
