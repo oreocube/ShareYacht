@@ -3,13 +3,19 @@ package com.shareyacht.shareyacht.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.SyncStateContract
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.shareyacht.shareyacht.R
 import com.shareyacht.shareyacht.adapter.YachtListAdapter
 import com.shareyacht.shareyacht.databinding.ActivityMainBinding
+import com.shareyacht.shareyacht.utils.Constants
 import com.shareyacht.shareyacht.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -21,15 +27,34 @@ class MainActivity : AppCompatActivity() {
 
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
+
         val adapter = YachtListAdapter()
 
-        mBinding.apply {
-            recyclerview.setHasFixedSize(true)
-            recyclerview.adapter = adapter
+        mBinding.recyclerview.apply {
+            this.adapter = adapter
+            layoutManager = LinearLayoutManager(context)
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+
+                    // 현재 화면에 보이는 아이템 중 마지막 위치
+                    val lastVisibleItemPosition: Int =
+                        (recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
+                    // 마지막 아이템 위치
+                    val itemTotalCount = recyclerView.adapter?.itemCount?.minus(1)
+
+                    // 스크롤이 마지막인 경우 더 불러오기
+                    if (lastVisibleItemPosition == itemTotalCount) {
+                        viewModel.getYachtList()
+                    }
+                }
+            })
         }
 
-        viewModel.results.observe(this) { it ->
-            adapter.submitList(it)
+        viewModel.getYachtList()
+        viewModel.results.observe(this) {
+            adapter.submitList(it.toMutableList())
         }
 
         initMainActionBar()

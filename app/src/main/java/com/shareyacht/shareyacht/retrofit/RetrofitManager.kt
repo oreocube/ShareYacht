@@ -202,7 +202,37 @@ class RetrofitManager {
         })
     }
 
-    fun requestYachtList() {
+    fun requestYachtList(
+        pageNum: Int,
+        completion: (code: Int, message: String?, yachtList: List<Yacht>?) -> Unit
+    ) {
+        val call = service?.requestYachtList(page = pageNum) ?: return
+
+        call.enqueue(object : Callback<BaseResponse<List<Yacht>>> {
+            override fun onResponse(
+                call: Call<BaseResponse<List<Yacht>>>,
+                response: Response<BaseResponse<List<Yacht>>>
+            ) {
+                when (response.code()) {
+                    200 -> {
+                        Log.d(TAG, response.raw().toString())
+                        if (response.body()?.error == false) {
+                            completion(0, null, response.body()!!.data)
+                        } else {
+                            completion(-1, response.body()?.message, null)
+                        }
+                    }
+                    else -> {
+                        completion(response.code(), null, null)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<List<Yacht>>>, t: Throwable) {
+                completion(-1, t.toString(), null)
+            }
+
+        })
 
     }
 }

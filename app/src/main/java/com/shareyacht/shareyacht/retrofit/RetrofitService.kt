@@ -43,9 +43,9 @@ interface RetrofitService {
     /* 일반 */
     // 요트 목록 조회
     @GET(API.CONSUMER_YACHT)
-    suspend fun requestYachtList(
+    fun requestYachtList(
         @Query(Keyword.PAGE_NUM) page: Int
-    ): BaseResponse<ResponseYachtList>
+    ): Call<BaseResponse<List<Yacht>>>
 
     // 요트 예약
     @POST
