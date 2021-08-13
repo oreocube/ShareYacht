@@ -2,7 +2,7 @@ package com.shareyacht.shareyacht.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.shareyacht.shareyacht.model.Yacht
+import com.shareyacht.shareyacht.model.ReqAddYacht
 import com.shareyacht.shareyacht.retrofit.RetrofitManager
 import com.shareyacht.shareyacht.utils.Preference
 import com.shareyacht.shareyacht.utils.SharedPreferenceManager
@@ -59,7 +59,7 @@ class AddYachtViewModel : ViewModel() {
         if (email.isNotBlank() && name.isNotBlank() && isNotEmptyForAllFields()) {
 
             if (imageID != null) {
-                val yacht = Yacht(
+                val yacht = ReqAddYacht(
                     owner = email,
                     company = name,
                     number = yachtNum.value!!,

@@ -36,7 +36,7 @@ interface RetrofitService {
     // 요트 등록, 수정
     @PUT(API.OWNER_MY_YACHT)
     fun requestAddYacht(
-        @Body body: Yacht
+        @Body body: ReqAddYacht
     ): Call<BaseResponse<Int>>
 
 

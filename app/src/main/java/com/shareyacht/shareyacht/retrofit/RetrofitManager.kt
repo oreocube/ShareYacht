@@ -138,7 +138,7 @@ class RetrofitManager {
 
     // 요트 등록
     fun requestAddYacht(
-        yacht: Yacht,
+        yacht: ReqAddYacht,
         completion: (code: Int, message: String?) -> Unit
     ) {
         val call = service?.requestAddYacht(yacht) ?: return
