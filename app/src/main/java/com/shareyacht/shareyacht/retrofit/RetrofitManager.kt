@@ -169,6 +169,7 @@ class RetrofitManager {
         })
     }
 
+    // 내 요트 조회
     fun requestMyYacht(
         completion: (code: Int, message: String?, yacht: Yacht?) -> Unit
     ) {
@@ -202,6 +203,7 @@ class RetrofitManager {
         })
     }
 
+    // 요트 목록 조회
     fun requestYachtList(
         pageNum: Int,
         completion: (code: Int, message: String?, yachtList: List<Yacht>?) -> Unit
@@ -234,5 +236,38 @@ class RetrofitManager {
 
         })
 
+    }
+
+    // 요트 상세 조회
+    fun requestGetYachtDetail(
+        yachtID: Int,
+        completion: (code: Int, message: String?, yacht: Yacht?) -> Unit
+    ) {
+        val call = service?.requestGetYachtDetail(yachtID) ?: return
+
+        call.enqueue(object : Callback<BaseResponse<Yacht>>{
+            override fun onResponse(
+                call: Call<BaseResponse<Yacht>>,
+                response: Response<BaseResponse<Yacht>>
+            ) {
+                when (response.code()) {
+                    200 -> {
+                        Log.d(TAG, response.raw().toString())
+                        if (response.body()?.error == false) {
+                            completion(0, null, response.body()!!.data)
+                        } else {
+                            completion(-1, response.body()?.message, null)
+                        }
+                    }
+                    else -> {
+                        completion(response.code(), null, null)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<Yacht>>, t: Throwable) {
+                completion(-1, t.toString(), null)
+            }
+        })
     }
 }

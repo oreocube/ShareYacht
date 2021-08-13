@@ -47,6 +47,12 @@ interface RetrofitService {
         @Query(Keyword.PAGE_NUM) page: Int
     ): Call<BaseResponse<List<Yacht>>>
 
+    // 요트 상세 조회
+    @GET("${API.CONSUMER_YACHT}/{id}")
+    fun requestGetYachtDetail(
+        @Path("id") id: Int
+    ): Call<BaseResponse<Yacht>>
+
     // 요트 예약
     @POST
     fun requestReserveYacht(

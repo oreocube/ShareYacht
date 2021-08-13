@@ -42,6 +42,7 @@ object Keyword {
 
     // yacht
     const val OWNER_ID: String = "ownerid"
+    const val YACHT_ID: String = "yachtid"
     const val YACHT_NUMBER: String = "yachtnumber"
     const val YACHT_NAME: String = "yachtname"
     const val MAX_PEOPLE: String = "maxpeople"

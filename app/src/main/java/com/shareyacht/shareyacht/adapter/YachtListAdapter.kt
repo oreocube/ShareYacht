@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.shareyacht.shareyacht.databinding.RvItemBinding
 import com.shareyacht.shareyacht.model.Yacht
 import com.shareyacht.shareyacht.utils.API
+import com.shareyacht.shareyacht.utils.Keyword
 import com.shareyacht.shareyacht.view.YachtDetailActivity
 
 class YachtListAdapter : ListAdapter<Yacht, YachtListAdapter.YachtViewHolder>(YACHT_COMPARATOR) {
@@ -45,6 +46,7 @@ class YachtListAdapter : ListAdapter<Yacht, YachtListAdapter.YachtViewHolder>(YA
 
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, YachtDetailActivity::class.java)
+                    intent.putExtra(Keyword.YACHT_ID, yacht.id.toInt())
                     startActivity(itemView.context, intent, null)
                 }
             }
