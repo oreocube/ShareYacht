@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="yacht"
+            type="com.shareyacht.shareyacht.model.Yacht" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -25,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="26dp"
             android:layout_marginTop="26dp"
-            android:text="10"
+            android:text="@{yacht.max}"
             android:textColor="@color/main_color"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="요트타고 힐링하자!"
+            android:text="@{yacht.name}"
             app:layout_constraintStart_toStartOf="@+id/typeTextView"
             app:layout_constraintTop_toBottomOf="@id/typeTextView" />
 
@@ -55,7 +62,7 @@
             android:id="@+id/companyTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="요트 컴퍼니"
+            android:text="@{yacht.company}"
             app:layout_constraintStart_toStartOf="@+id/titleTextView"
             app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
@@ -74,7 +81,7 @@
             android:id="@+id/locationTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="서울 ㅇㅇ계류장"
+            android:text="@{yacht.location}"
             android:textColor="@color/main_text"
             app:layout_constraintBaseline_toBaselineOf="@+id/locationLabel"
             app:layout_constraintEnd_toStartOf="@+id/locationLabel" />
@@ -84,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="30,000"
+            android:text="@{yacht.price}"
             android:textColor="@color/main_color"
             android:textSize="18sp"
             android:textStyle="bold"
