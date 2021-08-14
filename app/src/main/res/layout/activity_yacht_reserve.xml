@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="yacht"
+            type="com.shareyacht.shareyacht.model.Yacht" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="예약신청" />
+
+        <View
+            android:id="@+id/divider1"
+            style="@style/ThickDivider"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+        <include
+            android:id="@+id/yachtOverview"
+            layout="@layout/card_yacht_overview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/divider1" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintTop_toBottomOf="@+id/yachtOverview" />
+
+        <View
+            android:id="@+id/startContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/bg_card"
+            app:layout_constraintBottom_toTopOf="@id/divider4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider2" />
+
+        <TextView
+            android:id="@+id/startDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="2021-08-14 금요일"
+            app:layout_constraintEnd_toStartOf="@+id/divider3"
+            app:layout_constraintStart_toStartOf="@id/startContainer"
+            app:layout_constraintTop_toTopOf="@+id/startContainer" />
+
+        <TextView
+            android:id="@+id/startTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="14:00"
+            android:textColor="@color/main_color"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/startDay"
+            app:layout_constraintStart_toStartOf="@+id/startDay"
+            app:layout_constraintTop_toBottomOf="@+id/startDay" />
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="@id/divider4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/startContainer" />
+
+        <TextView
+            android:id="@+id/endDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="2021-08-14 금요일"
+            app:layout_constraintBaseline_toBaselineOf="@+id/startDay"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/divider3" />
+
+        <TextView
+            android:id="@+id/endTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="17:00"
+            android:textColor="@color/main_color"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@+id/startTime"
+            app:layout_constraintEnd_toEndOf="@+id/endDay"
+            app:layout_constraintStart_toStartOf="@+id/endDay"
+            app:layout_constraintTop_toBottomOf="@+id/endDay" />
+
+        <View
+            android:id="@+id/divider4"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="15dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintTop_toBottomOf="@id/startTime" />
+
+        <View
+            android:id="@+id/totalTimeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/bg_total_time"
+            app:layout_constraintBottom_toBottomOf="@id/divider5"
+            app:layout_constraintTop_toBottomOf="@id/divider4" />
+
+        <TextView
+            android:id="@+id/totalLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="총"
+            app:layout_constraintEnd_toStartOf="@+id/totalTimeValue"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/totalTimeContainer" />
+
+        <TextView
+            android:id="@+id/totalTimeValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="3"
+            android:textColor="@color/main_color"
+            app:layout_constraintBaseline_toBaselineOf="@+id/totalLabel"
+            app:layout_constraintEnd_toStartOf="@+id/timeLabel"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/totalLabel" />
+
+        <TextView
+            android:id="@+id/timeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="시간"
+            app:layout_constraintBaseline_toBaselineOf="@+id/totalLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/totalTimeValue" />
+
+        <View
+            android:id="@+id/divider5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintTop_toBottomOf="@+id/totalLabel" />
+
+        <TextView
+            android:id="@+id/peopleCountLabel"
+            style="@style/ListTitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="탑승인원"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider5" />
+
+        <ImageButton
+            android:id="@+id/minusButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:background="@null"
+            android:src="@drawable/ic_minus"
+            app:layout_constraintBottom_toTopOf="@id/divider6"
+            app:layout_constraintStart_toEndOf="@id/peopleCountLabel"
+            app:layout_constraintTop_toBottomOf="@id/divider5"
+            app:tint="@color/main_color" />
+
+        <TextView
+            android:id="@+id/peopleCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="3"
+            android:textSize="16sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/peopleCountLabel"
+            app:layout_constraintStart_toEndOf="@id/minusButton" />
+
+        <TextView
+            android:id="@+id/peopleUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="명"
+            android:textSize="16sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/peopleCountLabel"
+            app:layout_constraintStart_toEndOf="@id/peopleCount" />
+
+        <ImageButton
+            android:id="@+id/plusButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:background="@null"
+            android:src="@drawable/ic_plus"
+            app:layout_constraintBottom_toBottomOf="@id/divider6"
+            app:layout_constraintStart_toEndOf="@id/peopleUnit"
+            app:layout_constraintTop_toBottomOf="@id/divider5"
+            app:tint="@color/main_color" />
+
+        <View
+            android:id="@+id/divider6"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintTop_toBottomOf="@+id/peopleCountLabel" />
+
+        <TextView
+            android:id="@+id/startLocationLabel"
+            style="@style/ListTitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="출항위치"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider6" />
+
+        <TextView
+            android:id="@+id/startLocationTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:text="서울 ㅇㅇ 계류장"
+            android:textSize="16sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/startLocationLabel"
+            app:layout_constraintStart_toEndOf="@id/startLocationLabel" />
+
+        <View
+            android:id="@+id/divider7"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintTop_toBottomOf="@+id/startLocationLabel" />
+
+        <TextView
+            android:id="@+id/endLocationTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:text="서울 ㅇㅇ 계류장"
+            android:textSize="16sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/endLocationLabel"
+            app:layout_constraintStart_toEndOf="@id/endLocationLabel" />
+
+        <TextView
+            android:id="@+id/endLocationLabel"
+            style="@style/ListTitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="입항위치"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider7" />
+
+        <View
+            android:id="@+id/divider8"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintTop_toBottomOf="@+id/endLocationLabel" />
+
+        <TextView
+            android:id="@+id/priceLabel"
+            style="@style/ListTitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이용요금"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider8" />
+
+        <TextView
+            android:id="@+id/priceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:text="360,000"
+            android:textColor="@color/main_color"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@id/priceLabel"
+            app:layout_constraintStart_toEndOf="@id/priceLabel" />
+
+        <TextView
+            android:id="@+id/priceUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="원"
+            android:textColor="@color/main_color"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@id/priceLabel"
+            app:layout_constraintStart_toEndOf="@id/priceTextView" />
+
+        <View
+            android:id="@+id/divider9"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintTop_toBottomOf="@+id/priceLabel" />
+
+        <Button
+            android:id="@+id/reserveButton"
+            style="@style/MainButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginBottom="10dp"
+            android:text="결제하기"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

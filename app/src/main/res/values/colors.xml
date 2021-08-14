@@ -13,4 +13,5 @@
     <color name="per_text">#FF818181</color>
     <color name="bg_actionbar">#FFFFFFFF</color>
     <color name="bg_card">#FFFFFFFF</color>
+    <color name="bg_total_time">#FFF4F4F4</color>
 </resources>
