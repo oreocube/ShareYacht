@@ -1,5 +1,6 @@
 package com.shareyacht.shareyacht.model
 
+import androidx.constraintlayout.motion.widget.KeyCycleOscillator
 import com.google.gson.annotations.SerializedName
 import com.shareyacht.shareyacht.utils.Keyword
 
@@ -14,4 +15,11 @@ data class ReqReserve(
     val lenderID: String,
     @SerializedName(Keyword.YACHT_ID)
     val yachtID: String
+)
+
+data class ReqReservationList(
+    @SerializedName(Keyword.LENDER_ID)
+    val lenderID: String,
+    @SerializedName(Keyword.PAGE_NUM)
+    val page: Int
 )

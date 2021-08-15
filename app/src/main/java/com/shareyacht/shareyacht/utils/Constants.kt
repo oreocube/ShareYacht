@@ -19,6 +19,7 @@ object API {
     /* Consumer */
     const val CONSUMER_YACHT: String = "/consumer/yacht"
     const val CONSUMER_YACHT_RESERVE: String = "/consumer/yacht/reserve"
+    const val CONSUMER_RESERVE = "/consumer/reserve"
     const val CONSUMER_RESERVE_VIEW: String = "/consumer/reserve/view"
 
     const val IMAGE_UPLOAD: String = "/image/upload"
@@ -41,6 +42,7 @@ object Keyword {
     const val SEX: String = "sex"
 
     // yacht
+    const val YACHT = "yacht"
     const val OWNER_ID: String = "ownerid"
     const val YACHT_ID: String = "yachtid"
     const val YACHT_NUMBER: String = "yachtnumber"
@@ -53,8 +55,8 @@ object Keyword {
     // 요트 예약
     const val DEPARTURE = "departure"
     const val ARRIVAL = "arrival"
-    const val EMBARK_COUNT="embarkcount"
-    const val LENDER_ID="lenderid"
+    const val EMBARK_COUNT = "embarkcount"
+    const val LENDER_ID = "lenderid"
 
     // etc
     const val IMAGE_ID: String = "imageid"
