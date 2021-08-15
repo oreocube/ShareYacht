@@ -313,4 +313,45 @@ class RetrofitManager {
         })
 
     }
+
+    // 예약내역 목록
+    fun requestReservationList(
+        pageNum: Int,
+        completion: (code: Int, message: String?, reservationList: List<YachtReservation>?) -> Unit
+    ) {
+        val lenderID = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
+
+        val call = service?.requestReservationList(
+            ReqReservationList(
+                lenderID = lenderID!!,
+                page = pageNum
+            )
+        ) ?: return
+
+        call.enqueue(object : Callback<BaseResponse<List<YachtReservation>>> {
+            override fun onResponse(
+                call: Call<BaseResponse<List<YachtReservation>>>,
+                response: Response<BaseResponse<List<YachtReservation>>>
+            ) {
+                when (response.code()) {
+                    200 -> {
+                        Log.d(TAG, response.raw().toString())
+                        if (response.body()?.error == false) {
+                            completion(0, null, response.body()!!.data)
+                        } else {
+                            completion(-1, response.body()?.message, null)
+                        }
+                    }
+                    else -> {
+                        completion(response.code(), null, null)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<List<YachtReservation>>>, t: Throwable) {
+                completion(-1, t.toString(), null)
+            }
+
+        })
+    }
 }
