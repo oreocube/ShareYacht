@@ -245,7 +245,7 @@ class RetrofitManager {
     ) {
         val call = service?.requestGetYachtDetail(yachtID) ?: return
 
-        call.enqueue(object : Callback<BaseResponse<Yacht>>{
+        call.enqueue(object : Callback<BaseResponse<Yacht>> {
             override fun onResponse(
                 call: Call<BaseResponse<Yacht>>,
                 response: Response<BaseResponse<Yacht>>
@@ -269,5 +269,48 @@ class RetrofitManager {
                 completion(-1, t.toString(), null)
             }
         })
+    }
+
+    // 요트 예약신청
+    fun requestReserveYacht(
+        departure: String, arrival: String, embarkCount: Int, yachtID: String,
+        completion: (code: Int, message: String?) -> Unit
+    ) {
+        val lenderID = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
+        val req = ReqReserve(
+            departure = departure,
+            arrival = arrival,
+            embarkCount = embarkCount.toString(),
+            yachtID = yachtID,
+            lenderID = lenderID!!
+        )
+        val call = service?.requestReserveYacht(req) ?: return
+
+        call.enqueue(object : Callback<BaseResponse<Int>> {
+            override fun onResponse(
+                call: Call<BaseResponse<Int>>,
+                response: Response<BaseResponse<Int>>
+            ) {
+                when (response.code()) {
+                    200 -> {
+                        Log.d(TAG, response.raw().toString())
+                        if (response.body()?.error == false) {
+                            completion(0, null)
+                        } else {
+                            completion(-1, response.body()?.message)
+                        }
+                    }
+                    else -> {
+                        completion(response.code(), null)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<Int>>, t: Throwable) {
+                completion(-1, t.toString())
+            }
+
+        })
+
     }
 }

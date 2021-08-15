@@ -26,6 +26,8 @@ class YachtReserveViewModel : ViewModel() {
     private val end: Calendar = Calendar.getInstance()
     val timeInterval: MutableLiveData<Int> = MutableLiveData()
 
+    val paySuccess: MutableLiveData<Boolean> = MutableLiveData()
+
     // 요트 상세 조회
     fun getYachtDetail(yachtID: Int) {
         RetrofitManager.instance.requestGetYachtDetail(yachtID) { success, message, yacht ->
@@ -164,6 +166,23 @@ class YachtReserveViewModel : ViewModel() {
     }
 
     fun payButtonClick() {
-      //  RetrofitManager.instance.
+        RetrofitManager.instance.requestReserveYacht(
+            //departure: String, arrival: String, embarkCount: Int, yachtID: Int
+            departure = "${startDate.value} ${startTime.value}:00",
+            arrival = "${endDate.value} ${endTime.value}:00",
+            embarkCount = peopleCount.value!!,
+            yachtID = selectedYacht.value!!.id
+        ) { success, message ->
+            when (success) {
+                0 -> {
+                    // 성공한 경우 요트 조회 화면으로 이동
+                    paySuccess.value = true
+                }
+                else -> {
+                    _message.value = message
+                }
+            }
+
+        }
     }
 }

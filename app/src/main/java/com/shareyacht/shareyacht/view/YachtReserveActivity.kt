@@ -1,6 +1,7 @@
 package com.shareyacht.shareyacht.view
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -57,6 +58,15 @@ class YachtReserveActivity : AppCompatActivity() {
         })
         viewModel.price.observe(this, {
             binding.priceTextView.text = it
+        })
+        viewModel._message.observe(this, {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        })
+        viewModel.paySuccess.observe(this, {
+            if(it) {
+                setResult(RESULT_OK)
+                finish()
+            }
         })
 
         binding.startContainer.setOnClickListener {

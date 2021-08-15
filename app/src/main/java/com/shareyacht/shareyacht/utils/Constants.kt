@@ -50,6 +50,12 @@ object Keyword {
     const val LOCATION: String = "location"
     const val PRICE: String = "price"
 
+    // 요트 예약
+    const val DEPARTURE = "departure"
+    const val ARRIVAL = "arrival"
+    const val EMBARK_COUNT="embarkcount"
+    const val LENDER_ID="lenderid"
+
     // etc
     const val IMAGE_ID: String = "imageid"
     const val DATA: String = "data"

@@ -54,8 +54,8 @@ interface RetrofitService {
     ): Call<BaseResponse<Yacht>>
 
     // 요트 예약
-    @POST
+    @POST(API.CONSUMER_YACHT_RESERVE)
     fun requestReserveYacht(
-
+        @Body body: ReqReserve
     ): Call<BaseResponse<Int>>
 }
