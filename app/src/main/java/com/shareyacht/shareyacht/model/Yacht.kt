@@ -24,3 +24,12 @@ data class ReqAddYacht(
     @SerializedName(Keyword.PRICE) val price: String,
     @SerializedName(Keyword.IMAGE_ID) val imageid: Long
 )
+
+data class YachtReservation(
+    @SerializedName(Keyword.ID) val id: String,
+    @SerializedName(Keyword.DEPARTURE) val departure: String,
+    @SerializedName(Keyword.ARRIVAL) val arrival: String,
+    @SerializedName(Keyword.YACHT) val yacht: Yacht,
+    @SerializedName(Keyword.EMBARK_COUNT) val embarkCount: Int,
+    @SerializedName(Keyword.STATUS) val status: Int
+)
