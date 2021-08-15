@@ -1,4 +1,4 @@
-package com.shareyacht.shareyacht.view
+package com.shareyacht.shareyacht.view.owner
 
 import android.content.pm.PackageManager
 import android.graphics.Bitmap

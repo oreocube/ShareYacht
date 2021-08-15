@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
         android:padding="10dp"
-        tools:context=".view.MainActivity">
+        tools:context=".view.normal.MainActivity">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"

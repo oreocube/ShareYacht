@@ -1,11 +1,8 @@
-package com.shareyacht.shareyacht.view
+package com.shareyacht.shareyacht.view.normal
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.SyncStateContract
-import android.util.Log
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
@@ -15,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shareyacht.shareyacht.R
 import com.shareyacht.shareyacht.adapter.YachtListAdapter
 import com.shareyacht.shareyacht.databinding.ActivityMainBinding
-import com.shareyacht.shareyacht.utils.Constants
 import com.shareyacht.shareyacht.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {

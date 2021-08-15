@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="10dp"
                 android:paddingBottom="20dp"
-                tools:context=".view.OwnerActivity">
+                tools:context=".view.owner.OwnerActivity">
 
                 <include
                     android:id="@+id/myYachtFrame"

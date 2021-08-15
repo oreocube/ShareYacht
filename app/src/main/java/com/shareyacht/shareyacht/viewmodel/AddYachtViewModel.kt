@@ -22,6 +22,8 @@ class AddYachtViewModel : ViewModel() {
 
     val uploadImageSuccess: MutableLiveData<Boolean> = MutableLiveData()
     var imageID: Long? = null
+
+    val addYachtSuccess: MutableLiveData<Boolean> = MutableLiveData()
     val failMessage: MutableLiveData<String> = MutableLiveData()
 
     fun uploadImage(file: File) {
@@ -67,7 +69,7 @@ class AddYachtViewModel : ViewModel() {
                     name = yachtName.value!!,
                     max = maxPeople.value!!,
                     location = location.value!!,
-                    price = formatter.format(price.value!!.toInt()),
+                    price = price.value!!,
                     imageid = imageID!!
                 )
 
@@ -76,7 +78,7 @@ class AddYachtViewModel : ViewModel() {
                     when (success) {
                         0 -> {
                             // 성공한 경우 요트 조회 화면으로 이동
-
+                            addYachtSuccess.value = true
                         }
                         else -> {
                             failMessage.value = message

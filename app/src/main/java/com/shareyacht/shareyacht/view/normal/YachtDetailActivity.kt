@@ -1,4 +1,4 @@
-package com.shareyacht.shareyacht.view
+package com.shareyacht.shareyacht.view.normal
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

@@ -2,6 +2,10 @@ package com.shareyacht.shareyacht.utils
 
 object Constants {
     const val TAG: String = "로그"
+    const val STATE_WAIT = 0
+    const val STATE_CONFIRMED = 1
+    const val STATE_MOVING = 2
+    const val STATE_CANCEL = 3
 }
 
 object API {

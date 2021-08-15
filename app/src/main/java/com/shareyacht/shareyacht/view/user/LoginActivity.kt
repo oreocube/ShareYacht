@@ -1,7 +1,6 @@
 package com.shareyacht.shareyacht.view.user
 
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -11,8 +10,8 @@ import com.shareyacht.shareyacht.R
 import com.shareyacht.shareyacht.databinding.ActivityLoginBinding
 import com.shareyacht.shareyacht.utils.Preference
 import com.shareyacht.shareyacht.utils.SharedPreferenceManager
-import com.shareyacht.shareyacht.view.MainActivity
-import com.shareyacht.shareyacht.view.OwnerActivity
+import com.shareyacht.shareyacht.view.normal.MainActivity
+import com.shareyacht.shareyacht.view.owner.OwnerActivity
 import com.shareyacht.shareyacht.viewmodel.LoginViewModel
 import com.shareyacht.shareyacht.viewmodel.SignUpViewModel
 

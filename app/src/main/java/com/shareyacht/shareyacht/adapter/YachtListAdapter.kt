@@ -12,7 +12,7 @@ import com.shareyacht.shareyacht.databinding.RvItemBinding
 import com.shareyacht.shareyacht.model.Yacht
 import com.shareyacht.shareyacht.utils.API
 import com.shareyacht.shareyacht.utils.Keyword
-import com.shareyacht.shareyacht.view.YachtDetailActivity
+import com.shareyacht.shareyacht.view.normal.YachtDetailActivity
 
 class YachtListAdapter : ListAdapter<Yacht, YachtListAdapter.YachtViewHolder>(YACHT_COMPARATOR) {
 

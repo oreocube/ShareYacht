@@ -13,48 +13,49 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ShareYacht"
         android:usesCleartextTraffic="true">
+        <activity android:name=".view.owner.ReservationStateActivity"></activity>
         <activity
-            android:name=".view.SuccessActivity"
-            android:parentActivityName=".view.YachtReserveActivity">
+            android:name=".view.normal.SuccessActivity"
+            android:parentActivityName=".view.normal.YachtReserveActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.YachtReserveActivity" />
+                android:value=".view.normal.YachtReserveActivity" />
         </activity>
         <activity
-            android:name=".view.YachtDetailActivity"
-            android:parentActivityName=".view.MainActivity">
+            android:name=".view.normal.YachtDetailActivity"
+            android:parentActivityName=".view.normal.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.MainActivity" />
+                android:value=".view.normal.MainActivity" />
         </activity>
         <activity
-            android:name=".view.YachtReserveActivity"
-            android:parentActivityName=".view.YachtDetailActivity">
+            android:name=".view.normal.YachtReserveActivity"
+            android:parentActivityName=".view.normal.YachtDetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.YachtDetailActivity" />
+                android:value=".view.normal.YachtDetailActivity" />
         </activity>
         <activity
-            android:name=".view.AddYachtActivity"
-            android:parentActivityName=".view.OwnerActivity">
+            android:name=".view.owner.AddYachtActivity"
+            android:parentActivityName=".view.owner.OwnerActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.OwnerActivity" />
+                android:value=".view.owner.OwnerActivity" />
         </activity>
-        <activity android:name=".view.OwnerActivity" />
+        <activity android:name=".view.owner.OwnerActivity" />
         <activity
-            android:name=".view.ReservationActivity"
-            android:parentActivityName=".view.MainActivity">
+            android:name=".view.normal.ReservationActivity"
+            android:parentActivityName=".view.normal.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.MainActivity" />
+                android:value=".view.normal.MainActivity" />
         </activity>
         <activity
-            android:name=".view.QrViewActivity"
-            android:parentActivityName=".view.MainActivity">
+            android:name=".view.normal.QrViewActivity"
+            android:parentActivityName=".view.normal.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.MainActivity" />
+                android:value=".view.normal.MainActivity" />
         </activity>
         <activity android:name=".view.user.LoginActivity">
             <intent-filter>
@@ -63,7 +64,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.MainActivity" />
+        <activity android:name=".view.normal.MainActivity" />
     </application>
 
 </manifest>
