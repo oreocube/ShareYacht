@@ -14,6 +14,7 @@
         android:theme="@style/Theme.ShareYacht"
         android:usesCleartextTraffic="true">
         <activity android:name=".view.YachtDetailActivity" />
+        <activity android:name=".view.YachtReserveActivity" />
         <activity android:name=".view.AddYachtActivity" />
         <activity android:name=".view.OwnerActivity" />
         <activity android:name=".view.ReservationActivity" />
