@@ -6,6 +6,7 @@ import com.shareyacht.shareyacht.model.ReqAddYacht
 import com.shareyacht.shareyacht.retrofit.RetrofitManager
 import com.shareyacht.shareyacht.utils.Preference
 import com.shareyacht.shareyacht.utils.SharedPreferenceManager
+import com.shareyacht.shareyacht.utils.formatter
 import java.io.File
 
 class AddYachtViewModel : ViewModel() {
@@ -66,7 +67,7 @@ class AddYachtViewModel : ViewModel() {
                     name = yachtName.value!!,
                     max = maxPeople.value!!,
                     location = location.value!!,
-                    price = price.value!!,
+                    price = formatter.format(price.value!!.toInt()),
                     imageid = imageID!!
                 )
 
