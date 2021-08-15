@@ -1,5 +1,6 @@
 package com.shareyacht.shareyacht.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -63,8 +64,10 @@ class YachtReserveActivity : AppCompatActivity() {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         })
         viewModel.paySuccess.observe(this, {
-            if(it) {
+            if (it) {
                 setResult(RESULT_OK)
+                val intent = Intent(this, SuccessActivity::class.java)
+                startActivity(intent)
                 finish()
             }
         })

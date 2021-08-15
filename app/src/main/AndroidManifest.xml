@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ShareYacht"
         android:usesCleartextTraffic="true">
+        <activity android:name=".view.SuccessActivity"></activity>
         <activity android:name=".view.YachtDetailActivity" />
         <activity android:name=".view.YachtReserveActivity" />
         <activity android:name=".view.AddYachtActivity" />
