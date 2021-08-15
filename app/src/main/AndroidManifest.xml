@@ -13,13 +13,49 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ShareYacht"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.SuccessActivity"></activity>
-        <activity android:name=".view.YachtDetailActivity" />
-        <activity android:name=".view.YachtReserveActivity" />
-        <activity android:name=".view.AddYachtActivity" />
+        <activity
+            android:name=".view.SuccessActivity"
+            android:parentActivityName=".view.YachtReserveActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.YachtReserveActivity" />
+        </activity>
+        <activity
+            android:name=".view.YachtDetailActivity"
+            android:parentActivityName=".view.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.MainActivity" />
+        </activity>
+        <activity
+            android:name=".view.YachtReserveActivity"
+            android:parentActivityName=".view.YachtDetailActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.YachtDetailActivity" />
+        </activity>
+        <activity
+            android:name=".view.AddYachtActivity"
+            android:parentActivityName=".view.OwnerActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.OwnerActivity" />
+        </activity>
         <activity android:name=".view.OwnerActivity" />
-        <activity android:name=".view.ReservationActivity" />
-        <activity android:name=".view.QrViewActivity" />
+        <activity
+            android:name=".view.ReservationActivity"
+            android:parentActivityName=".view.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.MainActivity" />
+        </activity>
+        <activity
+            android:name=".view.QrViewActivity"
+            android:parentActivityName=".view.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.MainActivity" />
+        </activity>
         <activity android:name=".view.user.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
