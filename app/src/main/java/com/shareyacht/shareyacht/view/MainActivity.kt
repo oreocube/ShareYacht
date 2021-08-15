@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
             }
-            true
+            false
         }
     }
 }
