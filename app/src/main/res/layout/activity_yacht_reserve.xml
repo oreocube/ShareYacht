@@ -6,14 +6,14 @@
     <data>
 
         <variable
-            name="yacht"
-            type="com.shareyacht.shareyacht.model.Yacht" />
+            name="viewModel"
+            type="com.shareyacht.shareyacht.viewmodel.YachtReserveViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="">
+        tools:context=".view.YachtReserveActivity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -44,12 +44,22 @@
 
         <View
             android:id="@+id/startContainer"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/bg_card"
+            app:layout_constraintBottom_toTopOf="@id/divider4"
+            app:layout_constraintEnd_toStartOf="@id/divider3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider2" />
+
+        <View
+            android:id="@+id/endContainer"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/bg_card"
             app:layout_constraintBottom_toTopOf="@id/divider4"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/divider3"
             app:layout_constraintTop_toBottomOf="@id/divider2" />
 
         <TextView
@@ -180,6 +190,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:background="@null"
+            android:onClick="@{()->viewModel.onMinusButtonClick()}"
             android:src="@drawable/ic_minus"
             app:layout_constraintBottom_toTopOf="@id/divider6"
             app:layout_constraintStart_toEndOf="@id/peopleCountLabel"
@@ -191,7 +202,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="3"
             android:textSize="16sp"
             app:layout_constraintBaseline_toBaselineOf="@id/peopleCountLabel"
             app:layout_constraintStart_toEndOf="@id/minusButton" />
@@ -211,6 +221,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:background="@null"
+            android:onClick="@{()->viewModel.onPlusButtonClick()}"
             android:src="@drawable/ic_plus"
             app:layout_constraintBottom_toBottomOf="@id/divider6"
             app:layout_constraintStart_toEndOf="@id/peopleUnit"
