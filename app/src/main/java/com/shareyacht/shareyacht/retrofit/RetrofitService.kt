@@ -19,7 +19,7 @@ interface RetrofitService {
     @POST(API.USER_LOGIN)
     fun requestLogin(
         @Body body: ReqLogin
-    ): Call<BaseResponse<Int>>
+    ): Call<BaseResponse<String>>
 
     /* 이미지 */
     @Multipart
@@ -39,6 +39,22 @@ interface RetrofitService {
         @Body body: ReqAddYacht
     ): Call<BaseResponse<Int>>
 
+    // 예약내역 목록
+    @POST(API.OWNER_RESERVE)
+    fun requestOwnerReserve(
+        @Body body: BaseRequest
+    ): Call<BaseResponse<List<OwnerYachtReservation>>>
+
+    // 예약내역 상세
+    @POST(API.OWNER_RESERVE_VIEW)
+    fun requestOwnerReserveView(
+        @Body body: BaseRequest //TODO
+    ): Call<BaseResponse<OwnerYachtReservation>>
+
+    @POST(API.OWNER_RESERVE_DECISION)
+    fun requestOwnerReserveDecision(
+        @Body body: BaseRequest //TODO
+    ): Call<BaseResponse<Int>>
 
     /* 일반 */
     // 요트 목록 조회

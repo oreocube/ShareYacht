@@ -61,33 +61,33 @@ class RetrofitManager {
     // 로그인
     fun requestLogin(
         email: String, password: String, userType: Int,
-        completion: (code: Int, message: String?) -> Unit
+        completion: (code: Int, message: String?, data: String?) -> Unit
     ) {
         val req = ReqLogin(email = email, password = password, userType = userType)
         val call = service?.requestLogin(req) ?: return
 
-        call.enqueue(object : Callback<BaseResponse<Int>> {
+        call.enqueue(object : Callback<BaseResponse<String>> {
             override fun onResponse(
-                call: Call<BaseResponse<Int>>,
-                response: Response<BaseResponse<Int>>
+                call: Call<BaseResponse<String>>,
+                response: Response<BaseResponse<String>>
             ) {
                 when (response.code()) {
                     200 -> {
                         Log.d(TAG, response.raw().toString())
                         if (response.body()?.error == false) {
-                            completion(0, null)
+                            completion(0, null, response.body()!!.data)
                         } else {
-                            completion(-1, response.body()?.message)
+                            completion(-1, response.body()?.message, null)
                         }
                     }
                     else -> {
-                        completion(response.code(), null)
+                        completion(response.code(), null, null)
                     }
                 }
             }
 
-            override fun onFailure(call: Call<BaseResponse<Int>>, t: Throwable) {
-                completion(-1, t.toString())
+            override fun onFailure(call: Call<BaseResponse<String>>, t: Throwable) {
+                completion(-1, t.toString(), null)
             }
 
         })
@@ -136,6 +136,7 @@ class RetrofitManager {
         })
     }
 
+    /* 사업자 */
     // 요트 등록
     fun requestAddYacht(
         yacht: ReqAddYacht,
@@ -203,6 +204,78 @@ class RetrofitManager {
         })
     }
 
+    // 예약내역 조회
+    fun requestOwnerReserve(
+        completion: (code: Int, message: String?, yachtList: List<OwnerYachtReservation>?) -> Unit
+    ) {
+        val ownerID = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
+        val call = service?.requestOwnerReserve(BaseRequest(ownerID!!)) ?: return
+
+        call.enqueue(object : Callback<BaseResponse<List<OwnerYachtReservation>>> {
+            override fun onResponse(
+                call: Call<BaseResponse<List<OwnerYachtReservation>>>,
+                response: Response<BaseResponse<List<OwnerYachtReservation>>>
+            ) {
+                when (response.code()) {
+                    200 -> {
+                        Log.d(TAG, response.raw().toString())
+                        if (response.body()?.error == false) {
+                            completion(0, null, response.body()!!.data)
+                        } else {
+                            completion(-1, response.body()?.message, null)
+                        }
+                    }
+                    else -> {
+                        completion(response.code(), null, null)
+                    }
+                }
+            }
+
+            override fun onFailure(
+                call: Call<BaseResponse<List<OwnerYachtReservation>>>,
+                t: Throwable
+            ) {
+                completion(-1, t.toString(), null)
+            }
+
+        })
+    }
+
+    // 예약내역 상세
+//    fun requestOwnerReserveView(
+//        completion: (code: Int, message: String?, reservation: OwnerYachtReservation?) -> Unit
+//    ){
+//        // TODO
+//        val call = service?.requestOwnerReserveView()?:return
+//
+//        call.enqueue(object : Callback<BaseResponse<OwnerYachtReservation>>{
+//            override fun onResponse(
+//                call: Call<BaseResponse<OwnerYachtReservation>>,
+//                response: Response<BaseResponse<OwnerYachtReservation>>
+//            ) {
+//                when (response.code()) {
+//                    200 -> {
+//                        Log.d(TAG, response.raw().toString())
+//                        if (response.body()?.error == false) {
+//                            completion(0, null, response.body()!!.data)
+//                        } else {
+//                            completion(-1, response.body()?.message, null)
+//                        }
+//                    }
+//                    else -> {
+//                        completion(response.code(), null, null)
+//                    }
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<BaseResponse<OwnerYachtReservation>>, t: Throwable) {
+//                completion(-1, t.toString(), null)
+//            }
+//
+//        })
+//    }
+
+    /* 일반 */
     // 요트 목록 조회
     fun requestYachtList(
         pageNum: Int,
