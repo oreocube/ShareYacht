@@ -38,6 +38,10 @@ class OwnerActivity : AppCompatActivity() {
                 val intent = Intent(this@OwnerActivity, AddYachtActivity::class.java)
                 startActivity(intent)
             }
+            myYachtStatusFrame.root.setOnClickListener{
+                val intent = Intent(this@OwnerActivity, ReservationStateActivity::class.java)
+                startActivity(intent)
+            }
         }
         viewModel.apply {
             requestMyYacht()
