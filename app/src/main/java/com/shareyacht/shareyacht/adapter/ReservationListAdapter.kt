@@ -1,6 +1,5 @@
 package com.shareyacht.shareyacht.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -12,6 +11,7 @@ import com.shareyacht.shareyacht.model.YachtReservation
 import com.shareyacht.shareyacht.utils.API
 import com.shareyacht.shareyacht.utils.formatter
 
+/* [일반] 예약내역 - 상태별 목록 - list adapter */
 class ReservationListAdapter :
     ListAdapter<YachtReservation, ReservationListAdapter.ReservationViewHolder>(
         RESERVATION_COMPARATOR
@@ -41,10 +41,11 @@ class ReservationListAdapter :
                 0 -> "신청중"
                 else -> ""
             }
+            // 출항 시각, 입항 시각
             val start = reservation.departure.substring(15, 17).toInt()
             val end = reservation.arrival.substring(15, 17).toInt()
-            Log.d("로그", "start : $start, end : $end")
             val time = end - start
+            // 금액 합계
             val totalPrice = reservation.yacht.price.toInt() * reservation.embarkCount * time
 
             binding.apply {
@@ -64,6 +65,7 @@ class ReservationListAdapter :
         }
     }
 
+    // COMPARATOR
     companion object {
         private val RESERVATION_COMPARATOR = object : DiffUtil.ItemCallback<YachtReservation>() {
             override fun areItemsTheSame(

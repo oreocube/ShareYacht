@@ -2,7 +2,6 @@ package com.shareyacht.shareyacht.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.shareyacht.shareyacht.model.Yacht
 import com.shareyacht.shareyacht.model.YachtReservation
 import com.shareyacht.shareyacht.retrofit.RetrofitManager
 
@@ -42,6 +41,4 @@ class ReservationViewModel : ViewModel() {
             }
         }
     }
-
-
 }
