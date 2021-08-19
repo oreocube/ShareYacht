@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shareyacht.shareyacht.R
 import com.shareyacht.shareyacht.adapter.YachtListAdapter
 import com.shareyacht.shareyacht.databinding.ActivityMainBinding
+import com.shareyacht.shareyacht.utils.SharedPreferenceManager
 import com.shareyacht.shareyacht.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -23,6 +24,9 @@ class MainActivity : AppCompatActivity() {
 
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
+
+        // SharedPreference Init
+        SharedPreferenceManager().init(applicationContext)
 
         val adapter = YachtListAdapter()
 

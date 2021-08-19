@@ -90,7 +90,7 @@
             android:id="@+id/peopleCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{reservation.embarkCount}"
+            android:text="@{Integer.valueOf(reservation.embarkCount).toString()}"
             android:textSize="16sp"
             app:layout_constraintBaseline_toBaselineOf="@id/peopleCountLabel"
             app:layout_constraintStart_toStartOf="@id/lenderID" />
@@ -267,6 +267,7 @@
             android:layout_marginHorizontal="50dp"
             android:layout_marginBottom="10dp"
             android:text="입항"
+            android:visibility="gone"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

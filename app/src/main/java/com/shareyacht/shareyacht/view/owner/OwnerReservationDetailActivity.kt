@@ -2,11 +2,79 @@ package com.shareyacht.shareyacht.view.owner
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.activity.viewModels
+import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
 import com.shareyacht.shareyacht.R
+import com.shareyacht.shareyacht.databinding.ActivityOwnerReservationDetailBinding
+import com.shareyacht.shareyacht.utils.Constants.STATE_CONFIRMED
+import com.shareyacht.shareyacht.utils.Constants.STATE_MOVING
+import com.shareyacht.shareyacht.utils.Constants.STATE_WAIT
+import com.shareyacht.shareyacht.utils.Keyword
+import com.shareyacht.shareyacht.utils.formatter
+import com.shareyacht.shareyacht.viewmodel.OwnerReserveDetailViewModel
 
 class OwnerReservationDetailActivity : AppCompatActivity() {
+    private var mBinding: ActivityOwnerReservationDetailBinding? = null
+    private val viewModel: OwnerReserveDetailViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_owner_reservation_detail)
+
+        val binding = DataBindingUtil.setContentView<ActivityOwnerReservationDetailBinding>(
+            this, R.layout.activity_owner_reservation_detail
+        )
+
+        val reservationID = intent.getStringExtra(Keyword.RESERVATION_ID)
+
+        if (reservationID != null) {
+            viewModel.getReserveDetail(reservationID)
+        }
+
+        binding.viewModel = viewModel
+
+        viewModel.selectedYacht.observe(this, {
+            if (it != null) {
+                binding.reservation = it
+                binding.yachtOverview.yacht = it.yacht
+            }
+        })
+        viewModel.imageUrl.observe(this, { url ->
+            if (url != null) {
+                Glide.with(this)
+                    .load(url)
+                    .centerCrop()
+                    .into(binding.yachtOverview.yachtImage)
+            }
+        })
+        viewModel.totalPrice.observe(this, {
+            if (it != null) {
+                binding.price = formatter.format(it)
+            }
+        })
+        viewModel.status.observe(this, { status ->
+            when (status) {
+                STATE_WAIT -> {
+                    binding.apply {
+                        acceptButton.visibility = View.VISIBLE
+                        refuseButton.visibility = View.VISIBLE
+                    }
+                }
+                STATE_CONFIRMED -> {
+                    binding.apply {
+                        scanQrButton.root.visibility = View.VISIBLE
+                        leaveButton.root.visibility = View.VISIBLE
+                    }
+                }
+                STATE_MOVING -> {
+                    binding.apply {
+                        enterButton.visibility = View.VISIBLE
+                    }
+                }
+            }
+        })
+
+        mBinding = binding
     }
 }

@@ -48,9 +48,10 @@ interface RetrofitService {
     // 예약내역 상세
     @POST(API.OWNER_RESERVE_VIEW)
     fun requestOwnerReserveView(
-        @Body body: BaseRequest //TODO
+        @Body body: ReqOwnerReserveView
     ): Call<BaseResponse<OwnerYachtReservation>>
 
+    // 예약 승인 거절
     @POST(API.OWNER_RESERVE_DECISION)
     fun requestOwnerReserveDecision(
         @Body body: BaseRequest //TODO

@@ -242,38 +242,40 @@ class RetrofitManager {
     }
 
     // 예약내역 상세
-//    fun requestOwnerReserveView(
-//        completion: (code: Int, message: String?, reservation: OwnerYachtReservation?) -> Unit
-//    ){
-//        // TODO
-//        val call = service?.requestOwnerReserveView()?:return
-//
-//        call.enqueue(object : Callback<BaseResponse<OwnerYachtReservation>>{
-//            override fun onResponse(
-//                call: Call<BaseResponse<OwnerYachtReservation>>,
-//                response: Response<BaseResponse<OwnerYachtReservation>>
-//            ) {
-//                when (response.code()) {
-//                    200 -> {
-//                        Log.d(TAG, response.raw().toString())
-//                        if (response.body()?.error == false) {
-//                            completion(0, null, response.body()!!.data)
-//                        } else {
-//                            completion(-1, response.body()?.message, null)
-//                        }
-//                    }
-//                    else -> {
-//                        completion(response.code(), null, null)
-//                    }
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<BaseResponse<OwnerYachtReservation>>, t: Throwable) {
-//                completion(-1, t.toString(), null)
-//            }
-//
-//        })
-//    }
+    fun requestOwnerReserveView(
+        id: String,
+        completion: (code: Int, message: String?, reservation: OwnerYachtReservation?) -> Unit
+    ){
+        val ownerID = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
+        val req = ReqOwnerReserveView(ownerID!!, id)
+        val call = service?.requestOwnerReserveView(req)?:return
+
+        call.enqueue(object : Callback<BaseResponse<OwnerYachtReservation>>{
+            override fun onResponse(
+                call: Call<BaseResponse<OwnerYachtReservation>>,
+                response: Response<BaseResponse<OwnerYachtReservation>>
+            ) {
+                when (response.code()) {
+                    200 -> {
+                        Log.d(TAG, response.raw().toString())
+                        if (response.body()?.error == false) {
+                            completion(0, null, response.body()!!.data)
+                        } else {
+                            completion(-1, response.body()?.message, null)
+                        }
+                    }
+                    else -> {
+                        completion(response.code(), null, null)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<OwnerYachtReservation>>, t: Throwable) {
+                completion(-1, t.toString(), null)
+            }
+
+        })
+    }
 
     /* 일반 */
     // 요트 목록 조회

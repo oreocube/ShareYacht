@@ -1,7 +1,9 @@
 package com.shareyacht.shareyacht.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -9,7 +11,9 @@ import com.bumptech.glide.Glide
 import com.shareyacht.shareyacht.databinding.RvItemOwnerReservationBinding
 import com.shareyacht.shareyacht.model.OwnerYachtReservation
 import com.shareyacht.shareyacht.utils.API
+import com.shareyacht.shareyacht.utils.Keyword
 import com.shareyacht.shareyacht.utils.formatter
+import com.shareyacht.shareyacht.view.owner.OwnerReservationDetailActivity
 
 /* [사업자] 예약현황 - 상태별 목록 - list adapter */
 class OwnerReservationAdapter :
@@ -55,7 +59,9 @@ class OwnerReservationAdapter :
                     .into(yachtImage)
 
                 itemView.setOnClickListener {
-                    // 나중에
+                    val intent = Intent(itemView.context, OwnerReservationDetailActivity::class.java)
+                    intent.putExtra(Keyword.RESERVATION_ID, reservation.id)
+                    startActivity(itemView.context, intent, null)
                 }
             }
         }

@@ -67,6 +67,7 @@ object Keyword {
     const val ARRIVAL = "arrival"
     const val EMBARK_COUNT = "embarkcount"
     const val LENDER_ID = "lenderid"
+    const val RESERVATION_ID = "reservationid"
 
     // etc
     const val IMAGE_ID: String = "imageid"

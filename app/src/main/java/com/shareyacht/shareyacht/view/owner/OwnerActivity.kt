@@ -14,6 +14,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.bumptech.glide.Glide
 import com.shareyacht.shareyacht.R
 import com.shareyacht.shareyacht.databinding.ActivityOwnerBinding
+import com.shareyacht.shareyacht.utils.SharedPreferenceManager
 import com.shareyacht.shareyacht.viewmodel.OwnerMainViewModel
 
 class OwnerActivity : AppCompatActivity() {
@@ -27,6 +28,9 @@ class OwnerActivity : AppCompatActivity() {
         )
 
         mBinding = binding
+
+        // SharedPreference Init
+        SharedPreferenceManager().init(applicationContext)
 
         initMainActionBar()
         initNavigationDrawer()
