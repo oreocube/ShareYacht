@@ -19,6 +19,12 @@ object API {
     /* Owner */
     const val OWNER_MY_YACHT: String = "/owner/yacht/myyacht"
     const val OWNER_DRIVER: String = "/owner/yacht/driver"
+    const val OWNER_RESERVE = "/owner/reserve"
+    const val OWNER_RESERVE_VIEW = "/owner/reserve/view"
+    const val OWNER_RESERVE_DECISION = "/owner/reserve/decision"
+    const val OWNER_EMBARK = "/owner/yacht/embark"
+    const val OWNER_LEAVE = "/owner/yacht/leave"
+    const val OWNER_ENTER = "/owner/yacht/enter"
 
     /* Consumer */
     const val CONSUMER_YACHT: String = "/consumer/yacht"
