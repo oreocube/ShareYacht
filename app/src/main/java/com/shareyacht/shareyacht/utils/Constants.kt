@@ -5,7 +5,8 @@ object Constants {
     const val STATE_WAIT = 0
     const val STATE_CONFIRMED = 1
     const val STATE_MOVING = 2
-    const val STATE_CANCEL = 3
+    const val STATE_COMPLETED = 3
+    const val STATE_CANCEL = 4
 }
 
 object API {
@@ -68,6 +69,10 @@ object Keyword {
     const val EMBARK_COUNT = "embarkcount"
     const val LENDER_ID = "lenderid"
     const val RESERVATION_ID = "reservationid"
+    const val LEAVE_TIME = "leavetime"
+    const val ENTER_TIME = "entertime"
+    const val EMBARK_TIME = "embarktime"
+    const val EMBARK_USER_ID = "embarkuserid"
 
     // etc
     const val IMAGE_ID: String = "imageid"

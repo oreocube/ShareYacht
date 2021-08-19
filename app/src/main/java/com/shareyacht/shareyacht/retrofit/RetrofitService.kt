@@ -5,6 +5,7 @@ import com.shareyacht.shareyacht.utils.API
 import com.shareyacht.shareyacht.utils.Keyword
 import okhttp3.MultipartBody
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.http.*
 
 interface RetrofitService {
@@ -54,7 +55,25 @@ interface RetrofitService {
     // 예약 승인 거절
     @POST(API.OWNER_RESERVE_DECISION)
     fun requestOwnerReserveDecision(
-        @Body body: BaseRequest //TODO
+        @Body body: ReqOwnerDecision
+    ): Call<BaseResponse<Int>>
+
+    // 출항
+    @POST(API.OWNER_LEAVE)
+    fun requestOwnerLeave(
+        @Body body: ReqOwnerLeave
+    ): Call<BaseResponse<Int>>
+
+    // 입항
+    @POST(API.OWNER_ENTER)
+    fun requestOwnerEnter(
+        @Body body: ReqOwnerEnter
+    ): Call<BaseResponse<Int>>
+
+    // 탑승자 등록
+    @PUT(API.OWNER_EMBARK)
+    fun requestAddMember(
+        @Body body: ReqPutEmbark
     ): Call<BaseResponse<Int>>
 
     /* 일반 */

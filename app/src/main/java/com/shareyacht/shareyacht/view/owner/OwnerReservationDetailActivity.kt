@@ -34,12 +34,15 @@ class OwnerReservationDetailActivity : AppCompatActivity() {
 
         binding.viewModel = viewModel
 
+        // 예약내역
         viewModel.selectedYacht.observe(this, {
             if (it != null) {
                 binding.reservation = it
                 binding.yachtOverview.yacht = it.yacht
             }
         })
+
+        // 이미지 셋팅
         viewModel.imageUrl.observe(this, { url ->
             if (url != null) {
                 Glide.with(this)
@@ -48,11 +51,15 @@ class OwnerReservationDetailActivity : AppCompatActivity() {
                     .into(binding.yachtOverview.yachtImage)
             }
         })
+
+        // 결제 금액
         viewModel.totalPrice.observe(this, {
             if (it != null) {
                 binding.price = formatter.format(it)
             }
         })
+
+        // 상태에 맞는 버튼 표출
         viewModel.status.observe(this, { status ->
             when (status) {
                 STATE_WAIT -> {

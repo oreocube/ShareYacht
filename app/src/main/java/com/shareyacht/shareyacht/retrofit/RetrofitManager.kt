@@ -245,12 +245,12 @@ class RetrofitManager {
     fun requestOwnerReserveView(
         id: String,
         completion: (code: Int, message: String?, reservation: OwnerYachtReservation?) -> Unit
-    ){
+    ) {
         val ownerID = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
         val req = ReqOwnerReserveView(ownerID!!, id)
-        val call = service?.requestOwnerReserveView(req)?:return
+        val call = service?.requestOwnerReserveView(req) ?: return
 
-        call.enqueue(object : Callback<BaseResponse<OwnerYachtReservation>>{
+        call.enqueue(object : Callback<BaseResponse<OwnerYachtReservation>> {
             override fun onResponse(
                 call: Call<BaseResponse<OwnerYachtReservation>>,
                 response: Response<BaseResponse<OwnerYachtReservation>>
@@ -274,6 +274,163 @@ class RetrofitManager {
                 completion(-1, t.toString(), null)
             }
 
+        })
+    }
+
+    // 예약 승인/거절
+    fun requestOwnerReserveDecision(
+        reservationID: String, status: Int,
+        completion: (code: Int, message: String?) -> Unit
+    ) {
+        val ownerID = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
+        val req = ReqOwnerDecision(
+            ownerID = ownerID!!, reservationID = reservationID, status = status
+        )
+        val call = service?.requestOwnerReserveDecision(req) ?: return
+
+        call.enqueue(object : Callback<BaseResponse<Int>> {
+            override fun onResponse(
+                call: Call<BaseResponse<Int>>,
+                response: Response<BaseResponse<Int>>
+            ) {
+                when (response.code()) {
+                    200 -> {
+                        Log.d(TAG, response.raw().toString())
+                        if (response.body()?.error == false) {
+                            completion(0, null)
+                        } else {
+                            completion(-1, response.body()?.message)
+                        }
+                    }
+                    else -> {
+                        completion(response.code(), null)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<Int>>, t: Throwable) {
+                completion(-1, t.toString())
+            }
+        })
+    }
+
+    // 출항
+    fun requestOwnerLeave(
+        reservationID: String, status: Int, leaveTime: String,
+        completion: (code: Int, message: String?) -> Unit
+    ) {
+        val ownerID = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
+        val req = ReqOwnerLeave(
+            ownerID = ownerID!!,
+            reservationID = reservationID,
+            status = status,
+            leaveTime = leaveTime
+        )
+        val call = service?.requestOwnerLeave(req) ?: return
+
+        call.enqueue(object : Callback<BaseResponse<Int>> {
+            override fun onResponse(
+                call: Call<BaseResponse<Int>>,
+                response: Response<BaseResponse<Int>>
+            ) {
+                when (response.code()) {
+                    200 -> {
+                        Log.d(TAG, response.raw().toString())
+                        if (response.body()?.error == false) {
+                            completion(0, null)
+                        } else {
+                            completion(-1, response.body()?.message)
+                        }
+                    }
+                    else -> {
+                        completion(response.code(), null)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<Int>>, t: Throwable) {
+                completion(-1, t.toString())
+            }
+        })
+    }
+
+    // 입항
+    fun requestOwnerEnter(
+        reservationID: String, status: Int, enterTime: String,
+        completion: (code: Int, message: String?) -> Unit
+    ) {
+        val ownerID = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
+        val req = ReqOwnerEnter(
+            ownerID = ownerID!!,
+            reservationID = reservationID,
+            status = status,
+            enterTime = enterTime
+        )
+        val call = service?.requestOwnerEnter(req) ?: return
+
+        call.enqueue(object : Callback<BaseResponse<Int>> {
+            override fun onResponse(
+                call: Call<BaseResponse<Int>>,
+                response: Response<BaseResponse<Int>>
+            ) {
+                when (response.code()) {
+                    200 -> {
+                        Log.d(TAG, response.raw().toString())
+                        if (response.body()?.error == false) {
+                            completion(0, null)
+                        } else {
+                            completion(-1, response.body()?.message)
+                        }
+                    }
+                    else -> {
+                        completion(response.code(), null)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<Int>>, t: Throwable) {
+                completion(-1, t.toString())
+            }
+        })
+    }
+
+    // 탑승자 등록
+    fun requestAddMember(
+        reservationID: String, userID: String, embarkTime: String,
+        completion: (code: Int, message: String?) -> Unit
+    ) {
+        val ownerID = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
+        val req = ReqPutEmbark(
+            ownerID = ownerID!!,
+            reservationID = reservationID,
+            userID = userID,
+            embarkTime = embarkTime
+        )
+        val call = service?.requestAddMember(req) ?: return
+
+        call.enqueue(object : Callback<BaseResponse<Int>> {
+            override fun onResponse(
+                call: Call<BaseResponse<Int>>,
+                response: Response<BaseResponse<Int>>
+            ) {
+                when (response.code()) {
+                    200 -> {
+                        Log.d(TAG, response.raw().toString())
+                        if (response.body()?.error == false) {
+                            completion(0, null)
+                        } else {
+                            completion(-1, response.body()?.message)
+                        }
+                    }
+                    else -> {
+                        completion(response.code(), null)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<Int>>, t: Throwable) {
+                completion(-1, t.toString())
+            }
         })
     }
 
