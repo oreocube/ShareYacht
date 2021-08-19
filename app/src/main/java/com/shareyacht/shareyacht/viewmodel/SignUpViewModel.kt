@@ -162,7 +162,7 @@ class SignUpViewModel : ViewModel() {
             email = email.value!!,
             password = password.value!!,
             userType = userType
-        ) { success, message ->
+        ) { success, message, _ ->
             when (success) {
                 0 -> {
                     saveUserInfo()
