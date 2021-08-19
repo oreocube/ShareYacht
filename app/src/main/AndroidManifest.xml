@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ShareYacht"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.owner.ReservationStateActivity"></activity>
+        <activity android:name=".view.owner.OwnerReservationDetailActivity"></activity>
+        <activity android:name=".view.owner.ReservationStateActivity" />
         <activity
             android:name=".view.normal.SuccessActivity"
             android:parentActivityName=".view.normal.YachtReserveActivity">
