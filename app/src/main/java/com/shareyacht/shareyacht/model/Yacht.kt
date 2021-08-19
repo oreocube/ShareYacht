@@ -33,3 +33,13 @@ data class YachtReservation(
     @SerializedName(Keyword.EMBARK_COUNT) val embarkCount: Int,
     @SerializedName(Keyword.STATUS) val status: Int
 )
+
+data class OwnerYachtReservation(
+    @SerializedName(Keyword.ID) val id: String,
+    @SerializedName(Keyword.DEPARTURE) val departure: String,
+    @SerializedName(Keyword.ARRIVAL) val arrival: String,
+    @SerializedName(Keyword.YACHT) val yacht: Yacht,
+    @SerializedName(Keyword.EMBARK_COUNT) val embarkCount: Int,
+    @SerializedName(Keyword.STATUS) val status: Int,
+    @SerializedName(Keyword.LENDER_ID) val lenderID: String
+)
