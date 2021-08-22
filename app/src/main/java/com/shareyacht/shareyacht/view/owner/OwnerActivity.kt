@@ -48,6 +48,11 @@ class OwnerActivity : AppCompatActivity() {
                 val intent = Intent(this@OwnerActivity, ReservationStateActivity::class.java)
                 yachtStateActivityResultLauncher.launch(intent)
             }
+            // 경로 설정
+            setPathButton.setOnClickListener {
+                val intent = Intent(this@OwnerActivity, SetMapActivity::class.java)
+                startActivity(intent)
+            }
         }
         viewModel.apply {
             requestMyYacht()
@@ -114,7 +119,7 @@ class OwnerActivity : AppCompatActivity() {
     // 요트 현황
     private val yachtStateActivityResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if(result.resultCode == RESULT_OK) {
+            if (result.resultCode == RESULT_OK) {
                 // TODO
             }
         }
