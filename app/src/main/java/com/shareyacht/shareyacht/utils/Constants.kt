@@ -74,6 +74,14 @@ object Keyword {
     const val EMBARK_TIME = "embarktime"
     const val EMBARK_USER_ID = "embarkuserid"
 
+    // 승선명부
+    const val EMBARK_ID = "embarkid"
+    const val EMBARK_NAME = "embarkname"
+    const val EMBARK_ADDRESS = "embarkaddress"
+    const val EMBARK_SEX = "embarksex"
+    const val EMBARK_PHONE = "embarkphone"
+    const val EMBARK_BIRTHDAY = "embarkbirthday"
+
     // etc
     const val IMAGE_ID: String = "imageid"
     const val DATA: String = "data"
