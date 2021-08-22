@@ -166,10 +166,20 @@ class YachtReserveViewModel : ViewModel() {
     }
 
     fun payButtonClick() {
+        val sTime = if (startTime.value!! < 10) {
+            "0${startTime.value}:00"
+        } else {
+            "${startTime.value}:00"
+        }
+
+        val eTime = if (endTime.value!! < 10) {
+            "0${endTime.value}:00"
+        } else {
+            "${endTime.value}:00"
+        }
         RetrofitManager.instance.requestReserveYacht(
-            //departure: String, arrival: String, embarkCount: Int, yachtID: Int
-            departure = "${startDate.value} ${startTime.value}:00",
-            arrival = "${endDate.value} ${endTime.value}:00",
+            departure = "${startDate.value} $sTime",
+            arrival = "${endDate.value} $eTime",
             embarkCount = peopleCount.value!!,
             yachtID = selectedYacht.value!!.id
         ) { success, message ->

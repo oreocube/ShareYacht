@@ -1,15 +1,16 @@
 package com.shareyacht.shareyacht.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.shareyacht.shareyacht.model.OwnerYachtReservation
 import com.shareyacht.shareyacht.retrofit.RetrofitManager
 import com.shareyacht.shareyacht.utils.API
 import com.shareyacht.shareyacht.utils.Constants.STATE_CANCEL
+import com.shareyacht.shareyacht.utils.Constants.STATE_COMPLETED
 import com.shareyacht.shareyacht.utils.Constants.STATE_CONFIRMED
 import com.shareyacht.shareyacht.utils.Constants.STATE_MOVING
-import java.text.SimpleDateFormat
-import java.util.*
+import com.shareyacht.shareyacht.utils.getNowTime
 
 class OwnerReserveDetailViewModel : ViewModel() {
 
@@ -19,6 +20,9 @@ class OwnerReserveDetailViewModel : ViewModel() {
     val status: MutableLiveData<Int> = MutableLiveData()
     val totalPrice: MutableLiveData<Int> = MutableLiveData()
     var reservationID: String = ""
+    val _updateEvent = MutableLiveData<Boolean>()
+    val updateEvent: LiveData<Boolean>
+        get() = _updateEvent
 
     // 예약내역 상세 가져오기
     fun getReserveDetail(reservationID: String) {
@@ -46,8 +50,19 @@ class OwnerReserveDetailViewModel : ViewModel() {
     // 이용 요금 계산
     private fun getTotalPrice(reservation: OwnerYachtReservation) {
         // 출항 시각, 입항 시각
-        val start = reservation.departure.substring(15, 17).toInt()
-        val end = reservation.arrival.substring(15, 17).toInt()
+        val start = if (reservation.departure.substring(15, 17).contains(":")) {
+            reservation.departure.substring(15, 16).toInt()
+        } else {
+            reservation.departure.substring(15, 17).toInt()
+        }
+
+        val end = if (reservation.arrival.substring(15, 17).contains(":")) {
+            reservation.arrival.substring(15, 16).toInt()
+        } else {
+            reservation.arrival.substring(15, 17).toInt()
+        }
+        //val start = reservation.departure.substring(15, 17).toInt()
+        //val end = reservation.arrival.substring(15, 17).toInt()
         val time = end - start
         // 금액 합계
         totalPrice.value = reservation.yacht.price.toInt() * reservation.embarkCount * time
@@ -62,6 +77,7 @@ class OwnerReserveDetailViewModel : ViewModel() {
             when (success) {
                 0 -> {
                     // 승인
+                    _updateEvent.value = true
                 }
                 1 -> {
                     _message.value = message
@@ -79,18 +95,13 @@ class OwnerReserveDetailViewModel : ViewModel() {
             when (success) {
                 0 -> {
                     // 거절
+                    _updateEvent.value = true
                 }
                 1 -> {
                     _message.value = message
                 }
             }
         }
-    }
-
-    private fun getNowTime(): String {
-        val currentTime = Calendar.getInstance().time
-        val sdf = SimpleDateFormat("yyyy-MM-dd E요일", Locale.KOREAN)
-        return sdf.format(currentTime)
     }
 
     // 출항
@@ -103,6 +114,7 @@ class OwnerReserveDetailViewModel : ViewModel() {
             when (success) {
                 0 -> {
                     // 출항
+                    _updateEvent.value = true
                 }
                 1 -> {
                     _message.value = message
@@ -115,12 +127,13 @@ class OwnerReserveDetailViewModel : ViewModel() {
     fun enter() {
         RetrofitManager.instance.requestOwnerEnter(
             reservationID = reservationID,
-            status = STATE_MOVING,
+            status = STATE_COMPLETED,
             enterTime = getNowTime()
         ) { success, message ->
             when (success) {
                 0 -> {
                     // 입항
+                    _updateEvent.value = true
                 }
                 1 -> {
                     _message.value = message

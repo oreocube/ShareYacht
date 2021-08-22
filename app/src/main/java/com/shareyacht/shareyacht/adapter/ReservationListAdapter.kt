@@ -9,6 +9,11 @@ import com.bumptech.glide.Glide
 import com.shareyacht.shareyacht.databinding.RvItemReservationBinding
 import com.shareyacht.shareyacht.model.YachtReservation
 import com.shareyacht.shareyacht.utils.API
+import com.shareyacht.shareyacht.utils.Constants.STATE_CANCEL
+import com.shareyacht.shareyacht.utils.Constants.STATE_COMPLETED
+import com.shareyacht.shareyacht.utils.Constants.STATE_CONFIRMED
+import com.shareyacht.shareyacht.utils.Constants.STATE_MOVING
+import com.shareyacht.shareyacht.utils.Constants.STATE_WAIT
 import com.shareyacht.shareyacht.utils.formatter
 
 /* [일반] 예약내역 - 상태별 목록 - list adapter */
@@ -38,12 +43,27 @@ class ReservationListAdapter :
             val url = "${API.BASE_URL}/image/${reservation.yacht.imageid}"
 
             val status = when (reservation.status) {
-                0 -> "신청중"
+                STATE_WAIT -> "신청중"
+                STATE_CONFIRMED -> "예약확정"
+                STATE_MOVING -> "운항중"
+                STATE_COMPLETED -> "운항완료"
+                STATE_CANCEL -> "취소"
                 else -> ""
             }
             // 출항 시각, 입항 시각
-            val start = reservation.departure.substring(15, 17).toInt()
-            val end = reservation.arrival.substring(15, 17).toInt()
+            val start = if (reservation.departure.substring(15, 17).contains(":")) {
+                reservation.departure.substring(15, 16).toInt()
+            } else {
+                reservation.departure.substring(15, 17).toInt()
+            }
+
+            val end = if (reservation.arrival.substring(15, 17).contains(":")) {
+                reservation.arrival.substring(15, 16).toInt()
+            } else {
+                reservation.arrival.substring(15, 17).toInt()
+            }
+            //val start = reservation.departure.substring(15, 17).toInt()
+            //val end = reservation.arrival.substring(15, 17).toInt()
             val time = end - start
             // 금액 합계
             val totalPrice = reservation.yacht.price.toInt() * reservation.embarkCount * time

@@ -16,11 +16,10 @@ import com.shareyacht.shareyacht.utils.formatter
 import com.shareyacht.shareyacht.view.owner.OwnerReservationDetailActivity
 
 /* [사업자] 예약현황 - 상태별 목록 - list adapter */
-class OwnerReservationAdapter :
+class OwnerReservationAdapter(private val cl: ClickListener) :
     ListAdapter<OwnerYachtReservation, OwnerReservationAdapter.OwnerReservationViewHolder>(
         RESERVATION_COMPARATOR
     ) {
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OwnerReservationViewHolder {
         val binding = RvItemOwnerReservationBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
@@ -32,19 +31,35 @@ class OwnerReservationAdapter :
         val currentItem = getItem(position)
 
         if (currentItem != null) {
-            holder.bind(currentItem)
+            holder.bind(currentItem, cl.clickListener)
         }
     }
 
-    class OwnerReservationViewHolder(private val binding: RvItemOwnerReservationBinding) :
+    inner class OwnerReservationViewHolder(private val binding: RvItemOwnerReservationBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(reservation: OwnerYachtReservation) {
+        fun bind(
+            reservation: OwnerYachtReservation,
+            clickListener: (OwnerYachtReservation) -> Unit
+        ) {
+
+            itemView.setOnClickListener { clickListener(reservation) }
             val url = "${API.BASE_URL}/image/${reservation.yacht.imageid}"
 
             // 출항 시각, 입항 시각
-            val start = reservation.departure.substring(15, 17).toInt()
-            val end = reservation.arrival.substring(15, 17).toInt()
+            val start = if (reservation.departure.substring(15, 17).contains(":")) {
+                reservation.departure.substring(15, 16).toInt()
+            } else {
+                reservation.departure.substring(15, 17).toInt()
+            }
+
+            val end = if (reservation.arrival.substring(15, 17).contains(":")) {
+                reservation.arrival.substring(15, 16).toInt()
+            } else {
+                reservation.arrival.substring(15, 17).toInt()
+            }
+            //val start = reservation.departure.substring(15, 17).toInt()
+            //val end = reservation.arrival.substring(15, 17).toInt()
             val time = end - start
             // 금액 합계
             val totalPrice = reservation.yacht.price.toInt() * reservation.embarkCount * time
@@ -59,7 +74,8 @@ class OwnerReservationAdapter :
                     .into(yachtImage)
 
                 itemView.setOnClickListener {
-                    val intent = Intent(itemView.context, OwnerReservationDetailActivity::class.java)
+                    val intent =
+                        Intent(itemView.context, OwnerReservationDetailActivity::class.java)
                     intent.putExtra(Keyword.RESERVATION_ID, reservation.id)
                     startActivity(itemView.context, intent, null)
                 }
@@ -84,5 +100,6 @@ class OwnerReservationAdapter :
                     oldItem == newItem
             }
     }
-
 }
+
+data class ClickListener(val clickListener: (reservation: OwnerYachtReservation) -> Unit)
