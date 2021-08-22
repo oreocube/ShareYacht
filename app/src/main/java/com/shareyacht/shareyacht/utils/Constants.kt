@@ -10,7 +10,7 @@ object Constants {
 }
 
 object API {
-    const val BASE_URL: String = "http://wsx1341.tplinkdns.com:8080"
+    const val BASE_URL: String = "http://52.231.139.31:8080"
 
     /* User */
     const val USER_LOGIN: String = "/user/login"
