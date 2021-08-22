@@ -32,7 +32,6 @@ class LoginActivity : AppCompatActivity() {
         SharedPreferenceManager().init(applicationContext)
 
         // 로그인 성공 시 메인화면으로 이동 후 로그인 액티비티 종료
-        // TODO userType 별 다른 화면 이동 필요
         loginViewModel.loginResult.observe(this, { result ->
             if (result) {
                 navigateToMainActivity()
