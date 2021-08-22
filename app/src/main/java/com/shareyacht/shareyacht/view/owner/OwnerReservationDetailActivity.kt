@@ -1,5 +1,6 @@
 package com.shareyacht.shareyacht.view.owner
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -71,7 +72,11 @@ class OwnerReservationDetailActivity : AppCompatActivity() {
                 STATE_CONFIRMED -> {
                     binding.apply {
                         scanQrButton.root.visibility = View.VISIBLE
+                        scanQrButton.root.setOnClickListener {
+                            navigateToPassengersList()
+                        }
                         leaveButton.root.visibility = View.VISIBLE
+                        leaveButton.viewModel = this@OwnerReservationDetailActivity.viewModel
                     }
                 }
                 STATE_MOVING -> {
@@ -83,5 +88,12 @@ class OwnerReservationDetailActivity : AppCompatActivity() {
         })
 
         mBinding = binding
+    }
+
+    // 탑승자 목록 화면으로 이동
+    fun navigateToPassengersList() {
+        val intent = Intent(this, PassengersListActivity::class.java)
+        intent.putExtra(Keyword.RESERVATION_ID, viewModel.reservationID)
+        startActivity(intent)
     }
 }

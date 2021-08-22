@@ -8,7 +8,6 @@ import com.shareyacht.shareyacht.utils.API
 import com.shareyacht.shareyacht.utils.Constants.STATE_CANCEL
 import com.shareyacht.shareyacht.utils.Constants.STATE_CONFIRMED
 import com.shareyacht.shareyacht.utils.Constants.STATE_MOVING
-import com.shareyacht.shareyacht.utils.formatter
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -60,7 +59,7 @@ class OwnerReserveDetailViewModel : ViewModel() {
             reservationID = reservationID,
             status = STATE_CONFIRMED
         ) { success, message ->
-            when(success) {
+            when (success) {
                 0 -> {
                     // 승인
                 }
@@ -74,10 +73,10 @@ class OwnerReserveDetailViewModel : ViewModel() {
     // 예약 거절
     fun refuseReservation() {
         RetrofitManager.instance.requestOwnerReserveDecision(
-            reservationID= reservationID,
+            reservationID = reservationID,
             status = STATE_CANCEL
         ) { success, message ->
-            when(success) {
+            when (success) {
                 0 -> {
                     // 거절
                 }
@@ -101,7 +100,7 @@ class OwnerReserveDetailViewModel : ViewModel() {
             status = STATE_MOVING,
             leaveTime = getNowTime()
         ) { success, message ->
-            when(success) {
+            when (success) {
                 0 -> {
                     // 출항
                 }
@@ -112,8 +111,6 @@ class OwnerReserveDetailViewModel : ViewModel() {
         }
     }
 
-    // 탑승자 등록
-
     // 입항
     fun enter() {
         RetrofitManager.instance.requestOwnerEnter(
@@ -121,7 +118,7 @@ class OwnerReserveDetailViewModel : ViewModel() {
             status = STATE_MOVING,
             enterTime = getNowTime()
         ) { success, message ->
-            when(success) {
+            when (success) {
                 0 -> {
                     // 입항
                 }
