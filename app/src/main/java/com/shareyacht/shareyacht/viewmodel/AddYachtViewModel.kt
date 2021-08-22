@@ -76,7 +76,6 @@ class AddYachtViewModel : ViewModel() {
                 RetrofitManager.instance.requestAddYacht(yacht) { success, message ->
                     when (success) {
                         0 -> {
-                            // 성공한 경우 요트 조회 화면으로 이동
                             addYachtSuccess.value = true
                         }
                         else -> {

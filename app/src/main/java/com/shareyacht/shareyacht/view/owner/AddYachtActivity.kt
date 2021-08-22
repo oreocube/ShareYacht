@@ -42,6 +42,10 @@ class AddYachtActivity : AppCompatActivity() {
         // viewModel 바인딩
         binding.viewModel = viewModel
         binding.addPhotoButton.setOnClickListener(addPhotoButtonClicked)
+        viewModel.addYachtSuccess.observe(this, {
+            setResult(RESULT_OK)
+            finish()
+        })
 
         subscribeImageStatus()
         subscribeConnectionStatus()
