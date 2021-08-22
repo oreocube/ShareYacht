@@ -16,6 +16,10 @@
         android:theme="@style/Theme.ShareYacht"
         android:usesCleartextTraffic="true">
 
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="${mapKey}" />
+
         <!-- [로그인] -->
         <activity android:name=".view.user.LoginActivity">
             <intent-filter>
