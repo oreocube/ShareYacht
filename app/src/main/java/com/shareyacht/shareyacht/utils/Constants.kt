@@ -69,6 +69,7 @@ object Keyword {
     const val EMBARK_COUNT = "embarkcount"
     const val LENDER_ID = "lenderid"
     const val RESERVATION_ID = "reservationid"
+    const val RESERVE_ID = "reserveid"
     const val LEAVE_TIME = "leavetime"
     const val ENTER_TIME = "entertime"
     const val EMBARK_TIME = "embarktime"
