@@ -29,6 +29,8 @@ interface RetrofitService {
         @Part image: MultipartBody.Part
     ): Call<BaseResponse<Long?>>
 
+    /* 사업자 */
+    // 내 요트
     @POST(API.OWNER_MY_YACHT)
     fun requestMyYacht(
         @Body body: BaseRequest
@@ -58,6 +60,18 @@ interface RetrofitService {
         @Body body: ReqOwnerDecision
     ): Call<BaseResponse<Int>>
 
+    // 탑승자 조회
+    @POST(API.OWNER_EMBARK)
+    fun requestGetPassenger(
+        @Body body: ReqGetPassenger
+    ): Call<BaseResponse<List<Passenger>>>
+
+    // 탑승자 등록
+    @PUT(API.OWNER_EMBARK)
+    fun requestAddPassenger(
+        @Body body: ReqAddPassenger
+    ): Call<BaseResponse<Int>>
+
     // 출항
     @POST(API.OWNER_LEAVE)
     fun requestOwnerLeave(
@@ -68,12 +82,6 @@ interface RetrofitService {
     @POST(API.OWNER_ENTER)
     fun requestOwnerEnter(
         @Body body: ReqOwnerEnter
-    ): Call<BaseResponse<Int>>
-
-    // 탑승자 등록
-    @PUT(API.OWNER_EMBARK)
-    fun requestAddMember(
-        @Body body: ReqPutEmbark
     ): Call<BaseResponse<Int>>
 
     /* 일반 */

@@ -394,19 +394,58 @@ class RetrofitManager {
         })
     }
 
+    // 탑승자 조회
+    fun requestGetPassenger(
+        reservationID: String,
+        completion: (code: Int, message: String?, data: List<Passenger>?) -> Unit
+    ) {
+        val ownerID = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
+        val req = ReqGetPassenger(
+            ownerID = ownerID!!,
+            reserveID = reservationID
+        )
+        val call = service?.requestGetPassenger(req) ?: return
+
+        call.enqueue(object : Callback<BaseResponse<List<Passenger>>> {
+            override fun onResponse(
+                call: Call<BaseResponse<List<Passenger>>>,
+                response: Response<BaseResponse<List<Passenger>>>
+            ) {
+                when (response.code()) {
+                    200 -> {
+                        Log.d(TAG, response.raw().toString())
+                        if (response.body()?.error == false) {
+                            completion(0, null, response.body()!!.data)
+                        } else {
+                            completion(-1, response.body()?.message, null)
+                        }
+                    }
+                    else -> {
+                        completion(response.code(), null, null)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<List<Passenger>>>, t: Throwable) {
+                completion(-1, t.toString(), null)
+            }
+
+        })
+    }
+
     // 탑승자 등록
-    fun requestAddMember(
+    fun requestAddPassenger(
         reservationID: String, userID: String, embarkTime: String,
         completion: (code: Int, message: String?) -> Unit
     ) {
         val ownerID = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
-        val req = ReqPutEmbark(
+        val req = ReqAddPassenger(
             ownerID = ownerID!!,
-            reservationID = reservationID,
+            reserveID = reservationID,
             userID = userID,
             embarkTime = embarkTime
         )
-        val call = service?.requestAddMember(req) ?: return
+        val call = service?.requestAddPassenger(req) ?: return
 
         call.enqueue(object : Callback<BaseResponse<Int>> {
             override fun onResponse(

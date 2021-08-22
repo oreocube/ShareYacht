@@ -41,13 +41,20 @@ data class ReqOwnerEnter(
     val enterTime: String
 )
 
-data class ReqPutEmbark(
+data class ReqAddPassenger(
     @SerializedName(Keyword.OWNER_ID)
     val ownerID: String,
-    @SerializedName(Keyword.RESERVATION_ID)
-    val reservationID: String,
+    @SerializedName(Keyword.RESERVE_ID)
+    val reserveID: String,
     @SerializedName(Keyword.EMBARK_USER_ID)
     val userID: String,
     @SerializedName(Keyword.EMBARK_TIME)
     val embarkTime: String
+)
+
+data class ReqGetPassenger(
+    @SerializedName(Keyword.OWNER_ID)
+    val ownerID: String,
+    @SerializedName(Keyword.RESERVE_ID)
+    val reserveID: String
 )
