@@ -26,6 +26,8 @@ class OwnerReservationDetailActivity : AppCompatActivity() {
         val binding = DataBindingUtil.setContentView<ActivityOwnerReservationDetailBinding>(
             this, R.layout.activity_owner_reservation_detail
         )
+        mBinding = binding
+        initToolbar()
 
         val reservationID = intent.getStringExtra(Keyword.RESERVATION_ID)
 
@@ -87,13 +89,23 @@ class OwnerReservationDetailActivity : AppCompatActivity() {
             }
         })
 
-        mBinding = binding
+        viewModel.updateEvent.observe(this, {
+            setResult(RESULT_OK)
+            finish()
+        })
+    }
+
+    private fun initToolbar() {
+        val toolbar = mBinding?.toolbar
+        setSupportActionBar(toolbar)
+        val ab = supportActionBar
+        ab?.setDisplayHomeAsUpEnabled(true)
     }
 
     // 탑승자 목록 화면으로 이동
     fun navigateToPassengersList() {
         val intent = Intent(this, PassengersListActivity::class.java)
-        intent.putExtra(Keyword.RESERVATION_ID, viewModel.reservationID)
+        intent.putExtra(Keyword.RESERVE_ID, viewModel.reservationID)
         startActivity(intent)
     }
 }

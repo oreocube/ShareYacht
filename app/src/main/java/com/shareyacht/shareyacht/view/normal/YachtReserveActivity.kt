@@ -14,6 +14,7 @@ import com.shareyacht.shareyacht.viewmodel.YachtReserveViewModel
 
 class YachtReserveActivity : AppCompatActivity() {
     private val viewModel: YachtReserveViewModel by viewModels()
+    private lateinit var mBinding: ActivityYachtReserveBinding
     private var yachtID = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +23,9 @@ class YachtReserveActivity : AppCompatActivity() {
         val binding = DataBindingUtil.setContentView<ActivityYachtReserveBinding>(
             this, R.layout.activity_yacht_reserve
         )
+        mBinding = binding
+        initToolbar()
+
         yachtID = intent.getIntExtra(Keyword.YACHT_ID, 0)
         binding.viewModel = viewModel
         // 요트 정보 요청하기
@@ -77,5 +81,12 @@ class YachtReserveActivity : AppCompatActivity() {
             datePicker.show(supportFragmentManager, "출항")
         }
 
+    }
+
+    private fun initToolbar() {
+        val toolbar = mBinding.toolbar
+        setSupportActionBar(toolbar)
+        val ab = supportActionBar
+        ab?.setDisplayHomeAsUpEnabled(true)
     }
 }
