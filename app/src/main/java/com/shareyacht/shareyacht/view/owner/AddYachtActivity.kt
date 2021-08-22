@@ -1,4 +1,4 @@
-package com.shareyacht.shareyacht.view
+package com.shareyacht.shareyacht.view.owner
 
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -42,6 +42,10 @@ class AddYachtActivity : AppCompatActivity() {
         // viewModel 바인딩
         binding.viewModel = viewModel
         binding.addPhotoButton.setOnClickListener(addPhotoButtonClicked)
+        viewModel.addYachtSuccess.observe(this, {
+            setResult(RESULT_OK)
+            finish()
+        })
 
         subscribeImageStatus()
         subscribeConnectionStatus()

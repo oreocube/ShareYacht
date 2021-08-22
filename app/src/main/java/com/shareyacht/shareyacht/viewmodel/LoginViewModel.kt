@@ -70,10 +70,10 @@ class LoginViewModel : ViewModel() {
                 email = email.value!!,
                 password = password.value!!,
                 userType = userType
-            ) { success, message ->
+            ) { success, message, data ->
                 when (success) {
                     0 -> {
-                        saveUserInfo()
+                        saveUserInfo(data!!)
                         loginResult.value = true
                     }
                     else -> {
@@ -85,12 +85,13 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    private fun saveUserInfo() {
+    private fun saveUserInfo(data: String) {
         val preferences = SharedPreferenceManager.instance
         val editor: SharedPreferences.Editor = preferences.edit()
         editor.putString(Preference.SP_EMAIL, email.value)
         editor.putString(Preference.SP_PW, password.value)
         editor.putInt(Preference.SP_USERTYPE, userType)
+        editor.putString(Preference.SP_NAME, data)
         editor.apply()
     }
 }

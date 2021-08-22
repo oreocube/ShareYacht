@@ -2,10 +2,15 @@ package com.shareyacht.shareyacht.utils
 
 object Constants {
     const val TAG: String = "로그"
+    const val STATE_WAIT = 0
+    const val STATE_CONFIRMED = 1
+    const val STATE_MOVING = 2
+    const val STATE_COMPLETED = 3
+    const val STATE_CANCEL = 4
 }
 
 object API {
-    const val BASE_URL: String = "http://wsx1341.tplinkdns.com:8080"
+    const val BASE_URL: String = "http://52.231.139.31:8080"
 
     /* User */
     const val USER_LOGIN: String = "/user/login"
@@ -15,6 +20,18 @@ object API {
     /* Owner */
     const val OWNER_MY_YACHT: String = "/owner/yacht/myyacht"
     const val OWNER_DRIVER: String = "/owner/yacht/driver"
+    const val OWNER_RESERVE = "/owner/reserve"
+    const val OWNER_RESERVE_VIEW = "/owner/reserve/view"
+    const val OWNER_RESERVE_DECISION = "/owner/reserve/decision"
+    const val OWNER_EMBARK = "/owner/yacht/embark"
+    const val OWNER_LEAVE = "/owner/yacht/leave"
+    const val OWNER_ENTER = "/owner/yacht/enter"
+
+    /* Consumer */
+    const val CONSUMER_YACHT: String = "/consumer/yacht"
+    const val CONSUMER_YACHT_RESERVE: String = "/consumer/yacht/reserve"
+    const val CONSUMER_RESERVE = "/consumer/reserve"
+    const val CONSUMER_RESERVE_VIEW: String = "/consumer/reserve/view"
 
     const val IMAGE_UPLOAD: String = "/image/upload"
 }
@@ -36,7 +53,9 @@ object Keyword {
     const val SEX: String = "sex"
 
     // yacht
+    const val YACHT = "yacht"
     const val OWNER_ID: String = "ownerid"
+    const val YACHT_ID: String = "yachtid"
     const val YACHT_NUMBER: String = "yachtnumber"
     const val YACHT_NAME: String = "yachtname"
     const val MAX_PEOPLE: String = "maxpeople"
@@ -44,9 +63,30 @@ object Keyword {
     const val LOCATION: String = "location"
     const val PRICE: String = "price"
 
+    // 요트 예약
+    const val DEPARTURE = "departure"
+    const val ARRIVAL = "arrival"
+    const val EMBARK_COUNT = "embarkcount"
+    const val LENDER_ID = "lenderid"
+    const val RESERVATION_ID = "reservationid"
+    const val RESERVE_ID = "reserveid"
+    const val LEAVE_TIME = "leavetime"
+    const val ENTER_TIME = "entertime"
+    const val EMBARK_TIME = "embarktime"
+    const val EMBARK_USER_ID = "embarkuserid"
+
+    // 승선명부
+    const val EMBARK_ID = "embarkid"
+    const val EMBARK_NAME = "embarkname"
+    const val EMBARK_ADDRESS = "embarkaddress"
+    const val EMBARK_SEX = "embarksex"
+    const val EMBARK_PHONE = "embarkphone"
+    const val EMBARK_BIRTHDAY = "embarkbirthday"
+
     // etc
     const val IMAGE_ID: String = "imageid"
     const val DATA: String = "data"
+    const val PAGE_NUM: String = "pagenum"
 }
 
 object Preference {

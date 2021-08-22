@@ -2,7 +2,7 @@ package com.shareyacht.shareyacht.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.shareyacht.shareyacht.model.Yacht
+import com.shareyacht.shareyacht.model.ReqAddYacht
 import com.shareyacht.shareyacht.retrofit.RetrofitManager
 import com.shareyacht.shareyacht.utils.Preference
 import com.shareyacht.shareyacht.utils.SharedPreferenceManager
@@ -20,7 +20,9 @@ class AddYachtViewModel : ViewModel() {
     val busy: MutableLiveData<Boolean> = MutableLiveData()
 
     val uploadImageSuccess: MutableLiveData<Boolean> = MutableLiveData()
-    var imageID: Long? = null
+    private var imageID: Long? = null
+
+    val addYachtSuccess: MutableLiveData<Boolean> = MutableLiveData()
     val failMessage: MutableLiveData<String> = MutableLiveData()
 
     fun uploadImage(file: File) {
@@ -28,8 +30,8 @@ class AddYachtViewModel : ViewModel() {
         RetrofitManager.instance.requestUploadImage(file = file) { success, message, imageid ->
             when (success) {
                 0 -> {
-                    uploadImageSuccess.value = true
                     imageID = imageid
+                    uploadImageSuccess.value = true
                 }
                 else -> {
 
@@ -59,7 +61,7 @@ class AddYachtViewModel : ViewModel() {
         if (email.isNotBlank() && name.isNotBlank() && isNotEmptyForAllFields()) {
 
             if (imageID != null) {
-                val yacht = Yacht(
+                val yacht = ReqAddYacht(
                     owner = email,
                     company = name,
                     number = yachtNum.value!!,
@@ -74,8 +76,7 @@ class AddYachtViewModel : ViewModel() {
                 RetrofitManager.instance.requestAddYacht(yacht) { success, message ->
                     when (success) {
                         0 -> {
-                            // 성공한 경우 요트 조회 화면으로 이동
-
+                            addYachtSuccess.value = true
                         }
                         else -> {
                             failMessage.value = message

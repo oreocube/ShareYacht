@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="yacht"
+            type="com.shareyacht.shareyacht.model.Yacht" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/yachtImage"
+            android:layout_width="match_parent"
+            android:layout_height="278dp"
+            android:contentDescription="yachtImage"
+            android:fitsSystemWindows="true"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher"
+            app:layout_collapseMode="parallax"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/typeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="26dp"
+            android:text="@{yacht.max}"
+            android:textColor="@color/main_color"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/yachtImage" />
+
+        <TextView
+            android:id="@+id/typeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="인승"
+            android:textColor="@color/main_color"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@+id/typeTextView"
+            app:layout_constraintStart_toEndOf="@id/typeTextView" />
+
+        <TextView
+            android:id="@+id/titleTextView"
+            style="@style/TitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@{yacht.name}"
+            app:layout_constraintStart_toStartOf="@+id/typeTextView"
+            app:layout_constraintTop_toBottomOf="@id/typeTextView" />
+
+        <TextView
+            android:id="@+id/companyTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{yacht.company}"
+            app:layout_constraintStart_toStartOf="@+id/titleTextView"
+            app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
+
+        <TextView
+            android:id="@+id/locationLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="26dp"
+            android:text="에서 출발"
+            android:textColor="@color/main_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/companyTextView" />
+
+        <TextView
+            android:id="@+id/locationTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{yacht.location}"
+            android:textColor="@color/main_text"
+            app:layout_constraintBaseline_toBaselineOf="@+id/locationLabel"
+            app:layout_constraintEnd_toStartOf="@+id/locationLabel" />
+
+        <TextView
+            android:id="@+id/priceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{yacht.price}"
+            android:textColor="@color/main_color"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/unit"
+            app:layout_constraintTop_toBottomOf="@+id/locationTextView" />
+
+        <TextView
+            android:id="@+id/unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="@string/price_unit"
+            android:textColor="@color/main_color"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@+id/priceTextView"
+            app:layout_constraintEnd_toStartOf="@+id/per" />
+
+        <TextView
+            android:id="@+id/per"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/per_hour"
+            android:textColor="@color/per_text"
+            app:layout_constraintBaseline_toBaselineOf="@+id/priceTextView"
+            app:layout_constraintEnd_toEndOf="@+id/locationLabel" />
+
+        <View
+            android:id="@+id/mainDivider"
+            style="@style/ThickDivider"
+            android:layout_marginTop="30dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/per" />
+
+        <TextView
+            android:id="@+id/infoTitleTextView"
+            style="@style/TitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="20dp"
+            android:text="상세정보"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mainDivider" />
+
+        <TextView
+            android:id="@+id/infoTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="26dp"
+            android:layout_marginTop="10dp"
+            android:text="요트 상세정보 입니다. 요트 소유주가 입력할 수 있습니다."
+            android:textColor="@color/main_text"
+            app:layout_constraintTop_toBottomOf="@+id/infoTitleTextView" />
+
+        <Button
+            android:id="@+id/reserveButton"
+            style="@style/MainButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginBottom="10dp"
+            android:onClick="reserveButtonClick"
+            android:text="예약하기"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
