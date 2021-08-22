@@ -32,7 +32,7 @@
         <!-- [사업자] 메인 -->
         <activity android:name=".view.owner.OwnerActivity" />
 
-        <!--[사업자] 요트 등록 -->
+        <!-- [사업자] 요트 등록 -->
         <activity
             android:name=".view.owner.AddYachtActivity"
             android:parentActivityName=".view.owner.OwnerActivity">
@@ -41,7 +41,7 @@
                 android:value=".view.owner.OwnerActivity" />
         </activity>
 
-        <!--[사업자] 예약현황 -->
+        <!-- [사업자] 예약현황 -->
         <activity
             android:name=".view.owner.ReservationStateActivity"
             android:parentActivityName=".view.owner.OwnerActivity">
@@ -50,7 +50,7 @@
                 android:value=".view.owner.OwnerActivity" />
         </activity>
 
-        <!--[사업자] 예약 상세 -->
+        <!-- [사업자] 예약 상세 -->
         <activity
             android:name=".view.owner.OwnerReservationDetailActivity"
             android:parentActivityName=".view.owner.ReservationStateActivity">
@@ -70,6 +70,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.owner.ReservationStateActivity" />
+        </activity>
+
+        <!-- [사업자] 경로 설정 -->
+        <activity
+            android:name=".view.owner.SetMapActivity"
+            android:parentActivityName=".view.owner.OwnerActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.owner.OwnerActivity" />
         </activity>
 
         <!-- [일반] 메인 -->
