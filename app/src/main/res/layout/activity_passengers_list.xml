@@ -10,6 +10,7 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
+            app:title="탑승자 명부"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:layout_constraintTop_toTopOf="parent" />
@@ -33,5 +34,6 @@
             android:padding="10dp"
             android:text="탑승자 등록"
             app:layout_constraintBottom_toBottomOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
