@@ -3,9 +3,9 @@ package com.shareyacht.shareyacht.view.owner
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
@@ -38,20 +38,21 @@ class OwnerActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         binding.apply {
+            // 요트 등록하기
             myYachtFrame.addYachtButton.setOnClickListener {
                 val intent = Intent(this@OwnerActivity, AddYachtActivity::class.java)
-                startActivity(intent)
+                addYachtActivityResultLauncher.launch(intent)
             }
-            myYachtStatusFrame.root.setOnClickListener{
+            // 요트 현황
+            myYachtStatusFrame.root.setOnClickListener {
                 val intent = Intent(this@OwnerActivity, ReservationStateActivity::class.java)
-                startActivity(intent)
+                yachtStateActivityResultLauncher.launch(intent)
             }
         }
         viewModel.apply {
             requestMyYacht()
             _message.observe(this@OwnerActivity, { message ->
                 Toast.makeText(this@OwnerActivity, message, Toast.LENGTH_SHORT).show()
-                Log.d("!!!!!!!!!!", message)
             })
             hasYacht.observe(this@OwnerActivity, { hasYacht ->
                 if (hasYacht) { // 등록된 요트가 있는 경우
@@ -68,7 +69,7 @@ class OwnerActivity : AppCompatActivity() {
                     .into(binding.myYachtFrame.yachtImage)
             })
             myYacht.observe(this@OwnerActivity, { yacht ->
-                if(yacht!= null) {
+                if (yacht != null) {
                     binding.myYachtFrame.myYacht = yacht
                 }
             })
@@ -101,4 +102,20 @@ class OwnerActivity : AppCompatActivity() {
             true
         }
     }
+
+    // 요트 등록
+    private val addYachtActivityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                viewModel.requestMyYacht()
+            }
+        }
+
+    // 요트 현황
+    private val yachtStateActivityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if(result.resultCode == RESULT_OK) {
+                // TODO
+            }
+        }
 }

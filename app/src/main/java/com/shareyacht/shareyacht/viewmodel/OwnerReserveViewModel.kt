@@ -22,7 +22,7 @@ class OwnerReserveViewModel : ViewModel() {
     }
 
     // 예약 현황 가져오기
-    private fun getReservationStatus() {
+    fun getReservationStatus() {
         RetrofitManager.instance.requestOwnerReserve { success, message, reservationList ->
             when (success) {
                 0 -> {
