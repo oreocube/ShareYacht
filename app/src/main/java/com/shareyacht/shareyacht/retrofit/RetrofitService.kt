@@ -84,6 +84,18 @@ interface RetrofitService {
         @Body body: ReqOwnerEnter
     ): Call<BaseResponse<Int>>
 
+    // 경로 불러오기
+    @POST(API.MAP_YACHT)
+    fun requestGetPath(
+        @Body body: ReqGetPath
+    ): Call<BaseResponse<String>>
+
+    // 경로 설정
+    @PUT(API.MAP_YACHT)
+    fun requestAddPath(
+        @Body body: ReqAddPath
+    ): Call<BaseResponse<Int>>
+
     /* 일반 */
     // 요트 목록 조회
     @GET(API.CONSUMER_YACHT)
