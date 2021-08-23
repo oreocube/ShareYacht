@@ -1,5 +1,6 @@
 package com.shareyacht.shareyacht.model
 
+import androidx.constraintlayout.motion.widget.KeyCycleOscillator
 import com.google.gson.annotations.SerializedName
 import com.shareyacht.shareyacht.utils.Keyword
 
@@ -57,4 +58,16 @@ data class ReqGetPassenger(
     val ownerID: String,
     @SerializedName(Keyword.RESERVE_ID)
     val reserveID: String
+)
+
+data class ReqGetPath(
+    @SerializedName(Keyword.USER_ID)
+    val userID: String
+)
+
+data class ReqAddPath(
+    @SerializedName(Keyword.USER_ID)
+    val userID: String,
+    @SerializedName(Keyword.DATA)
+    val data: String
 )

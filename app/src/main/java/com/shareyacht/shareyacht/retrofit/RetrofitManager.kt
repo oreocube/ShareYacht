@@ -473,6 +473,75 @@ class RetrofitManager {
         })
     }
 
+    // 경로 불러오기
+    fun requestGetPath(
+        completion: (code: Int, message: String?, data: String?) -> Unit
+    ) {
+        val userID = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
+        val call = service?.requestGetPath(ReqGetPath(userID = userID!!)) ?: return
+
+        call.enqueue(object : Callback<BaseResponse<String>> {
+            override fun onResponse(
+                call: Call<BaseResponse<String>>,
+                response: Response<BaseResponse<String>>
+            ) {
+                when (response.code()) {
+                    200 -> {
+                        Log.d(TAG, response.raw().toString())
+                        if (response.body()?.error == false) {
+                            completion(0, null, response.body()!!.data)
+                        } else {
+                            completion(-1, response.body()?.message, null)
+                        }
+                    }
+                    else -> {
+                        completion(response.code(), null, null)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<String>>, t: Throwable) {
+                completion(-1, t.toString(), null)
+            }
+
+        })
+    }
+
+    // 경로 설정
+    fun requestAddPath(
+        data: String,
+        completion: (code: Int, message: String?) -> Unit
+    ) {
+        val userID = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
+        val call = service?.requestAddPath(ReqAddPath(userID = userID!!, data = data)) ?: return
+
+        call.enqueue(object :Callback<BaseResponse<Int>> {
+            override fun onResponse(
+                call: Call<BaseResponse<Int>>,
+                response: Response<BaseResponse<Int>>
+            ) {
+                when (response.code()) {
+                    200 -> {
+                        Log.d(TAG, response.raw().toString())
+                        if (response.body()?.error == false) {
+                            completion(0, null)
+                        } else {
+                            completion(-1, response.body()?.message)
+                        }
+                    }
+                    else -> {
+                        completion(response.code(), null)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<Int>>, t: Throwable) {
+                completion(-1, t.toString())
+            }
+
+        })
+    }
+
     /* 일반 */
     // 요트 목록 조회
     fun requestYachtList(
