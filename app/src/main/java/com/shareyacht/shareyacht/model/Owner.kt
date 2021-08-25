@@ -71,3 +71,16 @@ data class ReqAddPath(
     @SerializedName(Keyword.DATA)
     val data: String
 )
+
+data class ReqGetStatus(
+    @SerializedName("num1")
+    val num1: Int,
+    @SerializedName("num2")
+    val num2: Int,
+    @SerializedName("num3")
+    val num3: Int,
+    @SerializedName("num4")
+    val num4: Int,
+    @SerializedName("num5")
+    val num5: Int
+)
