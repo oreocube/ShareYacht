@@ -1,6 +1,5 @@
 package com.shareyacht.shareyacht.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,6 +21,7 @@ class OwnerPathViewModel : ViewModel() {
     val finishEvent: LiveData<Unit>
         get() = _finishEvent
 
+    // 등록된 경로 가져오기
     fun getMyPath() {
         RetrofitManager.instance.requestGetPath { success, message, data ->
             when (success) {
@@ -39,14 +39,12 @@ class OwnerPathViewModel : ViewModel() {
         }
     }
 
+    // 경로 파싱
     private fun parsePath(data: String) {
-        // 순서쌍은 세미콜론으로 구분
         val list = data.split(";")
-        // 위도, 경도는 콜론으로 구분
         for (i in list) {
             val point = i.split(":")
             if(point[0].isNotBlank() && point[1].isNotBlank()) {
-                Log.d("태그", "lat : ${point[0].toDouble()}, lon : ${point[1].toDouble()}")
                 val latLng = LatLng(point[0].toDouble(), point[1].toDouble())
                 // 경로에 추가
                 myPath.add(latLng)

@@ -1,10 +1,10 @@
 package com.shareyacht.shareyacht.view.owner
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.zxing.integration.android.IntentIntegrator
 import com.shareyacht.shareyacht.R
@@ -60,6 +60,7 @@ class PassengersListActivity : AppCompatActivity() {
         ab?.setDisplayHomeAsUpEnabled(true)
     }
 
+    // QR 코드 스캔 화면으로 이동
     private fun navigateToScanQrActivity() {
         val intentIntegrator = IntentIntegrator(this)
         intentIntegrator.setOrientationLocked(false)

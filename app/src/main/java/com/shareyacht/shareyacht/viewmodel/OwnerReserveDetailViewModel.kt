@@ -20,7 +20,8 @@ class OwnerReserveDetailViewModel : ViewModel() {
     val status: MutableLiveData<Int> = MutableLiveData()
     val totalPrice: MutableLiveData<Int> = MutableLiveData()
     var reservationID: String = ""
-    val _updateEvent = MutableLiveData<Boolean>()
+
+    private val _updateEvent = MutableLiveData<Boolean>()
     val updateEvent: LiveData<Boolean>
         get() = _updateEvent
 
