@@ -1,8 +1,6 @@
 package com.shareyacht.shareyacht.model
 
-import androidx.constraintlayout.motion.widget.KeyCycleOscillator
 import com.google.gson.annotations.SerializedName
-import com.shareyacht.shareyacht.utils.Keyword
 
 data class ReqOwnerReserveView(
     @SerializedName(Keyword.OWNER_ID)
@@ -73,6 +71,19 @@ data class ReqAddPath(
 )
 
 data class ReqGetStatus(
+    @SerializedName(Keyword.ERROR)
+    val error: Boolean,
+    @SerializedName(Keyword.MESSAGE)
+    val message: String,
+    @SerializedName(Keyword.STATUS)
+    val status: String,
+    @SerializedName("data1")
+    val data: ReqStatus
+)
+
+data class ReqStatus(
+    @SerializedName("num0")
+    val num0: Int,
     @SerializedName("num1")
     val num1: Int,
     @SerializedName("num2")
@@ -80,7 +91,5 @@ data class ReqGetStatus(
     @SerializedName("num3")
     val num3: Int,
     @SerializedName("num4")
-    val num4: Int,
-    @SerializedName("num5")
-    val num5: Int
+    val num4: Int
 )

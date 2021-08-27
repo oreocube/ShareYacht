@@ -5,7 +5,6 @@ import com.shareyacht.shareyacht.utils.API
 import com.shareyacht.shareyacht.utils.Keyword
 import okhttp3.MultipartBody
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.http.*
 
 interface RetrofitService {
@@ -47,6 +46,12 @@ interface RetrofitService {
     fun requestOwnerReserve(
         @Body body: BaseRequest
     ): Call<BaseResponse<List<OwnerYachtReservation>>>
+
+    // 예약내역 목록
+    @POST(API.OWNER_RESERVE)
+    fun requestReservationStatus(
+        @Body body: BaseRequest
+    ): Call<ReqGetStatus>
 
     // 예약내역 상세
     @POST(API.OWNER_RESERVE_VIEW)

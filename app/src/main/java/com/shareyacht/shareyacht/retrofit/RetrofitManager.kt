@@ -204,6 +204,37 @@ class RetrofitManager {
         })
     }
 
+    // 예약현황 조회
+    fun requestReservationStatus(
+        completion: (code: Int, message: String?, ReqStatus?) -> Unit
+    ) {
+        val ownerID = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
+        val call = service?.requestReservationStatus(BaseRequest(ownerID!!)) ?: return
+
+        call.enqueue(object : Callback<ReqGetStatus> {
+            override fun onResponse(call: Call<ReqGetStatus>, response: Response<ReqGetStatus>) {
+                when (response.code()) {
+                    200 -> {
+                        Log.d(TAG, response.raw().toString())
+                        if (response.body()?.error == false) {
+                            completion(0, null, response.body()!!.data)
+                        } else {
+                            completion(-1, response.body()?.message, null)
+                        }
+                    }
+                    else -> {
+                        completion(response.code(), null, null)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ReqGetStatus>, t: Throwable) {
+                completion(-1, t.toString(), null)
+            }
+
+        })
+    }
+
     // 예약내역 조회
     fun requestOwnerReserve(
         completion: (code: Int, message: String?, yachtList: List<OwnerYachtReservation>?) -> Unit
@@ -515,7 +546,7 @@ class RetrofitManager {
         val userID = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
         val call = service?.requestAddPath(ReqAddPath(userID = userID!!, data = data)) ?: return
 
-        call.enqueue(object :Callback<BaseResponse<Int>> {
+        call.enqueue(object : Callback<BaseResponse<Int>> {
             override fun onResponse(
                 call: Call<BaseResponse<Int>>,
                 response: Response<BaseResponse<Int>>
