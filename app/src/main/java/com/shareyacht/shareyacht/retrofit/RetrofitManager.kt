@@ -3,6 +3,7 @@ package com.shareyacht.shareyacht.retrofit
 import android.util.Log
 import com.shareyacht.shareyacht.model.*
 import com.shareyacht.shareyacht.utils.API
+import com.shareyacht.shareyacht.utils.Constants.STATE_CONFIRMED
 import com.shareyacht.shareyacht.utils.Constants.TAG
 import com.shareyacht.shareyacht.utils.Preference
 import com.shareyacht.shareyacht.utils.SharedPreferenceManager
@@ -204,6 +205,37 @@ class RetrofitManager {
         })
     }
 
+    // 예약현황 조회
+    fun requestReservationStatus(
+        completion: (code: Int, message: String?, ReqStatus?) -> Unit
+    ) {
+        val ownerID = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
+        val call = service?.requestReservationStatus(BaseRequest(ownerID!!)) ?: return
+
+        call.enqueue(object : Callback<ReqGetStatus> {
+            override fun onResponse(call: Call<ReqGetStatus>, response: Response<ReqGetStatus>) {
+                when (response.code()) {
+                    200 -> {
+                        Log.d(TAG, response.raw().toString())
+                        if (response.body()?.error == false) {
+                            completion(0, null, response.body()!!.data)
+                        } else {
+                            completion(-1, response.body()?.message, null)
+                        }
+                    }
+                    else -> {
+                        completion(response.code(), null, null)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ReqGetStatus>, t: Throwable) {
+                completion(-1, t.toString(), null)
+            }
+
+        })
+    }
+
     // 예약내역 조회
     fun requestOwnerReserve(
         completion: (code: Int, message: String?, yachtList: List<OwnerYachtReservation>?) -> Unit
@@ -320,13 +352,15 @@ class RetrofitManager {
         completion: (code: Int, message: String?) -> Unit
     ) {
         val ownerID = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
+        val userType =
+            getUserTypeString(SharedPreferenceManager.instance.getInt(Preference.SP_USERTYPE, 0))
         val req = ReqOwnerLeave(
             ownerID = ownerID!!,
             reservationID = reservationID,
             status = status,
             leaveTime = leaveTime
         )
-        val call = service?.requestOwnerLeave(req) ?: return
+        val call = service?.requestOwnerLeave(req, userType = userType) ?: return
 
         call.enqueue(object : Callback<BaseResponse<Int>> {
             override fun onResponse(
@@ -354,19 +388,29 @@ class RetrofitManager {
         })
     }
 
+    private fun getUserTypeString(type: Int): String = when (type) {
+        1 -> "consumer"
+        2 -> "owner"
+        3 -> "driver"
+        else -> ""
+    }
+
+
     // 입항
     fun requestOwnerEnter(
         reservationID: String, status: Int, enterTime: String,
         completion: (code: Int, message: String?) -> Unit
     ) {
         val ownerID = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
+        val userType =
+            getUserTypeString(SharedPreferenceManager.instance.getInt(Preference.SP_USERTYPE, 0))
         val req = ReqOwnerEnter(
             ownerID = ownerID!!,
             reservationID = reservationID,
             status = status,
             enterTime = enterTime
         )
-        val call = service?.requestOwnerEnter(req) ?: return
+        val call = service?.requestOwnerEnter(req, userType = userType) ?: return
 
         call.enqueue(object : Callback<BaseResponse<Int>> {
             override fun onResponse(
@@ -475,10 +519,12 @@ class RetrofitManager {
 
     // 경로 불러오기
     fun requestGetPath(
+        reservationID: String,
         completion: (code: Int, message: String?, data: String?) -> Unit
     ) {
         val userID = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
-        val call = service?.requestGetPath(ReqGetPath(userID = userID!!)) ?: return
+        val call = service?.requestGetPath(ReqGetPath(userID = userID!!, reserveid = reservationID))
+            ?: return
 
         call.enqueue(object : Callback<BaseResponse<String>> {
             override fun onResponse(
@@ -510,12 +556,19 @@ class RetrofitManager {
     // 경로 설정
     fun requestAddPath(
         data: String,
+        reservationID: String,
         completion: (code: Int, message: String?) -> Unit
     ) {
         val userID = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
-        val call = service?.requestAddPath(ReqAddPath(userID = userID!!, data = data)) ?: return
+        val call = service?.requestAddPath(
+            ReqAddPath(
+                userID = userID!!,
+                data = data,
+                reserveid = reservationID
+            )
+        ) ?: return
 
-        call.enqueue(object :Callback<BaseResponse<Int>> {
+        call.enqueue(object : Callback<BaseResponse<Int>> {
             override fun onResponse(
                 call: Call<BaseResponse<Int>>,
                 response: Response<BaseResponse<Int>>
@@ -691,7 +744,194 @@ class RetrofitManager {
             override fun onFailure(call: Call<BaseResponse<List<YachtReservation>>>, t: Throwable) {
                 completion(-1, t.toString(), null)
             }
+        })
+    }
 
+    /* 운전자 */
+    // 리스트
+    fun requestDriverList(
+        pageNum: Int,
+        completion: (code: Int, message: String?, yachtList: List<OwnerYachtReservation>?) -> Unit
+    ) {
+        val call = service?.requestDriverList(ReqDriverList(page = pageNum)) ?: return
+
+        call.enqueue(object : Callback<BaseResponse<List<OwnerYachtReservation>>> {
+            override fun onResponse(
+                call: Call<BaseResponse<List<OwnerYachtReservation>>>,
+                response: Response<BaseResponse<List<OwnerYachtReservation>>>
+            ) {
+                when (response.code()) {
+                    200 -> {
+                        Log.d(TAG, response.raw().toString())
+                        if (response.body()?.error == false) {
+                            completion(0, null, response.body()!!.data)
+                        } else {
+                            completion(-1, response.body()?.message, null)
+                        }
+                    }
+                    else -> {
+                        completion(response.code(), null, null)
+                    }
+                }
+            }
+
+            override fun onFailure(
+                call: Call<BaseResponse<List<OwnerYachtReservation>>>,
+                t: Throwable
+            ) {
+                completion(-1, t.toString(), null)
+            }
+        })
+    }
+
+    // 아이템 상세조회
+    fun requestDriverListView(
+        reservationID: String,
+        completion: (code: Int, message: String?, data: OwnerYachtReservation?) -> Unit
+    ) {
+        val call = service?.requestDriverListView(
+            ReqDriverListView(reservationID = reservationID)
+        ) ?: return
+
+        call.enqueue(object : Callback<BaseResponse<OwnerYachtReservation>> {
+            override fun onResponse(
+                call: Call<BaseResponse<OwnerYachtReservation>>,
+                response: Response<BaseResponse<OwnerYachtReservation>>
+            ) {
+                when (response.code()) {
+                    200 -> {
+                        Log.d(TAG, response.raw().toString())
+                        if (response.body()?.error == false) {
+                            completion(0, null, response.body()!!.data)
+                        } else {
+                            completion(-1, response.body()?.message, response.body()?.data)
+                        }
+                    }
+                    else -> {
+                        completion(response.code(), null, null)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<OwnerYachtReservation>>, t: Throwable) {
+                completion(-1, t.toString(), null)
+            }
+
+        })
+
+    }
+
+    // 운항 예약
+    fun requestDriverMatch(
+        reservationID: String,
+        completion: (code: Int, message: String?) -> Unit
+    ) {
+        val id = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
+        val call = service?.requestDriverMatch(
+            ReqDriverMatch(
+                reservationID = reservationID,
+                driverID = id!!,
+                status = STATE_CONFIRMED
+            )
+        ) ?: return
+
+        call.enqueue(object : Callback<BaseResponse<Int>> {
+            override fun onResponse(
+                call: Call<BaseResponse<Int>>,
+                response: Response<BaseResponse<Int>>
+            ) {
+                when (response.code()) {
+                    200 -> {
+                        Log.d(TAG, response.raw().toString())
+                        if (response.body()?.error == false) {
+                            completion(0, null)
+                        } else {
+                            completion(-1, response.body()?.message)
+                        }
+                    }
+                    else -> {
+                        completion(response.code(), null)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<Int>>, t: Throwable) {
+                completion(-1, t.toString())
+            }
+        })
+    }
+
+    // 예약내역 조회
+    fun requestDriverReserve(
+        pageNum: Int,
+        completion: (code: Int, message: String?, data: List<OwnerYachtReservation>?) -> Unit
+    ) {
+        val id = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
+        val req = ReqDriverReserve(page = pageNum, driverID = id!!)
+        val call = service?.requestDriverReserveList(req) ?: return
+
+        call.enqueue(object : Callback<BaseResponse<List<OwnerYachtReservation>>> {
+            override fun onResponse(
+                call: Call<BaseResponse<List<OwnerYachtReservation>>>,
+                response: Response<BaseResponse<List<OwnerYachtReservation>>>
+            ) {
+                when (response.code()) {
+                    200 -> {
+                        Log.d(TAG, response.raw().toString())
+                        if (response.body()?.error == false) {
+                            completion(0, null, response.body()!!.data)
+                        } else {
+                            completion(-1, response.body()?.message, response.body()?.data)
+                        }
+                    }
+                    else -> {
+                        completion(response.code(), null, null)
+                    }
+                }
+            }
+
+            override fun onFailure(
+                call: Call<BaseResponse<List<OwnerYachtReservation>>>,
+                t: Throwable
+            ) {
+                completion(-1, t.toString(), null)
+            }
+
+        })
+    }
+
+    // 예약내역 상세 조회
+    fun requestDriverReserveView(
+        reservationID: String,
+        completion: (code: Int, message: String?, data: OwnerYachtReservation?) -> Unit
+    ) {
+        val id = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
+        val req = ReqDriverReserveView(reservationID = reservationID, driverID = id!!)
+        val call = service?.requestDriverReserveView(req) ?: return
+
+        call.enqueue(object : Callback<BaseResponse<OwnerYachtReservation>> {
+            override fun onResponse(
+                call: Call<BaseResponse<OwnerYachtReservation>>,
+                response: Response<BaseResponse<OwnerYachtReservation>>
+            ) {
+                when (response.code()) {
+                    200 -> {
+                        Log.d(TAG, response.raw().toString())
+                        if (response.body()?.error == false) {
+                            completion(0, null, response.body()!!.data)
+                        } else {
+                            completion(-1, response.body()?.message, response.body()?.data)
+                        }
+                    }
+                    else -> {
+                        completion(response.code(), null, null)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<OwnerYachtReservation>>, t: Throwable) {
+                completion(-1, t.toString(), null)
+            }
         })
     }
 }

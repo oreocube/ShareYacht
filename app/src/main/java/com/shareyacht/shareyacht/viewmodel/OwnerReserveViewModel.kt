@@ -27,6 +27,7 @@ class OwnerReserveViewModel : ViewModel() {
             when (success) {
                 0 -> {
                     if (reservationList!!.isNotEmpty()) {
+                        clearList()
                         // status 에 맞게 분류하기
                         categorizeList(reservationList)
                     }
@@ -37,6 +38,13 @@ class OwnerReserveViewModel : ViewModel() {
             }
 
         }
+    }
+
+    private fun clearList() {
+        stateWaitList.clear()
+        stateConfirmedList.clear()
+        stateCancelList.clear()
+        stateMovingList.clear()
     }
 
     // Status 에 따라 분류하기

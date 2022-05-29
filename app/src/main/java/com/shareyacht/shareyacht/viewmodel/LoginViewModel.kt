@@ -1,63 +1,38 @@
 package com.shareyacht.shareyacht.viewmodel
 
 import android.content.SharedPreferences
-import android.widget.CompoundButton
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.material.button.MaterialButtonToggleGroup
 import com.shareyacht.shareyacht.R
 import com.shareyacht.shareyacht.retrofit.RetrofitManager
 import com.shareyacht.shareyacht.utils.Preference
 import com.shareyacht.shareyacht.utils.SharedPreferenceManager
+import com.shareyacht.shareyacht.utils.UserType
 
 class LoginViewModel : ViewModel() {
 
     val email: MutableLiveData<String> = MutableLiveData()
     val password: MutableLiveData<String> = MutableLiveData()
-
-    // 체크박스 상태 (normal : 일반, corp : 요트 사업자)
-    val normal: MutableLiveData<Boolean> = MutableLiveData(true)
-    val corp: MutableLiveData<Boolean> = MutableLiveData(false)
-
-    private var userType: Int = 1
+    private var userType: Int = UserType.NORMAL
 
     // 로그인 결과
     val loginResult: MutableLiveData<Boolean> = MutableLiveData()
     val failMessage: MutableLiveData<String> = MutableLiveData()
 
-    // 일반 회원 체크된 경우 업데이트
-    private fun normalChecked() {
-        normal.value = true
-        corp.value = false
-        userType = 1
-    }
-
-    // 사업자 회원 체크된 경우 업데이트
-    private fun corpChecked() {
-        corp.value = true
-        normal.value = false
-        userType = 2
-    }
-
-    // 체크박스 변경 리스너
-    val checkedChanged: CompoundButton.OnCheckedChangeListener =
-        CompoundButton.OnCheckedChangeListener { button, isChecked ->
-            if (button != null) {
-                when (button.id) {
-                    // 일반 회원 체크박스에 이벤트 발생
-                    R.id.normalUserCheck -> {
-                        if (isChecked) {
-                            normalChecked()
-                        } else {
-                            corpChecked()
-                        }
+    // MaterialButtonToggleGroup - onButtonCheckedListener
+    val onUserTypeChecked =
+        MaterialButtonToggleGroup.OnButtonCheckedListener { _, checkedId, isChecked ->
+            if (isChecked) {
+                when (checkedId) {
+                    R.id.normalButton -> {
+                        userType = UserType.NORMAL
                     }
-                    // 사업자 회원 체크박스에 이벤트 발생
-                    R.id.corpUserCheck -> {
-                        if (isChecked) {
-                            corpChecked()
-                        } else {
-                            normalChecked()
-                        }
+                    R.id.corpButton -> {
+                        userType = UserType.OWNER
+                    }
+                    R.id.driverButton -> {
+                        userType = UserType.DRIVER
                     }
                 }
             }

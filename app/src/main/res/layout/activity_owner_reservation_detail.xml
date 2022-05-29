@@ -21,7 +21,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.normal.YachtReserveActivity">
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -30,193 +30,232 @@
             app:layout_constraintTop_toTopOf="parent"
             app:title="예약상세" />
 
-        <View
-            android:id="@+id/divider1"
-            style="@style/ThickDivider"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
-        <include
-            android:id="@+id/yachtOverview"
-            layout="@layout/card_yacht_overview"
+        <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="70dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:context=".view.normal.YachtReserveActivity">
+
+                <View
+                    android:id="@+id/divider1"
+                    style="@style/ThickDivider"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <include
+                    android:id="@+id/yachtOverview"
+                    layout="@layout/card_yacht_overview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/divider1" />
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintTop_toBottomOf="@+id/yachtOverview" />
+
+                <TextView
+                    android:id="@+id/lenderIdLabel"
+                    style="@style/ListTitleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="신청자 ID"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divider2" />
+
+                <TextView
+                    android:id="@+id/lenderID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:text="@{reservation.lenderID}"
+                    android:textSize="16sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/lenderIdLabel"
+                    app:layout_constraintStart_toEndOf="@+id/lenderIdLabel" />
+
+                <View
+                    android:id="@+id/divider3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintTop_toBottomOf="@+id/lenderIdLabel" />
+
+                <TextView
+                    android:id="@+id/peopleCountLabel"
+                    style="@style/ListTitleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="탑승인원"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divider3" />
+
+                <TextView
+                    android:id="@+id/peopleCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{Integer.valueOf(reservation.embarkCount).toString()}"
+                    android:textSize="16sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/peopleCountLabel"
+                    app:layout_constraintStart_toStartOf="@id/lenderID" />
+
+                <TextView
+                    android:id="@+id/peopleUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="명"
+                    android:textSize="16sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/peopleCountLabel"
+                    app:layout_constraintStart_toEndOf="@id/peopleCount" />
+
+                <View
+                    android:id="@+id/divider4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintTop_toBottomOf="@+id/peopleCountLabel" />
+
+                <TextView
+                    android:id="@+id/startLocationLabel"
+                    style="@style/ListTitleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="출항일시"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divider4" />
+
+                <TextView
+                    android:id="@+id/startLocationTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{reservation.departure}"
+                    android:textSize="16sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/startLocationLabel"
+                    app:layout_constraintStart_toStartOf="@id/lenderID" />
+
+                <View
+                    android:id="@+id/divider5"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintTop_toBottomOf="@+id/startLocationLabel" />
+
+                <TextView
+                    android:id="@+id/endLocationLabel"
+                    style="@style/ListTitleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="입항일시"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divider5" />
+
+                <TextView
+                    android:id="@+id/endLocationTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{reservation.arrival}"
+                    android:textSize="16sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/endLocationLabel"
+                    app:layout_constraintStart_toStartOf="@id/lenderID" />
+
+                <View
+                    android:id="@+id/divider6"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintTop_toBottomOf="@+id/endLocationLabel" />
+
+                <TextView
+                    android:id="@+id/priceLabel"
+                    style="@style/ListTitleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="이용요금"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divider6" />
+
+                <TextView
+                    android:id="@+id/priceTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{price}"
+                    android:textColor="@color/main_color"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBaseline_toBaselineOf="@id/priceLabel"
+                    app:layout_constraintStart_toStartOf="@id/lenderID" />
+
+                <TextView
+                    android:id="@+id/priceUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="원"
+                    android:textColor="@color/main_color"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBaseline_toBaselineOf="@id/priceLabel"
+                    app:layout_constraintStart_toEndOf="@id/priceTextView" />
+
+                <View
+                    android:id="@+id/divider7"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintTop_toBottomOf="@+id/priceLabel" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/driveSelfButton"
+            style="@style/MainButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/divider1" />
-
-        <View
-            android:id="@+id/divider2"
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintTop_toBottomOf="@+id/yachtOverview" />
-
-        <TextView
-            android:id="@+id/lenderIdLabel"
-            style="@style/ListTitleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="신청자 ID"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider2" />
-
-        <TextView
-            android:id="@+id/lenderID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:text="@{reservation.lenderID}"
-            android:textSize="16sp"
-            app:layout_constraintBaseline_toBaselineOf="@id/lenderIdLabel"
-            app:layout_constraintStart_toEndOf="@+id/lenderIdLabel" />
-
-        <View
-            android:id="@+id/divider3"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="20dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintTop_toBottomOf="@+id/lenderIdLabel" />
-
-        <TextView
-            android:id="@+id/peopleCountLabel"
-            style="@style/ListTitleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="탑승인원"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider3" />
-
-        <TextView
-            android:id="@+id/peopleCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{Integer.valueOf(reservation.embarkCount).toString()}"
-            android:textSize="16sp"
-            app:layout_constraintBaseline_toBaselineOf="@id/peopleCountLabel"
-            app:layout_constraintStart_toStartOf="@id/lenderID" />
-
-        <TextView
-            android:id="@+id/peopleUnit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="명"
-            android:textSize="16sp"
-            app:layout_constraintBaseline_toBaselineOf="@id/peopleCountLabel"
-            app:layout_constraintStart_toEndOf="@id/peopleCount" />
-
-        <View
-            android:id="@+id/divider4"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="20dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintTop_toBottomOf="@+id/peopleCountLabel" />
-
-        <TextView
-            android:id="@+id/startLocationLabel"
-            style="@style/ListTitleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="출항일시"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider4" />
-
-        <TextView
-            android:id="@+id/startLocationTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{reservation.departure}"
-            android:textSize="16sp"
-            app:layout_constraintBaseline_toBaselineOf="@id/startLocationLabel"
-            app:layout_constraintStart_toStartOf="@id/lenderID" />
-
-        <View
-            android:id="@+id/divider5"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="20dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintTop_toBottomOf="@+id/startLocationLabel" />
-
-        <TextView
-            android:id="@+id/endLocationLabel"
-            style="@style/ListTitleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="입항일시"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider5" />
-
-        <TextView
-            android:id="@+id/endLocationTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{reservation.arrival}"
-            android:textSize="16sp"
-            app:layout_constraintBaseline_toBaselineOf="@id/endLocationLabel"
-            app:layout_constraintStart_toStartOf="@id/lenderID" />
-
-        <View
-            android:id="@+id/divider6"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="20dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintTop_toBottomOf="@+id/endLocationLabel" />
-
-        <TextView
-            android:id="@+id/priceLabel"
-            style="@style/ListTitleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="이용요금"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider6" />
-
-        <TextView
-            android:id="@+id/priceTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{price}"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="@color/white"
+            android:onClick="@{() -> viewModel.driveSelfAndAcceptReservation()}"
+            android:padding="10dp"
+            android:text="직접 운전"
             android:textColor="@color/main_color"
-            android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBaseline_toBaselineOf="@id/priceLabel"
-            app:layout_constraintStart_toStartOf="@id/lenderID" />
-
-        <TextView
-            android:id="@+id/priceUnit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="원"
-            android:textColor="@color/main_color"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBaseline_toBaselineOf="@id/priceLabel"
-            app:layout_constraintStart_toEndOf="@id/priceTextView" />
-
-        <View
-            android:id="@+id/divider7"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="20dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintTop_toBottomOf="@+id/priceLabel" />
+            android:visibility="gone"
+            app:layout_constraintBaseline_toBaselineOf="@id/acceptButton"
+            app:layout_constraintBottom_toTopOf="@id/refuseButton"
+            app:layout_constraintEnd_toStartOf="@+id/acceptButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@id/refuseButton"
+            app:strokeColor="@color/main_color"
+            app:strokeWidth="2dp" />
 
         <Button
             android:id="@+id/acceptButton"
             style="@style/MainButton"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="50dp"
+            android:layout_marginStart="5dp"
             android:layout_marginBottom="5dp"
             android:onClick="@{() -> viewModel.acceptReservation()}"
-            android:text="승인"
+            android:text="운전자 필요"
             android:textStyle="bold"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/refuseButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toEndOf="@id/refuseButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/driveSelfButton" />
 
         <Button
             android:id="@+id/refuseButton"
@@ -233,33 +272,58 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <include
+        <Button
             android:id="@+id/scanQrButton"
-            layout="@layout/card_scan_qr"
+            style="@style/MainButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="@color/white"
+            android:text="승선명부 등록"
+            android:textColor="@color/main_color"
+            android:textStyle="bold"
             android:visibility="gone"
-            app:layout_constraintEnd_toStartOf="@+id/leaveButton"
+            app:layout_constraintBottom_toTopOf="@id/leaveButton"
+            app:layout_constraintEnd_toStartOf="@+id/setPathButton"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider7" />
+            app:layout_constraintStart_toStartOf="@id/leaveButton"
+            app:strokeColor="@color/main_color"
+            app:strokeWidth="2dp" />
 
-        <include
-            android:id="@+id/leaveButton"
-            layout="@layout/card_leave"
+        <Button
+            android:id="@+id/setPathButton"
+            style="@style/MainButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="@color/white"
+            android:text="경로 설정"
+            android:textColor="@color/main_color"
+            android:textStyle="bold"
             android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/leaveButton"
+            app:layout_constraintEnd_toEndOf="@id/leaveButton"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/scanQrButton"
-            app:layout_constraintTop_toBottomOf="@id/divider7" />
+            app:strokeColor="@color/main_color"
+            app:strokeWidth="2dp" />
+
+        <Button
+            android:id="@+id/leaveButton"
+            style="@style/MainButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginBottom="20dp"
+            android:text="출항"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/enterButton"

@@ -30,14 +30,6 @@ class LoginFragment : Fragment() {
 
             // 회원가입 버튼 클릭된 경우 화면 이동
             navSignUpButton.setOnClickListener { navigateToSignUp() }
-
-            // 뷰모델의 체크박스 상태가 변경된 경우 체크박스 ui 업데이트
-            viewModel.normal.observe(viewLifecycleOwner, { normal ->
-                normalUserCheck.isChecked = normal
-            })
-            viewModel.corp.observe(viewLifecycleOwner, { corp ->
-                corpUserCheck.isChecked = corp
-            })
         }
 
         return binding.root

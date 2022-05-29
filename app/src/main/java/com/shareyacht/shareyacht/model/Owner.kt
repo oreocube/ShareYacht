@@ -1,6 +1,5 @@
 package com.shareyacht.shareyacht.model
 
-import androidx.constraintlayout.motion.widget.KeyCycleOscillator
 import com.google.gson.annotations.SerializedName
 import com.shareyacht.shareyacht.utils.Keyword
 
@@ -62,17 +61,34 @@ data class ReqGetPassenger(
 
 data class ReqGetPath(
     @SerializedName(Keyword.USER_ID)
-    val userID: String
+    val userID: String,
+    @SerializedName(Keyword.RESERVE_ID)
+    val reserveid: String
 )
 
 data class ReqAddPath(
     @SerializedName(Keyword.USER_ID)
     val userID: String,
     @SerializedName(Keyword.DATA)
-    val data: String
+    val data: String,
+    @SerializedName(Keyword.RESERVE_ID)
+    val reserveid: String
 )
 
 data class ReqGetStatus(
+    @SerializedName(Keyword.ERROR)
+    val error: Boolean,
+    @SerializedName(Keyword.MESSAGE)
+    val message: String,
+    @SerializedName(Keyword.STATUS)
+    val status: String,
+    @SerializedName("data1")
+    val data: ReqStatus
+)
+
+data class ReqStatus(
+    @SerializedName("num0")
+    val num0: Int,
     @SerializedName("num1")
     val num1: Int,
     @SerializedName("num2")
@@ -80,7 +96,38 @@ data class ReqGetStatus(
     @SerializedName("num3")
     val num3: Int,
     @SerializedName("num4")
-    val num4: Int,
-    @SerializedName("num5")
-    val num5: Int
+    val num4: Int
+)
+
+data class ReqDriverList(
+    @SerializedName(Keyword.PAGE_NUM)
+    val page: Int
+)
+
+data class ReqDriverListView(
+    @SerializedName(Keyword.ID)
+    val reservationID: String
+)
+
+data class ReqDriverMatch(
+    @SerializedName(Keyword.ID)
+    val reservationID: String,
+    @SerializedName(Keyword.DRIVER_ID)
+    val driverID: String,
+    @SerializedName(Keyword.STATUS)
+    val status: Int
+)
+
+data class ReqDriverReserve(
+    @SerializedName(Keyword.PAGE_NUM)
+    val page: Int,
+    @SerializedName(Keyword.DRIVER_ID)
+    val driverID: String
+)
+
+data class ReqDriverReserveView(
+    @SerializedName(Keyword.ID)
+    val reservationID: String,
+    @SerializedName(Keyword.DRIVER_ID)
+    val driverID: String
 )

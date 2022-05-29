@@ -1,18 +1,20 @@
 package com.shareyacht.shareyacht.view.owner
 
-import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shareyacht.shareyacht.adapter.ClickListener
 import com.shareyacht.shareyacht.adapter.OwnerReservationAdapter
 import com.shareyacht.shareyacht.databinding.FragmentReservationStateBinding
+import com.shareyacht.shareyacht.utils.Constants
 import com.shareyacht.shareyacht.utils.Constants.STATE_CANCEL
 import com.shareyacht.shareyacht.utils.Constants.STATE_CONFIRMED
 import com.shareyacht.shareyacht.utils.Constants.STATE_MOVING
@@ -35,14 +37,14 @@ class ReservationFragment(val state: Int) : Fragment() {
 
         mBinding = binding
 
-        mAdapter = OwnerReservationAdapter(ClickListener { reservation ->
-            val intent =
-                Intent(context, OwnerReservationDetailActivity::class.java)
+        mAdapter = OwnerReservationAdapter { reservation ->
+            val intent = Intent(context, OwnerReservationDetailActivity::class.java)
             intent.putExtra(Keyword.RESERVATION_ID, reservation.id)
             reservationDetailActivityResultLauncher.launch(intent)
-        })
+        }
 
         viewModel.filterCompleted.observe(viewLifecycleOwner, {
+            Log.d("로그 : ", "새로운 필터링 감지")
             if (it) {
                 when (state) {
                     STATE_WAIT -> {
@@ -69,9 +71,11 @@ class ReservationFragment(val state: Int) : Fragment() {
         return binding.root
     }
 
+    // 상세 화면으로 이동
     private val reservationDetailActivityResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK) {
+            if (result.resultCode == AppCompatActivity.RESULT_OK) {
+                Log.d(Constants.TAG, "액티비티 RESULT_OK")
                 viewModel.getReservationStatus()
             }
         }

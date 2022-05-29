@@ -1,10 +1,11 @@
 package com.shareyacht.shareyacht.view.normal
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shareyacht.shareyacht.R
 import com.shareyacht.shareyacht.adapter.YachtListAdapter
 import com.shareyacht.shareyacht.databinding.ActivityMainBinding
+import com.shareyacht.shareyacht.utils.Preference
 import com.shareyacht.shareyacht.utils.SharedPreferenceManager
 import com.shareyacht.shareyacht.viewmodel.MainViewModel
 
@@ -77,6 +79,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun initNavigationDrawer() {
         val navigationView = mBinding.navView
+        val headerView = navigationView.getHeaderView(0)
+
+        // 이름, 이메일 설정
+        val id = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
+        val name = SharedPreferenceManager.instance.getString(Preference.SP_NAME, "")
+        headerView.findViewById<TextView>(R.id.emailTextView).text = id
+        headerView.findViewById<TextView>(R.id.nameTextView).text = name
+
         navigationView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.drawer_qr -> {

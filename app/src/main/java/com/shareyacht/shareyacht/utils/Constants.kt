@@ -2,11 +2,13 @@ package com.shareyacht.shareyacht.utils
 
 object Constants {
     const val TAG: String = "로그"
+    const val ADB_TAG = "SHARE-YACHT"
     const val STATE_WAIT = 0
     const val STATE_CONFIRMED = 1
     const val STATE_MOVING = 2
     const val STATE_COMPLETED = 3
     const val STATE_CANCEL = 4
+    const val STATE_WAIT_DRIVER = 5
 }
 
 object API {
@@ -34,7 +36,18 @@ object API {
     const val CONSUMER_RESERVE = "/consumer/reserve"
     const val CONSUMER_RESERVE_VIEW = "/consumer/reserve/view"
 
+    /* Driver */
+    const val DRIVER_LIST = "/driver/list"
+    const val DRIVER_LIST_VIEW = "/driver/list/view"
+    const val DRIVER_MATCH = "/driver/match"
+    const val DRIVER_RESERVE = "/driver/reserve"
+    const val DRIVER_RESERVE_VIEW = "/driver/reserve/view"
+
+    const val IMAGE_URL_BASE = "$BASE_URL/image"
     const val IMAGE_UPLOAD = "/image/upload"
+
+    const val YACHT_LEAVE = "/yacht/leave"
+    const val YACHT_ENTER = "/yacht/enter"
 }
 
 object Keyword {
@@ -53,6 +66,7 @@ object Keyword {
     const val BIRTHDAY = "birthday"
     const val SEX = "sex"
     const val USER_ID = "userid"
+    const val DRIVER_LICENSE = "driverlicense"
 
     // yacht
     const val YACHT = "yacht"
@@ -76,6 +90,7 @@ object Keyword {
     const val ENTER_TIME = "entertime"
     const val EMBARK_TIME = "embarktime"
     const val EMBARK_USER_ID = "embarkuserid"
+    const val DRIVER_ID = "driverid"
 
     // 승선명부
     const val EMBARK_ID = "embarkid"
@@ -89,6 +104,12 @@ object Keyword {
     const val IMAGE_ID = "imageid"
     const val DATA = "data"
     const val PAGE_NUM = "pagenum"
+}
+
+object UserType {
+    const val NORMAL = 1
+    const val OWNER = 2
+    const val DRIVER = 3
 }
 
 object Preference {

@@ -41,5 +41,6 @@ data class OwnerYachtReservation(
     @SerializedName(Keyword.YACHT) val yacht: Yacht,
     @SerializedName(Keyword.EMBARK_COUNT) val embarkCount: Int,
     @SerializedName(Keyword.STATUS) val status: Int,
-    @SerializedName(Keyword.LENDER_ID) val lenderID: String
+    @SerializedName(Keyword.LENDER_ID) val lenderID: String,
+    @SerializedName(Keyword.DRIVER_ID) val driverID: String?
 )

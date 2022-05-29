@@ -10,6 +10,8 @@ import com.shareyacht.shareyacht.utils.Constants.STATE_CANCEL
 import com.shareyacht.shareyacht.utils.Constants.STATE_COMPLETED
 import com.shareyacht.shareyacht.utils.Constants.STATE_CONFIRMED
 import com.shareyacht.shareyacht.utils.Constants.STATE_MOVING
+import com.shareyacht.shareyacht.utils.Constants.STATE_WAIT_DRIVER
+import com.shareyacht.shareyacht.utils.UserType
 import com.shareyacht.shareyacht.utils.getNowTime
 
 class OwnerReserveDetailViewModel : ViewModel() {
@@ -20,15 +22,49 @@ class OwnerReserveDetailViewModel : ViewModel() {
     val status: MutableLiveData<Int> = MutableLiveData()
     val totalPrice: MutableLiveData<Int> = MutableLiveData()
     var reservationID: String = ""
-    val _updateEvent = MutableLiveData<Boolean>()
+
+    private val _updateEvent = MutableLiveData<Boolean>()
     val updateEvent: LiveData<Boolean>
         get() = _updateEvent
 
     // 예약내역 상세 가져오기
-    fun getReserveDetail(reservationID: String) {
+    fun getReserveDetail(userType: Int, reservationID: String) {
         this.reservationID = reservationID
 
-        RetrofitManager.instance.requestOwnerReserveView(reservationID) { success, message, data ->
+        when (userType) {
+            UserType.OWNER -> {
+                getItemForOwner()
+            }
+            UserType.DRIVER -> {
+                getItemForDriver()
+            }
+        }
+
+
+    }
+
+    private fun getItemForOwner() {
+        RetrofitManager.instance.requestOwnerReserveView(id = reservationID) { success, message, data ->
+            when (success) {
+                0 -> {
+                    if (data != null) {
+                        imageUrl.value = "${API.BASE_URL}/image/${data.yacht.imageid}"
+                        selectedYacht.value = data
+                        status.value = data.status
+                        getTotalPrice(data)
+                    } else {
+                        _message.value = "요트를 찾을 수 없습니다."
+                    }
+                }
+                1 -> {
+                    _message.value = message
+                }
+            }
+        }
+    }
+
+    private fun getItemForDriver() {
+        RetrofitManager.instance.requestDriverReserveView(reservationID = reservationID) { success, message, data ->
             when (success) {
                 0 -> {
                     if (data != null) {
@@ -61,18 +97,33 @@ class OwnerReserveDetailViewModel : ViewModel() {
         } else {
             reservation.arrival.substring(15, 17).toInt()
         }
-        //val start = reservation.departure.substring(15, 17).toInt()
-        //val end = reservation.arrival.substring(15, 17).toInt()
         val time = end - start
         // 금액 합계
         totalPrice.value = reservation.yacht.price.toInt() * reservation.embarkCount * time
     }
 
-    // 예약 승인
-    fun acceptReservation() {
+    fun driveSelfAndAcceptReservation() {
         RetrofitManager.instance.requestOwnerReserveDecision(
             reservationID = reservationID,
             status = STATE_CONFIRMED
+        ) { success, message ->
+            when (success) {
+                0 -> {
+                    // 승인
+                    _updateEvent.value = true
+                }
+                1 -> {
+                    _message.value = message
+                }
+            }
+        }
+    }
+
+    // 예약 승인
+    fun acceptReservation() {// 운전자 매칭 필요
+        RetrofitManager.instance.requestOwnerReserveDecision(
+            reservationID = reservationID,
+            status = STATE_WAIT_DRIVER
         ) { success, message ->
             when (success) {
                 0 -> {

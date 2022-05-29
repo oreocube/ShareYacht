@@ -1,10 +1,9 @@
 package com.shareyacht.shareyacht.view.owner
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import com.shareyacht.shareyacht.R
 import android.graphics.Color
+import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
@@ -14,7 +13,9 @@ import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.overlay.PathOverlay
+import com.shareyacht.shareyacht.R
 import com.shareyacht.shareyacht.databinding.ActivitySetMapBinding
+import com.shareyacht.shareyacht.utils.Keyword
 import com.shareyacht.shareyacht.viewmodel.OwnerPathViewModel
 
 class SetMapActivity : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener {
@@ -31,6 +32,7 @@ class SetMapActivity : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickL
 
         mBinding = binding
         setContentView(binding.root)
+        initToolbar()
 
         val fm: FragmentManager = supportFragmentManager
         var mapFragment: MapFragment? = fm.findFragmentById(R.id.map) as MapFragment
@@ -49,15 +51,28 @@ class SetMapActivity : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickL
 
     }
 
-    // 지도를 다 불러온 뒤 실행할 코드
+    private fun initToolbar() {
+        val toolbar = mBinding.toolbar
+        setSupportActionBar(toolbar)
+        val ab = supportActionBar
+        ab?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    // onMapReady Callback
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap
 
         // 경로 커스텀
         initPath()
 
+        // reservationID 가져오기
+        val reservationID = intent.getStringExtra(Keyword.RESERVATION_ID)
+
         // 경로 불러오기
-        viewModel.getMyPath()
+        if (reservationID != null) {
+            viewModel.getMyPath(reservationID)
+        }
+
         viewModel.getMyPathCompleted.observe(this, {
             // 설정된 경로가 있는 경우
             if (viewModel.myPath.size > 0) {

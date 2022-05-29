@@ -1,15 +1,17 @@
 package com.shareyacht.shareyacht.view.user
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.shareyacht.shareyacht.R
 import com.shareyacht.shareyacht.databinding.ActivityLoginBinding
 import com.shareyacht.shareyacht.utils.Preference
 import com.shareyacht.shareyacht.utils.SharedPreferenceManager
+import com.shareyacht.shareyacht.utils.UserType
+import com.shareyacht.shareyacht.view.DriverActivity
 import com.shareyacht.shareyacht.view.normal.MainActivity
 import com.shareyacht.shareyacht.view.owner.OwnerActivity
 import com.shareyacht.shareyacht.viewmodel.LoginViewModel
@@ -57,13 +59,18 @@ class LoginActivity : AppCompatActivity() {
 
     private fun navigateToMainActivity() {
         when (SharedPreferenceManager.instance.getInt(Preference.SP_USERTYPE, 0)) {
-            1 -> {
+            UserType.NORMAL -> {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             }
-            2 -> {
+            UserType.OWNER -> {
                 val intent = Intent(this, OwnerActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            UserType.DRIVER -> {
+                val intent = Intent(this, DriverActivity::class.java)
                 startActivity(intent)
                 finish()
             }

@@ -11,3 +11,5 @@ fun getNowTime(): String {
     val sdf = SimpleDateFormat("yyyy-MM-dd E요일", Locale.KOREAN)
     return sdf.format(currentTime)
 }
+
+fun getImageUrl(imageID: Long) = "${API.IMAGE_URL_BASE}/${imageID}"

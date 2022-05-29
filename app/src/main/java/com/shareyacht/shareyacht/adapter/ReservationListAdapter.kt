@@ -8,13 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.shareyacht.shareyacht.databinding.RvItemReservationBinding
 import com.shareyacht.shareyacht.model.YachtReservation
-import com.shareyacht.shareyacht.utils.API
 import com.shareyacht.shareyacht.utils.Constants.STATE_CANCEL
 import com.shareyacht.shareyacht.utils.Constants.STATE_COMPLETED
 import com.shareyacht.shareyacht.utils.Constants.STATE_CONFIRMED
 import com.shareyacht.shareyacht.utils.Constants.STATE_MOVING
 import com.shareyacht.shareyacht.utils.Constants.STATE_WAIT
+import com.shareyacht.shareyacht.utils.Constants.STATE_WAIT_DRIVER
 import com.shareyacht.shareyacht.utils.formatter
+import com.shareyacht.shareyacht.utils.getImageUrl
 
 /* [일반] 예약내역 - 상태별 목록 - list adapter */
 class ReservationListAdapter :
@@ -40,10 +41,11 @@ class ReservationListAdapter :
     class ReservationViewHolder(private val binding: RvItemReservationBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(reservation: YachtReservation) {
-            val url = "${API.BASE_URL}/image/${reservation.yacht.imageid}"
+            val url = getImageUrl(reservation.yacht.imageid)
 
             val status = when (reservation.status) {
                 STATE_WAIT -> "신청중"
+                STATE_WAIT_DRIVER -> "운전자 매칭 대기"
                 STATE_CONFIRMED -> "예약확정"
                 STATE_MOVING -> "운항중"
                 STATE_COMPLETED -> "운항완료"
@@ -62,8 +64,7 @@ class ReservationListAdapter :
             } else {
                 reservation.arrival.substring(15, 17).toInt()
             }
-            //val start = reservation.departure.substring(15, 17).toInt()
-            //val end = reservation.arrival.substring(15, 17).toInt()
+
             val time = end - start
             // 금액 합계
             val totalPrice = reservation.yacht.price.toInt() * reservation.embarkCount * time
@@ -92,7 +93,7 @@ class ReservationListAdapter :
                 oldItem: YachtReservation,
                 newItem: YachtReservation
             ): Boolean =
-                oldItem.id == newItem.id
+                oldItem.id == newItem.id && oldItem.status == newItem.status
 
             override fun areContentsTheSame(
                 oldItem: YachtReservation,

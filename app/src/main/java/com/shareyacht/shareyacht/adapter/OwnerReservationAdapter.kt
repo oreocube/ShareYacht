@@ -1,9 +1,7 @@
 package com.shareyacht.shareyacht.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,12 +9,10 @@ import com.bumptech.glide.Glide
 import com.shareyacht.shareyacht.databinding.RvItemOwnerReservationBinding
 import com.shareyacht.shareyacht.model.OwnerYachtReservation
 import com.shareyacht.shareyacht.utils.API
-import com.shareyacht.shareyacht.utils.Keyword
 import com.shareyacht.shareyacht.utils.formatter
-import com.shareyacht.shareyacht.view.owner.OwnerReservationDetailActivity
 
 /* [사업자] 예약현황 - 상태별 목록 - list adapter */
-class OwnerReservationAdapter(private val cl: ClickListener) :
+class OwnerReservationAdapter(private val clickListener: (reservation: OwnerYachtReservation) -> Unit) :
     ListAdapter<OwnerYachtReservation, OwnerReservationAdapter.OwnerReservationViewHolder>(
         RESERVATION_COMPARATOR
     ) {
@@ -31,7 +27,7 @@ class OwnerReservationAdapter(private val cl: ClickListener) :
         val currentItem = getItem(position)
 
         if (currentItem != null) {
-            holder.bind(currentItem, cl.clickListener)
+            holder.bind(currentItem, clickListener)
         }
     }
 
@@ -58,8 +54,6 @@ class OwnerReservationAdapter(private val cl: ClickListener) :
             } else {
                 reservation.arrival.substring(15, 17).toInt()
             }
-            //val start = reservation.departure.substring(15, 17).toInt()
-            //val end = reservation.arrival.substring(15, 17).toInt()
             val time = end - start
             // 금액 합계
             val totalPrice = reservation.yacht.price.toInt() * reservation.embarkCount * time
@@ -72,13 +66,6 @@ class OwnerReservationAdapter(private val cl: ClickListener) :
                     .load(url)
                     .centerCrop()
                     .into(yachtImage)
-
-                itemView.setOnClickListener {
-                    val intent =
-                        Intent(itemView.context, OwnerReservationDetailActivity::class.java)
-                    intent.putExtra(Keyword.RESERVATION_ID, reservation.id)
-                    startActivity(itemView.context, intent, null)
-                }
             }
         }
     }
@@ -91,7 +78,7 @@ class OwnerReservationAdapter(private val cl: ClickListener) :
                     oldItem: OwnerYachtReservation,
                     newItem: OwnerYachtReservation
                 ): Boolean =
-                    oldItem.id == newItem.id
+                    oldItem.id == newItem.id && oldItem.status == newItem.status
 
                 override fun areContentsTheSame(
                     oldItem: OwnerYachtReservation,

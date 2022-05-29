@@ -30,29 +30,41 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="50dp" />
 
-        <CheckBox
-            android:id="@+id/normalUserCheck"
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:buttonTint="@color/checkbox_tint"
-            android:checked="@={loginViewModel.normal}"
-            android:onCheckedChanged="@{loginViewModel.checkedChanged}"
-            android:text="@string/normal_user"
+            app:checkedBtnAttrChanged="@{loginViewModel.onUserTypeChecked}"
+            app:checkedButton="@id/normalButton"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appName" />
+            app:layout_constraintTop_toBottomOf="@id/appName"
+            app:selectionRequired="true"
+            app:singleSelection="true">
 
-        <CheckBox
-            android:id="@+id/corpUserCheck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:buttonTint="@color/checkbox_tint"
-            android:checked="@={loginViewModel.corp}"
-            android:onCheckedChanged="@{loginViewModel.checkedChanged}"
-            android:text="@string/corp_user"
-            app:layout_constraintBaseline_toBaselineOf="@+id/normalUserCheck"
-            app:layout_constraintStart_toEndOf="@+id/normalUserCheck" />
+            <Button
+                android:id="@+id/normalButton"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="일반회원" />
+
+            <Button
+                android:id="@+id/corpButton"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="요트 사업자" />
+
+            <Button
+                android:id="@+id/driverButton"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="운전자" />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailTextInput"
@@ -60,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/corpUserCheck"
+            app:layout_constraintTop_toBottomOf="@+id/toggleButton"
             app:startIconDrawable="@drawable/ic_email">
 
             <com.google.android.material.textfield.TextInputEditText

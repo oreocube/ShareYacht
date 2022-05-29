@@ -1,19 +1,21 @@
 package com.shareyacht.shareyacht.view.owner
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import com.bumptech.glide.Glide
 import com.shareyacht.shareyacht.R
 import com.shareyacht.shareyacht.databinding.ActivityOwnerBinding
+import com.shareyacht.shareyacht.utils.Preference
 import com.shareyacht.shareyacht.utils.SharedPreferenceManager
 import com.shareyacht.shareyacht.viewmodel.OwnerMainViewModel
 
@@ -48,14 +50,8 @@ class OwnerActivity : AppCompatActivity() {
                 val intent = Intent(this@OwnerActivity, ReservationStateActivity::class.java)
                 yachtStateActivityResultLauncher.launch(intent)
             }
-            // 경로 설정
-            setPathButton.setOnClickListener {
-                val intent = Intent(this@OwnerActivity, SetMapActivity::class.java)
-                startActivity(intent)
-            }
         }
         viewModel.apply {
-            requestMyYacht()
             _message.observe(this@OwnerActivity, { message ->
                 Toast.makeText(this@OwnerActivity, message, Toast.LENGTH_SHORT).show()
             })
@@ -78,6 +74,10 @@ class OwnerActivity : AppCompatActivity() {
                     binding.myYachtFrame.myYacht = yacht
                 }
             })
+            myStatus.observe(this@OwnerActivity, { data ->
+                if (data != null)
+                    binding.myYachtStatusFrame.status = data
+            })
         }
     }
 
@@ -97,15 +97,13 @@ class OwnerActivity : AppCompatActivity() {
 
     private fun initNavigationDrawer() {
         val navigationView = mBinding.navView
-        navigationView.setNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.drawer_add_yacht -> {
-                    val intent = Intent(applicationContext, AddYachtActivity::class.java)
-                    startActivity(intent)
-                }
-            }
-            true
-        }
+        val headerView = navigationView.getHeaderView(0)
+
+        // 이름, 이메일 설정
+        val id = SharedPreferenceManager.instance.getString(Preference.SP_EMAIL, "")
+        val name = SharedPreferenceManager.instance.getString(Preference.SP_NAME, "")
+        headerView.findViewById<TextView>(R.id.emailTextView).text = id
+        headerView.findViewById<TextView>(R.id.nameTextView).text = name
     }
 
     // 요트 등록
@@ -120,7 +118,7 @@ class OwnerActivity : AppCompatActivity() {
     private val yachtStateActivityResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
-                // TODO
+                viewModel.requestMyStatus()
             }
         }
 }

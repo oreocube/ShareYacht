@@ -4,15 +4,15 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.activity.result.contract.ActivityResultContracts.GetContent
+import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.shareyacht.shareyacht.R
@@ -38,6 +38,7 @@ class AddYachtActivity : AppCompatActivity() {
         )
 
         mBinding = binding
+        initToolbar()
 
         // viewModel 바인딩
         binding.viewModel = viewModel
@@ -49,6 +50,13 @@ class AddYachtActivity : AppCompatActivity() {
 
         subscribeImageStatus()
         subscribeConnectionStatus()
+    }
+
+    private fun initToolbar() {
+        val toolbar = mBinding.toolbar
+        setSupportActionBar(toolbar)
+        val ab = supportActionBar
+        ab?.setDisplayHomeAsUpEnabled(true)
     }
 
     // 통신 중인 경우 버튼 비활성화

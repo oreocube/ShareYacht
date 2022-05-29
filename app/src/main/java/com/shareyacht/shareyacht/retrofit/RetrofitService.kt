@@ -5,7 +5,6 @@ import com.shareyacht.shareyacht.utils.API
 import com.shareyacht.shareyacht.utils.Keyword
 import okhttp3.MultipartBody
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.http.*
 
 interface RetrofitService {
@@ -48,6 +47,12 @@ interface RetrofitService {
         @Body body: BaseRequest
     ): Call<BaseResponse<List<OwnerYachtReservation>>>
 
+    // 예약내역 목록
+    @POST(API.OWNER_RESERVE)
+    fun requestReservationStatus(
+        @Body body: BaseRequest
+    ): Call<ReqGetStatus>
+
     // 예약내역 상세
     @POST(API.OWNER_RESERVE_VIEW)
     fun requestOwnerReserveView(
@@ -73,15 +78,17 @@ interface RetrofitService {
     ): Call<BaseResponse<Int>>
 
     // 출항
-    @POST(API.OWNER_LEAVE)
+    @POST("/{userType}${API.YACHT_LEAVE}")
     fun requestOwnerLeave(
-        @Body body: ReqOwnerLeave
+        @Body body: ReqOwnerLeave,
+        @Path("userType") userType: String
     ): Call<BaseResponse<Int>>
 
     // 입항
-    @POST(API.OWNER_ENTER)
+    @POST("/{userType}${API.YACHT_ENTER}")
     fun requestOwnerEnter(
-        @Body body: ReqOwnerEnter
+        @Body body: ReqOwnerEnter,
+        @Path("userType") userType: String
     ): Call<BaseResponse<Int>>
 
     // 경로 불러오기
@@ -120,4 +127,35 @@ interface RetrofitService {
     fun requestReservationList(
         @Body body: ReqReservationList
     ): Call<BaseResponse<List<YachtReservation>>>
+
+    /* 운전자 */
+    // 리스트
+    @POST(API.DRIVER_LIST)
+    fun requestDriverList(
+        @Body body: ReqDriverList
+    ): Call<BaseResponse<List<OwnerYachtReservation>>>
+
+    // 아이템 조회
+    @POST(API.DRIVER_LIST_VIEW)
+    fun requestDriverListView(
+        @Body body: ReqDriverListView
+    ): Call<BaseResponse<OwnerYachtReservation>>
+
+    // 운전 예약
+    @POST(API.DRIVER_MATCH)
+    fun requestDriverMatch(
+        @Body body: ReqDriverMatch
+    ): Call<BaseResponse<Int>>
+
+    // 예약내역 조회
+    @POST(API.DRIVER_RESERVE)
+    fun requestDriverReserveList(
+        @Body body: ReqDriverReserve
+    ): Call<BaseResponse<List<OwnerYachtReservation>>>
+
+    // 예약내역 상세 조회
+    @POST(API.DRIVER_RESERVE_VIEW)
+    fun requestDriverReserveView(
+        @Body body: ReqDriverReserveView
+    ): Call<BaseResponse<OwnerYachtReservation>>
 }

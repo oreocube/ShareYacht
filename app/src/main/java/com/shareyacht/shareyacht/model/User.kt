@@ -11,7 +11,8 @@ data class User(
     @SerializedName(Keyword.BIRTHDAY) val birth: String,
     @SerializedName(Keyword.ADDRESS) val address: String,
     @SerializedName(Keyword.PHONE) val phone: String,
-    @SerializedName(Keyword.SEX) val sex: String
+    @SerializedName(Keyword.SEX) val sex: String,
+    @SerializedName(Keyword.DRIVER_LICENSE) var driverLicense: String?
 )
 
 data class ReqLogin(

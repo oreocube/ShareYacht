@@ -1,6 +1,5 @@
 package com.shareyacht.shareyacht.model
 
-import androidx.constraintlayout.motion.widget.KeyCycleOscillator
 import com.google.gson.annotations.SerializedName
 import com.shareyacht.shareyacht.utils.Keyword
 

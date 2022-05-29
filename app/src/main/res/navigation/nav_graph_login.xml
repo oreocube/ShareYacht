@@ -30,10 +30,21 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_signUpFragment_to_licenseInfoFragment"
+            app:destination="@id/licenseInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/userInfoFragment"
         android:name="com.shareyacht.shareyacht.view.user.UserInfoFragment"
         android:label="fragment_user_info"
         tools:layout="@layout/fragment_user_info" />
+    <fragment
+        android:id="@+id/licenseInfoFragment"
+        android:name="com.shareyacht.shareyacht.view.user.LicenseInfoFragment"
+        android:label="LicenseInfoFragment">
+        <action
+            android:id="@+id/action_licenseInfoFragment_to_userInfoFragment"
+            app:destination="@id/userInfoFragment" />
+    </fragment>
 </navigation>

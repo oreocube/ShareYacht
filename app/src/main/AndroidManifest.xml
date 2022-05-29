@@ -7,6 +7,10 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <!-- GPS 권한 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,51 +19,45 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ShareYacht"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".view.owner.MapViewActivity"
+            android:exported="true" />
+        <activity android:name=".view.DriverReservationActivity" />
+        <activity android:name=".view.DriverDetailActivity" />
+        <activity android:name=".view.DriverActivity" />
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
-            android:value="${mapKey}" />
-
-        <!-- [로그인] -->
+            android:value="${mapKey}" /> <!-- [로그인] -->
         <activity android:name=".view.user.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- [사업자] 메인 -->
-        <activity android:name=".view.owner.OwnerActivity" />
-
-        <!-- [사업자] 요트 등록 -->
+        </activity> <!-- [사업자] 메인 -->
+        <activity android:name=".view.owner.OwnerActivity" /> <!-- [사업자] 요트 등록 -->
         <activity
             android:name=".view.owner.AddYachtActivity"
             android:parentActivityName=".view.owner.OwnerActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.owner.OwnerActivity" />
-        </activity>
-
-        <!-- [사업자] 예약현황 -->
+        </activity> <!-- [사업자] 예약현황 -->
         <activity
             android:name=".view.owner.ReservationStateActivity"
             android:parentActivityName=".view.owner.OwnerActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.owner.OwnerActivity" />
-        </activity>
-
-        <!-- [사업자] 예약 상세 -->
+        </activity> <!-- [사업자] 예약 상세 -->
         <activity
             android:name=".view.owner.OwnerReservationDetailActivity"
             android:parentActivityName=".view.owner.ReservationStateActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.owner.ReservationStateActivity" />
-        </activity>
-
-        <!-- [사업자] 탑승자 명부 -->
+        </activity> <!-- [사업자] 탑승자 명부 -->
         <activity
             android:name=".view.owner.PassengersListActivity"
             android:parentActivityName=".view.owner.ReservationStateActivity"
@@ -70,57 +68,43 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.owner.ReservationStateActivity" />
-        </activity>
-
-        <!-- [사업자] 경로 설정 -->
+        </activity> <!-- [사업자] 경로 설정 -->
         <activity
             android:name=".view.owner.SetMapActivity"
             android:parentActivityName=".view.owner.OwnerActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.owner.OwnerActivity" />
-        </activity>
-
-        <!-- [일반] 메인 -->
-        <activity android:name=".view.normal.MainActivity" />
-
-        <!-- [일반] 요트 상세 -->
+        </activity> <!-- [일반] 메인 -->
+        <activity android:name=".view.normal.MainActivity" /> <!-- [일반] 요트 상세 -->
         <activity
             android:name=".view.normal.YachtDetailActivity"
             android:parentActivityName=".view.normal.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.normal.MainActivity" />
-        </activity>
-
-        <!-- [일반] 예약신청 -->
+        </activity> <!-- [일반] 예약신청 -->
         <activity
             android:name=".view.normal.YachtReserveActivity"
             android:parentActivityName=".view.normal.YachtDetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.normal.YachtDetailActivity" />
-        </activity>
-
-        <!-- [일반] 예약성공 -->
+        </activity> <!-- [일반] 예약성공 -->
         <activity
             android:name=".view.normal.SuccessActivity"
             android:parentActivityName=".view.normal.YachtReserveActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.normal.YachtReserveActivity" />
-        </activity>
-
-        <!-- [일반] QR 코드 조회 -->
+        </activity> <!-- [일반] QR 코드 조회 -->
         <activity
             android:name=".view.normal.QrViewActivity"
             android:parentActivityName=".view.normal.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.normal.MainActivity" />
-        </activity>
-
-        <!-- [일반] 예약내역 -->
+        </activity> <!-- [일반] 예약내역 -->
         <activity
             android:name=".view.normal.ReservationActivity"
             android:parentActivityName=".view.normal.MainActivity">
@@ -129,4 +113,5 @@
                 android:value=".view.normal.MainActivity" />
         </activity>
     </application>
+
 </manifest>

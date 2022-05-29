@@ -1,6 +1,5 @@
 package com.shareyacht.shareyacht.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,8 +21,12 @@ class OwnerPathViewModel : ViewModel() {
     val finishEvent: LiveData<Unit>
         get() = _finishEvent
 
-    fun getMyPath() {
-        RetrofitManager.instance.requestGetPath { success, message, data ->
+    private var reservationID: String? = null
+
+    // 등록된 경로 가져오기
+    fun getMyPath(reservationID: String) {
+        this.reservationID = reservationID
+        RetrofitManager.instance.requestGetPath(reservationID = reservationID) { success, message, data ->
             when (success) {
                 0 -> {
                     if (data != null) {
@@ -39,14 +42,12 @@ class OwnerPathViewModel : ViewModel() {
         }
     }
 
+    // 경로 파싱
     private fun parsePath(data: String) {
-        // 순서쌍은 세미콜론으로 구분
         val list = data.split(";")
-        // 위도, 경도는 콜론으로 구분
         for (i in list) {
             val point = i.split(":")
-            if(point[0].isNotBlank() && point[1].isNotBlank()) {
-                Log.d("태그", "lat : ${point[0].toDouble()}, lon : ${point[1].toDouble()}")
+            if (point[0].isNotBlank() && point[1].isNotBlank()) {
                 val latLng = LatLng(point[0].toDouble(), point[1].toDouble())
                 // 경로에 추가
                 myPath.add(latLng)
@@ -63,15 +64,24 @@ class OwnerPathViewModel : ViewModel() {
             path = "$path$points"
         }
 
-        RetrofitManager.instance.requestAddPath(path) { success, message ->
-            when (success) {
-                0 -> {
-                    _finishEvent.postValue(Unit)
-                }
-                else -> {
-                    _message.value = message
+        // reservation ID가 있으면
+        if (reservationID != null) {
+            RetrofitManager.instance.requestAddPath(
+                data = path,
+                reservationID = reservationID!!
+            ) { success, message ->
+                when (success) {
+                    0 -> {
+                        _finishEvent.postValue(Unit)
+                    }
+                    else -> {
+                        _message.value = message
+                    }
                 }
             }
+        } else {
+            _message.value = "해당 예약을 찾을 수 없습니다."
         }
+
     }
 }

@@ -1,7 +1,7 @@
 package com.shareyacht.shareyacht.viewmodel
 
 import android.content.SharedPreferences
-import android.widget.CompoundButton
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.material.button.MaterialButtonToggleGroup
@@ -10,6 +10,7 @@ import com.shareyacht.shareyacht.model.User
 import com.shareyacht.shareyacht.retrofit.RetrofitManager
 import com.shareyacht.shareyacht.utils.Preference
 import com.shareyacht.shareyacht.utils.SharedPreferenceManager
+import com.shareyacht.shareyacht.utils.UserType
 
 class SignUpViewModel : ViewModel() {
 
@@ -17,12 +18,7 @@ class SignUpViewModel : ViewModel() {
     val email: MutableLiveData<String> = MutableLiveData()
     val password: MutableLiveData<String> = MutableLiveData()
     val passwordCheck: MutableLiveData<String> = MutableLiveData()
-
-    // 체크박스 상태 (normal : 일반, corp : 요트 사업자)
-    val normal: MutableLiveData<Boolean> = MutableLiveData(true)
-    val corp: MutableLiveData<Boolean> = MutableLiveData(false)
-
-    private var userType: Int = 1
+    var userType = UserType.NORMAL
 
     // 아이디, 비밀번호 관련 에러 메시지
     val errorMessage: MutableLiveData<String> = MutableLiveData()
@@ -30,41 +26,19 @@ class SignUpViewModel : ViewModel() {
     // 상세정보 입력 화면으로 이동가능한지 여부
     val navStatus: MutableLiveData<Boolean> = MutableLiveData(false)
 
-
-    // 일반 회원 체크된 경우 업데이트
-    private fun normalChecked() {
-        normal.value = true
-        corp.value = false
-        userType = 1
-    }
-
-    // 사업자 회원 체크된 경우 업데이트
-    private fun corpChecked() {
-        corp.value = true
-        normal.value = false
-        userType = 2
-    }
-
-    // 체크박스 변경 리스너
-    val checkedChanged: CompoundButton.OnCheckedChangeListener =
-        CompoundButton.OnCheckedChangeListener { button, isChecked ->
-            if (button != null) {
-                when (button.id) {
-                    // 일반 회원 체크박스에 이벤트 발생
-                    R.id.normalUserCheck -> {
-                        if (isChecked) {
-                            normalChecked()
-                        } else {
-                            corpChecked()
-                        }
+    // MaterialButtonToggleGroup - onButtonCheckedListener
+    val onUserTypeChecked =
+        MaterialButtonToggleGroup.OnButtonCheckedListener { _, checkedId, isChecked ->
+            if (isChecked) {
+                when (checkedId) {
+                    R.id.normalButton -> {
+                        userType = UserType.NORMAL
                     }
-                    // 사업자 회원 체크박스에 이벤트 발생
-                    R.id.corpUserCheck -> {
-                        if (isChecked) {
-                            corpChecked()
-                        } else {
-                            normalChecked()
-                        }
+                    R.id.corpButton -> {
+                        userType = UserType.OWNER
+                    }
+                    R.id.driverButton -> {
+                        userType = UserType.DRIVER
                     }
                 }
             }
@@ -82,6 +56,19 @@ class SignUpViewModel : ViewModel() {
             }
         } else {
             errorMessage.value = "모든 항목을 입력해주세요."
+        }
+    }
+
+    /* 면허정보 입력 페이지 */
+    val _licenseNumber = MutableLiveData<String>()
+    val licenseNumber: LiveData<String>
+        get() = _licenseNumber
+
+    fun saveLicense() {
+        if (!licenseNumber.value.isNullOrEmpty()) {
+            navStatus.value = true
+        } else {
+            errorMessage.value = "면허정보를 입력해주세요."
         }
     }
 
@@ -136,8 +123,14 @@ class SignUpViewModel : ViewModel() {
                 birth = birth.value!!,
                 address = "${addressBase.value!!} ${addressDetail.value!!}",
                 phone = phone.value!!,
-                sex = sex.value!!
+                sex = sex.value!!,
+                driverLicense = null
             )
+
+            if (userType == UserType.DRIVER) {
+                user.driverLicense = licenseNumber.value
+            }
+
             RetrofitManager.instance.requestSignup(
                 user = user
             ) { success, message ->
